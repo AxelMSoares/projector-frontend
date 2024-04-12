@@ -1,0 +1,67 @@
+.login-field {
+    padding: 40px 0;
+    color: var(--light-color);
+    background-color: var(--secondary-background-color);
+    max-width: 400px;
+    width: 100%;
+    border-radius: 20px;
+    margin-top: 100px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-field h1 {
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+}
+
+.login-field input {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 0;
+    padding: 5px 20px;
+}
+
+.login-field .sign-up-link {
+    margin-top: 40px;
+    color: #fff;
+}
+
+.login-field button {
+    background-color: var(--secondary-color);
+    color: var(--light-color);
+    font-weight: 600;
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 10px;
+    transition: all .4s ease;
+}
+
+.login-field button:hover,
+.login-field button:focus {
+    background-color: var(--fourth-color);
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+.pwd-recommendations {
+    font-size: 0.8em;
+    margin-bottom: 5px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.pwd-recommendations li {
+    list-style-type: disc;
+    margin-left: 40px;
+}
+
+#login-mail {
+    display: none;
+}

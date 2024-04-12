@@ -21,8 +21,10 @@ $text-font: "Inter", sans-serif;
 @import '_reset';
 @import '_header';
 @import '_home';
-// @import '_default';
-// @import '_footer';
+@import '_footer';
+@import '_login';
+@import '_register';
+@import '_newProject';
 
 
 *{
@@ -33,3 +35,61 @@ img {
     max-width: 100%;
     height: auto;
 }
+
+body {
+    color: var(--dark-color);
+    background-color: var(--main-background-color);
+    font-family: $default-font;
+    font-size: 1em;
+    font-weight: 600;
+    line-height: 1.6em;
+}
+
+input {
+    border-radius: 5px;
+    border: 0;
+    height: 30px;
+}
+
+.error {
+    padding: 5px 20px;
+    color: var(--light-color);
+    background-color: var(--error-color);
+    border-radius: 5px;
+    font-size: 0.8em;
+    list-style-type: disc;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 80%;
+    text-decoration: none;
+}
+
+.capitalize-first-letter::first-letter {
+    text-transform: uppercase;
+}
+
+.success {
+    background-color: var(--success-color);
+    color: var(--light-color);
+    padding: 5px 20px;
+    max-width: 400px;
+    margin-right: auto;
+    margin-top: 80px;
+    margin-bottom: -60px;
+    margin-left: auto;
+    border-radius: 5px;
+}
+
+.success-text{
+    color: var(--success-color);
+}
+
+.error-text{
+    color: var(--error-color);
+}
+
+.required-field{
+    color: var(--error-color);
+    margin-left: 5px;
+}
+

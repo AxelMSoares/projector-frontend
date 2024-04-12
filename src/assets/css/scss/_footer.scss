@@ -1,0 +1,19 @@
+.footer-background {
+    width: 100%;
+    margin-top: 200px;
+    background-color: var(--secondary-background-color);
+    height: 140px;
+    padding: 30px 0;
+}
+
+.footer .footer-wrapper {
+    max-width: 1400px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.footer a {
+    text-decoration: none;
+    color: var(--light-color);
+}
