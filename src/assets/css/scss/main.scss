@@ -1,0 +1,35 @@
+:root{
+    --main-background-color: #fff;
+    --light-color: #fff;
+    --dark-color: #000;
+    --primary-color: #547AA5;
+    --secondary-color: #4F5165;
+    --third-color: #50D8D7;
+    --fourth-color: #474044;
+    --success-color: #198754;
+    --error-color: #DC3545;
+    --secondary-background-color: #293132;
+}
+
+// En scss on peut ajouter des commentaires en utilisant des doubles slashs devant
+
+// On peut créer des variables pour les fonts:
+$default-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+$text-font: "Inter", sans-serif;
+
+// Imports, on decoupe notre code scss en plusieurs morceaux. Exemple: fonts, defaut, header, footer, main
+@import '_reset';
+@import '_header';
+@import '_home';
+// @import '_default';
+// @import '_footer';
+
+
+*{
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
