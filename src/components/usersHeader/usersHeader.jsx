@@ -1,6 +1,22 @@
+import { useState } from 'react';
+import Cookies from 'js-cookie';
 import { Link } from 'react-router-dom';
 
-function UsersHeader() {
+function UsersHeader({onConnect}) {
+
+	const [data, setData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+
+	// console.log(data['username']);
+
+	const onLogoutHandler = (e) => {
+		e.preventDefault();
+		// Destroy the cookies
+		onConnect(false);
+		Cookies.remove('jwt', { path: '/' });
+		Cookies.remove('userData', { path: '/' });
+		window.location.href = '/';
+	}
+
     return (
         <header>
 		<nav className="nav-bar">
@@ -18,8 +34,8 @@ function UsersHeader() {
 				</div>
 				<div className="nav-bar-right">
 					<ul>
-						<li> Bienvenue: <span className="username-view"> User </span></li>
-						<li id="logout-btn"><a className="page-link" href="">Se Deconnecter</a></li>
+						<li> Bienvenue: <span className="username-view"> { data['username'] } </span></li>
+						<li id="logout-btn"><a className="page-link" href="" onClick={onLogoutHandler}>Se Deconnecter</a></li>
 					</ul>
 				</div>
 			</div>

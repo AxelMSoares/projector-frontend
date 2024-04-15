@@ -1,5 +1,6 @@
-import { useState } from 'react'
-import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link} from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link } from 'react-router-dom'
+import Cookies from 'js-cookie';
 import PublicHeader from '../src/components/publicHeader/publicHeader.jsx';
 import UsersHeader from '../src/components/usersHeader/usersHeader.jsx';
 import Footer from '../src/components/footer/footer.jsx';
@@ -12,7 +13,14 @@ import PrivacyPolicy from '../src/components/privacyPolicy/privacyPolicy.jsx'
 import './assets/css/main.css'
 
 function App() {
-  const [connected, setConnected] = useState(true); // Déclaration du hook d'état
+  const onConnectChangeHandler = (value) => setConnected(value); // Déclaration de la fonction de mise à jour du hook d'état
+  const [connected, setConnected] = useState(false); // Déclaration du hook d'état
+  const [data, setData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+  const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
+
+  useEffect(() => {
+    setConnected(Cookies.get('jwt') ? true : false);
+  }, [jwt]);
 
   const router = createBrowserRouter([
     {
@@ -26,7 +34,7 @@ function App() {
         },
         {
           path: '/connexion',
-          element: <LoginForm />
+          element: <LoginForm onConnect={onConnectChangeHandler} />
         },
         {
           path: '/inscription',
@@ -34,11 +42,11 @@ function App() {
         },
         {
           path: '/nouveau-projet',
-          element: <NewProjectForm />
+          element: <NewProjectForm jwt = { jwt } />
         },
         {
           path: '/mes-projets',
-          element: <ProjectList />
+          element: <ProjectList jwt = { jwt } />
         },
         {
           path: '/politique-de-confidentialite',
@@ -60,9 +68,11 @@ function App() {
   }
 
   function Root() {
+
+
     return (
       <>
-        {connected ? <UsersHeader /> : <PublicHeader />}
+        {connected ? <UsersHeader onConnect={onConnectChangeHandler} /> : <PublicHeader />}
         <Outlet />
         <Footer />
       </>
