@@ -1,15 +1,25 @@
 import Cookies from 'js-cookie';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 function LoginForm({ onConnect }) {
 
   const navigate = useNavigate();
-  const [newUserMsg, setNewUserMsg] = useState(Cookies.get('newUserMsg') ? Cookies.get('newUserMsg') : null);
+  const location = useLocation();
+  const [newUserMsg, setNewUserMsg] = useState('');
+  
 
-  if (Cookies.get('newUserMsg')) {
-    Cookies.remove('newUserMsg');
-  };
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const registerSuccess = searchParams.get('success');
+    if (registerSuccess) {
+        setNewUserMsg('Inscription réussie, veuillez vous connecter');
+        // Erase the message after 10 seconds
+        setTimeout(() => {
+        setNewUserMsg('');
+        }, 10000);
+    }
+}, [location.search]);
 
   async function onLoginFormSubmitHandler(e) {
     e.preventDefault();
@@ -51,9 +61,9 @@ function LoginForm({ onConnect }) {
 
   return (
     <div>
+      { newUserMsg ? <div className='success'>{newUserMsg}</div> : null } 
       <form className="login-field" action="" method="post">
         <h1>Connexion</h1>
-        {newUserMsg ? <p className='success'>{newUserMsg}</p> : null}
         <label htmlFor="username">Utilisateur:</label>
         <input type="text" id="username" name="username" />
         <label htmlFor="pwd">Mot de passe:</label>

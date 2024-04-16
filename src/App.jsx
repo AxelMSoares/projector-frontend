@@ -13,8 +13,8 @@ import PrivacyPolicy from '../src/components/privacyPolicy/privacyPolicy.jsx'
 import './assets/css/main.css'
 
 function App() {
-  const onConnectChangeHandler = (value) => setConnected(value); // Déclaration de la fonction de mise à jour du hook d'état
-  const [connected, setConnected] = useState(false); // Déclaration du hook d'état
+  const [connected, setConnected] = useState(false); // State hook
+  const onConnectChangeHandler = (value) => setConnected(value); // Update the state hook
   const [data, setData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
   const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
 

@@ -79,7 +79,9 @@ function RegisterForm() {
                 
                 if (response.ok) {
                     Cookies.set('newUserMsg', "Compte créé avec succès! Vous pouvez dès à present vous connecter.");
-                    window.location.href = '/connexion';
+                    window.location.href = '/connexion?success=true';
+                } else if (response.status === 400) {
+                    setErrorMsg(prevErrors => [...prevErrors, responseData.error]);
                 }
             }
         }
