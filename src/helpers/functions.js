@@ -1,4 +1,4 @@
-import escape from 'html-entities';
+import { escape } from 'html-entities';
 
 
 // Check if the password has at least 8 characters, one uppercase letter, one lowercase letter, and one number
@@ -36,4 +36,28 @@ export function cleanString(string) {
     const regex = /<[^>]*>/g;
     const cleanedString = string.replace(regex, '').trim();
     return escape(cleanedString); // Return the cleaned string
+}
+
+// Transform a date format to DD/MM/YYYY
+export function formatDate(date) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(date).toLocaleDateString('fr-FR', options);
+}
+
+// Transform a date to format YYYY/MM/DD
+export function formatDateToYYYYMMDD(date) {
+    const parsedDate = new Date(date);
+    const year = parsedDate.getFullYear();
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0'); // Pour obtenir un format MM (ex: 03)
+    const day = parsedDate.getDate().toString().padStart(2, '0'); // Pour obtenir un format DD (ex: 05)
+    return `${year}/${month}/${day}`;
+}
+
+// Check if the date is in the past
+export function checkDateIsPassed(date) {
+    if (new Date(date) < new Date()){
+        return 'error-text'
+    } else {
+        return 'success-text'
+    }
 }
