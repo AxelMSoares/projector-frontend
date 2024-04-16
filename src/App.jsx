@@ -10,6 +10,7 @@ import RegisterForm from '../src/components/registerForm/registerForm.jsx'
 import NewProjectForm from '../src/components/newProjectForm/newProjectForm.jsx'
 import ProjectList from './components/projectList/projectList.jsx';
 import PrivacyPolicy from '../src/components/privacyPolicy/privacyPolicy.jsx'
+import ProjectDetails from './components/projectDetails/projectDetails.jsx';
 import './assets/css/main.css'
 
 function App() {
@@ -49,6 +50,10 @@ function App() {
           element: <ProjectList jwt = { jwt } />
         },
         {
+          path: '/detail-projet/:uuid',
+          element: <ProjectDetails />
+        },
+        {
           path: '/politique-de-confidentialite',
           element: <PrivacyPolicy />
         }
@@ -61,7 +66,7 @@ function App() {
     console.log(error);
     return (
       <div>
-        <h2 className='error-page'>Une erreur est survenue !</h2>
+        <h2 className='error-page'>Zut! Une erreur est survenue!</h2>
         <p>{error?.error?.toString() ?? error?.toString()}</p>
       </div>
     );

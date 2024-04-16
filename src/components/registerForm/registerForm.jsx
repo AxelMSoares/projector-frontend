@@ -60,8 +60,8 @@ function RegisterForm() {
                 setFormValidated(true);
 
                 const validatedForm = {
-                    username: formData.username,
-                    email: formData.email,
+                    username: formData.username.toLowerCase(),
+                    email: formData.email.toLowerCase(),
                     pwd: formData.pwd,
                     cgu: 1
                 }

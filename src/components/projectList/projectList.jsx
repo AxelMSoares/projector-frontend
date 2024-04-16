@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { formatDate, checkDateIsPassed } from '../../helpers/functions';
 
@@ -7,12 +7,12 @@ export default function ProjectList({ jwt }) {
 
     const navigate = useNavigate();
     const userData = Cookies.get('userData');
-    const userUUID = JSON.parse(userData).uuid;
+    const userUUID = userData ? JSON.parse(userData).uuid : null;
     const [projects, setProjects] = useState([]);
 
     useEffect(() => {
-        if (!jwt || !userUUID) {
-            navigate('/connexion'); //If the user is not connected, redirect him to the login page
+        if (!jwt) {
+            window.location.href = '/connexion'; //If the user is not connected, redirect him to the login page
             return; // Return to prevent the rest of the function from executing
         }
 
@@ -40,17 +40,18 @@ export default function ProjectList({ jwt }) {
         fetchData(); // Call the function to get the projects
     }, [jwt, navigate, userUUID]); // Dependency array
 
-
+    const handleProjectClick = (uuid) => {
+        window.location.href = `/detail-projet/${uuid}`;
+    }
 
     return (
         <main>
-            {jwt ? (
+            {projects.length > 0 ? (
                 <div className="project-list">
                     <h2>Mes Projets:</h2>
                     {projects.map(project => (
                         <div key={project.uuid} className="project">
-                            <a href="">
-                                <div className="project-content">
+                                <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
                                     <p className='project-title'>{project.project_name}</p>
                                     <p>{project.project_description}</p>
                                     <p>Créé le: {formatDate(project.CREATED)}</p>
@@ -58,7 +59,6 @@ export default function ProjectList({ jwt }) {
                                     <p>Catégorie: {project.category_name}</p>
                                     <p>Statut: {project.status_name}</p>
                                 </div>
-                            </a>
                         </div>
                     ))}
                 </div>
