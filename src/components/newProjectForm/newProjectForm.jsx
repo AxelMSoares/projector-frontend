@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function NewProjectForm({ jwt }) {
+function NewProjectForm({ jwt, userData }) {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
+    const [errorMsg, setErrorMsg] = useState('');
 
     useEffect(() => {
         if (!jwt) {
@@ -29,11 +30,55 @@ function NewProjectForm({ jwt }) {
         }
     }
 
-    console.log (categories);
+    async function newProject(event) {
+        event.preventDefault();
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = {
+            project_name: formData.get('projectName'),
+            user_uuid: userData.uuid,
+            project_description: formData.get('projectDesc'),
+            project_category_id: formData.get('category'),
+            project_status_id: 1
+        };
+
+        const deadline = formData.get('deadline');
+        if (deadline) {
+            data.project_deadline = formData.get('deadline');
+        }
+
+
+        if (!data.project_name || !data.project_description || !data.project_category_id) {
+            setErrorMsg('Veuillez remplir tous les champs obligatoires');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/projects/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.status === 400) {
+                setErrorMsg('Ce projet existe déjà');
+            } else if (response.status === 201) {
+                window.location.href = "/mes-projets"; // Correction de la redirection
+            } else {
+                setErrorMsg('Erreur lors de la création du projet');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la création du projet', error);
+            setErrorMsg('Erreur lors de la création du projet'); // Gestion de l'erreur par défaut
+        }
+    }
 
     return (
         <main>
-            <form className="new-project-field" action="" method="POST">
+            <form className="new-project-field" action="" method="POST" onSubmit={newProject}>
                 <h2>Nouveau Projet</h2>
                 <div>
                     <label htmlFor="projectName">Nom du Projet:<span className="required-field">*</span></label>
@@ -54,7 +99,7 @@ function NewProjectForm({ jwt }) {
                             <option key={category.id} value={category.id}>{category.category_name}</option>
                         ))}
                     </select>
-                    
+
                 </div>
                 <fieldset>
                     <legend>Le projet sera:</legend>
@@ -67,6 +112,7 @@ function NewProjectForm({ jwt }) {
                         <label htmlFor="public" title="Le projet pourra être édité par n'importe quel autre utilisateur">Public</label>
                     </div>
                 </fieldset>
+                {errorMsg && <p className="error-text">{errorMsg}</p>}
                 <button type="submit">Créer</button>
             </form>
         </main >

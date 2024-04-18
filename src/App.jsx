@@ -16,7 +16,7 @@ import './assets/css/main.css'
 function App() {
   const [connected, setConnected] = useState(false); // State hook
   const onConnectChangeHandler = (value) => setConnected(value); // Update the state hook
-  const [data, setData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+  const [userData, setUserData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
   const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
 
   useEffect(() => {
@@ -43,15 +43,15 @@ function App() {
         },
         {
           path: '/nouveau-projet',
-          element: <NewProjectForm jwt = { jwt } />
+          element: <NewProjectForm jwt = { jwt } userData = { userData } />
         },
         {
           path: '/mes-projets',
           element: <ProjectList jwt = { jwt } />
         },
         {
-          path: '/detail-projet/:uuid',
-          element: <ProjectDetails />
+          path: '/detail-projet/',
+          element: <ProjectDetails jwt = { jwt }/>
         },
         {
           path: '/politique-de-confidentialite',

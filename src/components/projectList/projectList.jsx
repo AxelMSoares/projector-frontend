@@ -41,7 +41,7 @@ export default function ProjectList({ jwt }) {
     }, [jwt, navigate, userUUID]); // Dependency array
 
     const handleProjectClick = (uuid) => {
-        window.location.href = `/detail-projet/${uuid}`;
+        window.location.href = `/detail-projet/?uuid=${uuid}`;
     }
 
     return (
