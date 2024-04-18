@@ -9,6 +9,8 @@
     --success-color: #198754;
     --error-color: #DC3545;
     --secondary-background-color: #293132;
+    --warning-color: #FFCA2C;
+    --ongoing-color: #0B5ED7;
 }
 
 // En scss on peut ajouter des commentaires en utilisant des doubles slashs devant
@@ -90,6 +92,26 @@ input {
 
 .required-field{
     color: var(--error-color);
+    margin-left: 5px;
+}
+
+.cancelled-color{
+    color: var(--error-color);
+    margin-left: 5px;
+}
+
+.ongoing-color{
+    color: var(--ongoing-color);
+    margin-left: 5px;
+}
+
+.paused-color{
+    color: var(--warning-color);
+    margin-left: 5px;
+}
+
+.done-color{
+    color: var(--success-color);
     margin-left: 5px;
 }
 

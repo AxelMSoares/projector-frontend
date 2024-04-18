@@ -61,3 +61,19 @@ export function checkDateIsPassed(date) {
         return 'success-text'
     }
 }
+
+// Check the status and change de class name accordingly
+export function checkStatus(status) {
+    switch (status) {
+        case 'En cours':
+            return 'ongoing-color';
+        case 'Terminé':
+            return 'done-color';
+        case 'Annulé':
+            return 'cancelled-color';
+        case 'En pause':
+            return 'paused-color';
+        default:
+            return 'ongoing-color';
+    }
+}
