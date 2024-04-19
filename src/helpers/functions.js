@@ -40,7 +40,7 @@ export function cleanString(string) {
 
 // Transform a date format to DD/MM/YYYY
 export function formatDate(date) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const options = { weekday:'long', year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(date).toLocaleDateString('fr-FR', options);
 }
 
@@ -76,4 +76,29 @@ export function checkStatus(status) {
         default:
             return 'ongoing-color';
     }
+}
+
+// Check if i'm the message sender
+export function checkMessageAuthor(messageAuthor, username) {
+    return messageAuthor === username ? 'myMessage' : 'otherMessage';
+}
+
+// Only display the hour and minutes of a date
+export function displayHour(date) {
+    return new Date(date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+}
+
+// Fonction pour attribuer une couleur cohérente à un utilisateur
+export function assignColorToUser(username) {
+    // Utilisez une fonction de hachage pour générer un nombre unique à partir du nom d'utilisateur
+    // Vous pouvez utiliser une fonction de hachage comme DJB2 ou FNV-1a
+    let hash = 0;
+    for (let i = 0; i < username.length; i++) {
+        hash = username.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    // Convertissez le hash en une couleur RGB
+    const r = (hash & 0xFF) + 60; // Composante rouge
+    const g = ((hash >> 8) & 0xFF) + 60; // Composante verte
+    const b = ((hash >> 16) & 0xFF) + 60; // Composante bleue
+    return `rgb(${r}, ${g}, ${b})`; // Retourne la couleur sous forme de chaîne
 }

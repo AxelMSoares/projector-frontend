@@ -51,7 +51,7 @@ function App() {
         },
         {
           path: '/detail-projet/',
-          element: <ProjectDetails jwt = { jwt }/>
+          element: <ProjectDetails jwt = { jwt } userData = { userData } />
         },
         {
           path: '/politique-de-confidentialite',

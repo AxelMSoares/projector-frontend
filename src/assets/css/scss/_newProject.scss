@@ -139,6 +139,32 @@
     margin-top: 10px;
 }
 
+.project-detail h2 {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.project-detail .date{
+    color: var(--light-color);
+    text-align: center;
+    margin: 20px 0;
+    font-size: 0.9rem;
+
+}
+
+.project-detail .detail{
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+.project-detail .members{
+     border: 2px solid var(--light-color);
+     border-radius: 5px;
+     padding: 40px 20px;
+     margin: 40px 0;
+}
+    
+
 .project-detail .project-tchat{
     background-color: var(--secondary-background-color);
     color: var(--dark-color);
@@ -161,7 +187,7 @@
     margin-left: auto;
 }
 
-.project-detail #message-form #message{
+.project-detail #message-form #new_message{
     width: 100%;
     padding: 20px;
     border: 1px solid var(--dark-color);
@@ -173,10 +199,10 @@
     padding: 10px;
     border: 0;
     border-radius: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-bottom: 5px;
-    max-width: 70%;
+    max-width: 60%;
     display:flex;
     flex-wrap:wrap;
     flex-direction: column;
@@ -185,20 +211,22 @@
 
 .project-detail .project-tchat .message-author{
     text-transform: capitalize;
-    font-weight: 600;
+    font-weight: 800;
+    font-size: 1.1rem;
 }
 
 
 .project-detail .project-tchat .myMessage{
-    background-color: var(--primary-color);
-    margin-left: 400px;
+    background-color: rgb(66, 30, 30);
+    margin-left: 800px;
     align-self: end;
 }
 
 .project-detail .project-tchat .otherMessage{
-    background-color: var(--secondary-color);
-    margin-right: 400px;
+    background-color: rgb(50, 51, 71);
+    margin-right: 800px;
     align-self: start;
+    margin-bottom: 10px;
 }
 
 .project-detail .time{
