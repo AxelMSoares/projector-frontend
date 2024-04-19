@@ -62,6 +62,8 @@ input {
     list-style-type: disc;
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
     width: 80%;
     text-decoration: none;
 }
@@ -113,5 +115,26 @@ input {
 .done-color{
     color: var(--success-color);
     margin-left: 5px;
+}
+
+.edit-btn {
+    color: var(--light-color);
+    background: transparent;
+    border: 0;
+    text-align: end;
+    font-size: 0.6em;
+}
+
+.delete-btn{
+    color: var(--light-color);
+    background: transparent;
+    border: 0;
+    text-align: end;
+    font-size: 0.6em;
+}
+
+.msg-btns{
+    display: flex;
+    justify-content: flex-end;
 }
 
