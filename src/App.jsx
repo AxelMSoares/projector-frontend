@@ -11,6 +11,7 @@ import NewProjectForm from '../src/components/newProjectForm/newProjectForm.jsx'
 import ProjectList from './components/projectList/projectList.jsx';
 import PrivacyPolicy from '../src/components/privacyPolicy/privacyPolicy.jsx'
 import ProjectDetails from './components/projectDetails/projectDetails.jsx';
+import Tchat from './components/projectTchat/tchat.jsx';
 import './assets/css/main.css'
 
 function App() {
@@ -56,6 +57,10 @@ function App() {
         {
           path: '/politique-de-confidentialite',
           element: <PrivacyPolicy />
+        },
+        {
+          path: '/projet/tchat/',
+          element: <Tchat jwt={jwt} userData={userData}/>
         }
       ]
     }

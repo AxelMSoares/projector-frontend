@@ -27,6 +27,7 @@ $text-font: "Inter", sans-serif;
 @import '_login';
 @import '_register';
 @import '_newProject';
+@import '_tchat';
 
 
 *{
@@ -138,3 +139,35 @@ input {
     justify-content: flex-end;
 }
 
+.new-content{
+    background: transparent;
+    border: 0;
+    resize: none;
+    width: 100%;
+    color: var(--light-color);
+    height: 100px;
+    margin-bottom: 20px;
+}
+
+.validate-edit-btn{
+    color: var(--light-color);
+    background: transparent;
+    border: 1px solid var(--light-color);
+    border-radius: 5px;
+    text-align: end;
+    font-size: 0.6em;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.tchat-access-btn{
+    color: var(--light-color);
+    text-decoration: none;
+    background-color: #4e8deb;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 0;
+    margin-right: auto;
+    margin-left: auto;
+}

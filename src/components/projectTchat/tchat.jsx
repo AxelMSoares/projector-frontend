@@ -1,24 +1,43 @@
 import { formatDate, checkDateIsPassed, checkStatus, checkMessageAuthor, displayHour, assignColorToUser } from '../../helpers/functions';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 
 
 export default function Tchat({ projectUuid, error, jwt, userData }) {
 
+    // Search in the url the project uuid
+    const searchParams = new URLSearchParams(location.search);
+    const projectUUID = searchParams.get('uuid');
+
     const [messages, setMessages] = useState([]);
-    const project = projectUuid;
     const [errorMessage, setErrorMessage] = useState('');
+    const [editingMessage, setEditingMessage] = useState(null);
+    const scrollRef = useRef(null); // Reference to the last message
 
     useEffect(() => {
+        const invervalId = setInterval(() => {
         // Call the function to get the project messages
         getProjectMessages();
+        }, 1000); // Refresh the messages every 10 seconds
+
+        return () => clearInterval(invervalId);
+
     }, []); // Empty array to avoid infinite loop
 
+    useEffect(() => {
+        scrollToBottom(); // Call the function to scroll to the bottom of the chat
+    }, [messages]); // Execute the function when the messages change
 
+    if (!jwt) {
+        window.location.href = "/connexion"; // Redirect to the login page if the user is not connected
+        return;
+    }
+
+    // Function to get the project messages
     async function getProjectMessages() {
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/${project}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/${projectUUID}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
@@ -106,7 +125,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         const msgId = e.target.id;
 
-        // Demander une confirmation avant de supprimer le message
+        // Ask for confirmation before deleting the message
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce message ?");
 
         if (confirmation) {
@@ -136,9 +155,64 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
         }
     }
 
+    const updateMessage = async (messageId, newContent) => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/update/${messageId}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": jwt
+                },
+                body: JSON.stringify({ message_content: newContent })
+            });
+
+            if (!response.ok) {
+                setErrorMessage("Une erreur est survenue lors de la mise à jour du message");
+            } else {
+                setErrorMessage('');
+                getProjectMessages();
+                setEditingMessage(null); // Reset the editing message
+            }
+
+        } catch (error) {
+            setErrorMessage("Une erreur est survenue lors de la mise à jour du message");
+            console.log("Une erreur est survenue lors de la mise à jour du message", error);
+        }
+    };
+
+    // Function to handle de form submission to edit a message
+    const handleEditFormSubmit = async (e, messageId) => {
+        e.preventDefault();
+        const newContent = e.target.new_content.value;
+        if (newContent.trim() === "") {
+            setErrorMessage("Veuillez saisir un contenu valide pour le message");
+            return;
+        }
+
+        if (newContent === editingMessage.content) {
+            setEditingMessage(null);
+            return;
+        }
+
+        await updateMessage(messageId, newContent);
+    };
+
+    // Function to activate the edit mode
+    const activateEditMode = (messageId, messageContent) => {
+        setEditingMessage({ id: messageId, content: messageContent });
+    };
+
+    function scrollToBottom() {
+        // Scroll to the bottom of the chat
+        if (scrollRef.current) {
+            scrollRef.current.scrollIntoView({ behavior: "smooth", block: "end" });
+        }
+    }
+
+
     return (
 
-        <div>
+        <div className='tchat-background'>
             <p>Tchat:</p>
             <div className="project-tchat">
                 {Object.keys(groupedMessages).map(date => (
@@ -147,14 +221,26 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
                         {groupedMessages[date].map(message => (
                             <div key={message.id} className={"message " + checkMessageAuthor(message.username, userData.username)} >
                                 <p className="message-author" style={{ color: assignColorToUser(message.username) }}>{message.username}</p>
-                                <p className="capitalize-first-letter">{message.message_content}</p>
-                                <p className="time">{displayHour(message.message_created)}</p>
-                                {(checkMessageAuthor(message.username, userData.username) === "myMessage") ?
-                                    <div className='msg-btns'>
-                                        <button className="edit-btn"> Modifier </button>
-                                        <button className="delete-btn" onClick={handleMessageDelete} id={message.id}  > Supprimer </button>
-                                    </div> : null
-                                }
+                                {editingMessage && editingMessage.id === message.id ? (
+                                    // Display de form to edit the message
+                                    <form onSubmit={(e) => handleEditFormSubmit(e, message.id)}>
+                                        <textarea name="new_content" className="new-content" defaultValue={editingMessage.content}></textarea>
+                                        <button type="submit" className="validate-edit-btn">Valider</button>
+                                    </form>
+                                ) : (
+                                    // Display the message content
+                                    <>
+                                        <p className="capitalize-first-letter">{message.message_content}</p>
+                                        {message.modified == true ? <p className="message-modified">Modifié.</p> : null}
+                                        <p className="time">{displayHour(message.message_created)}</p>
+                                        {(checkMessageAuthor(message.username, userData.username) === "myMessage") &&
+                                            <div className='msg-btns'>
+                                                <button className="edit-btn" onClick={() => activateEditMode(message.id, message.message_content)}>Modifier</button>
+                                                <button className="delete-btn" onClick={handleMessageDelete} id={message.id}>Supprimer</button>
+                                            </div>
+                                        }
+                                    </>
+                                )}
                             </div>
                         ))}
                     </div>
@@ -164,6 +250,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
             <form id="message-form" onSubmit={newMessage}>
                 <input type="text" id="new_message" name="new_message" placeholder="Votre message..." maxLength="255" />
             </form>
+            <div ref={scrollRef}></div>
         </div>
     );
 }

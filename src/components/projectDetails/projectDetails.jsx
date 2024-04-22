@@ -1,7 +1,7 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { formatDate, checkDateIsPassed, checkStatus } from '../../helpers/functions';
-import Tchat from '../projectTchat/tchat';
+
 
 export default function ProjectDetails({ jwt, userData }) {
 
@@ -44,7 +44,7 @@ export default function ProjectDetails({ jwt, userData }) {
                 setProject(data[0]);
 
                 if (userData) {
-                    if (userData.username != data[0].username) {
+                    if (userData.username != data[0].username && userData.statut !== 'administrateur') {
                         setErrorMsg('Vous n\'avez pas les droits pour accéder à ce projet');
                         return;
                     }
@@ -55,6 +55,10 @@ export default function ProjectDetails({ jwt, userData }) {
             setErrorMsg('Erreur lors du chargement du projet');
             console.log("Une erreur est survenue lors de la récupération du projet", error);
         }
+    }
+
+    function redirectToTchat() {
+        window.location.href = `/projet/tchat/?uuid=${projectUuid}`;
     }
 
     return (
@@ -72,7 +76,7 @@ export default function ProjectDetails({ jwt, userData }) {
                         <p>Membres:</p>
                         <p>Pas encore de membres dans ce projet.</p>
                     </div>
-                    <Tchat projectUuid={projectUuid} error={setErrorMsg} jwt={jwt} userData={userData}/>
+                    <button className ="tchat-access-btn" onClick = {redirectToTchat}>Acceder au tchat du projet</button>
                 </div>
             }
         </div>
