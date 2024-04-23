@@ -82,9 +82,11 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         const data = {
             message_content: e.target.new_message.value,
-            project_uuid: project,
+            project_uuid: projectUUID,
             user_uuid: userData.uuid
         }
+
+        
 
         if (!data.message_content) {
             setErrorMessage("Veuillez saisir un message");
@@ -107,8 +109,9 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
                 } else {
                     setErrorMessage('');
                     getProjectMessages();
+                    console.log(data);
                     document.getElementById("new_message").value = ""; // Clear the input
-                    window.location.reload(); // Reload the page to display the new message
+                    // window.location.reload(); // Reload the page to display the new message
                 }
 
             } catch (error) {
@@ -193,7 +196,6 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
             setEditingMessage(null);
             return;
         }
-
         await updateMessage(messageId, newContent);
     };
 
