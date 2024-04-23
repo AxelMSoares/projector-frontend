@@ -9,8 +9,14 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     const [statusList, setStatusList] = useState([]);
     const data = {
         project_description: project.project_description,
-        project_deadline: formatDateToYYYYMMDD(project.project_deadline),
         project_status_id: newStatus
+    }
+
+    if (project.project_deadline){
+        data.project_deadline = formatDateToYYYYMMDD(project.project_deadline);
+    } else {
+        data.project_deadline = null;
+    
     }
 
     useEffect(() => {

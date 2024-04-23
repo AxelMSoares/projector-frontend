@@ -157,7 +157,7 @@ export default function ProjectDetails({ jwt, userData }) {
                 <div className="project-detail">
                     <h2 className="capitalize-first-letter">{project.project_name}</h2>
                     <p className="detail">Auteur: <span className="capitalize-first-letter">{project.username}</span></p>
-                    <p className="detail">Crée le: <span>{formatDate(project.created)}</span></p>
+                    <p className="detail">Crée le: <span>{formatDate(project.project_created)}</span></p>
                     < DescriptionField project={project} />
                     < CategoryField project={project} />
                     < Deadline project={project} userData={userData} onUpdate={updateProject} />
