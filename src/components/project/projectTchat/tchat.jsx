@@ -1,4 +1,4 @@
-import { formatDate, checkDateIsPassed, checkStatus, checkMessageAuthor, displayHour, assignColorToUser } from '../../helpers/functions';
+import { formatDate, checkDateIsPassed, checkStatus, checkMessageAuthor, displayHour, assignColorToUser } from '../../../helpers/functions';
 import { useState, useEffect, useRef } from "react";
 
 

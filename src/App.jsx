@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'react'
 import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link } from 'react-router-dom'
 import Cookies from 'js-cookie';
-import PublicHeader from '../src/components/publicHeader/publicHeader.jsx';
-import UsersHeader from '../src/components/usersHeader/usersHeader.jsx';
+import PublicHeader from '../src/components/headers/publicHeader/publicHeader.jsx';
+import UsersHeader from '../src/components/headers/usersHeader/usersHeader.jsx';
 import Footer from '../src/components/footer/footer.jsx';
 import Home from '../src/components/homePage/home.jsx'
-import LoginForm from '../src/components/loginForm/loginForm.jsx'
-import RegisterForm from '../src/components/registerForm/registerForm.jsx'
-import NewProjectForm from '../src/components/newProjectForm/newProjectForm.jsx'
-import ProjectList from './components/projectList/projectList.jsx';
-import PrivacyPolicy from '../src/components/privacyPolicy/privacyPolicy.jsx'
-import ProjectDetails from './components/projectDetails/projectDetails.jsx';
-import Tchat from './components/projectTchat/tchat.jsx';
+import LoginForm from '../src/components/publicForms/loginForm/loginForm.jsx'
+import RegisterForm from '../src/components/publicForms/registerForm/registerForm.jsx'
+import NewProjectForm from '../src/components/project/newProjectForm/newProjectForm.jsx'
+import ProjectList from './components/project/projectList/projectList.jsx';
+import PrivacyPolicy from '../src//components/privacyPolicy/privacyPolicy.jsx'
+import ProjectDetails from './components/project/projectDetails/projectDetails.jsx';
+import Tchat from './components/project/projectTchat/tchat.jsx';
 import './assets/css/main.css'
 
 function App() {

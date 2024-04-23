@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { formatDate, checkDateIsPassed, checkStatus } from '../../helpers/functions';
+import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
 
 export default function ProjectList({ jwt }) {
 
@@ -56,7 +56,7 @@ export default function ProjectList({ jwt }) {
                                     <p>{project.project_description}</p>
                                     <p>Créé le: {formatDate(project.CREATED)}</p>
                                     <p>Catégorie: {project.category_name}</p>
-                                    <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p>
+                                    { project.project_deadline ? <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p> : <p> Deadline: <span className="success-text">Pas de data limite</span></p>}
                                     <p>Statut: <span className={ checkStatus(project.status_name) }>{project.status_name}</span></p>
                                 </div>
                         </div>

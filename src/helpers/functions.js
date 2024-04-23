@@ -102,3 +102,25 @@ export function assignColorToUser(username) {
     const b = ((hash >> 16) & 0xFF) + 60; // Composante bleue
     return `rgb(${r}, ${g}, ${b})`; // Retourne la couleur sous forme de chaîne
 }
+
+// Check if the user status is "administrateur"
+export function checkAdminStatus(status) {
+    return (status === 'administrateur' ? true : false);
+}
+
+// Check if the user is a project member
+export function checkProjectMember(projectMembers, userUuid) {
+    const member = projectMembers.find(member => member.uuid === userUuid);
+
+    if (member) {
+        return true;
+    }
+
+    // if no member has the same uuid as the user, return false
+    return false;
+}
+
+// Check if the user is the project author
+export function checkProjectAuthor(projectAuthor, userUuid) {
+    return (projectAuthor === userUuid ? true : false);
+}

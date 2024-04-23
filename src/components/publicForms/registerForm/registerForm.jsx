@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { checkPasswordMatch, checkEmailMatch, checkPasswordFormat } from '../../helpers/functions.js';
+import { checkPasswordMatch, checkEmailMatch, checkPasswordFormat } from '../../../helpers/functions.js';
 import Cookies from 'js-cookie';
 
 function RegisterForm() {

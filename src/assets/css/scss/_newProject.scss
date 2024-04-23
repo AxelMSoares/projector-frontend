@@ -155,3 +155,70 @@
      padding: 40px 20px;
      margin: 40px 0;
 }
+
+.project-detail .members li{
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--light-color);
+    padding: 10px;
+    justify-content: space-around;
+}
+
+.project-detail .members li:first-child{
+    border-radius: 5px 5px 0 0;
+}
+
+.project-detail .members li:last-child{
+    border-radius: 0 0 5px 5px;
+}
+
+.project-detail .members li p,
+.project-detail .members li div{
+    width: 30%;
+    text-align: center;
+}
+
+.project-detail .members .members-delete-btn,
+.project-detail .members .members-edit-btn,
+.project-detail .members .members-add-btn{
+    background-color: var(--error-color);
+    padding: 5px 10px;
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    font-size: 0.6rem;
+}
+
+.project-detail .members .members-edit-btn{
+    background-color: var(--ongoing-color);
+    margin-right: 10px;
+}
+
+.project-detail .project-date-field,
+.project-detail .project-status-field{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-detail .project-date-field button,
+.project-detail .project-status-field button{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    margin-left: 10px;
+    font-size: 0.8em;
+    padding: 2px 10px;
+
+}
+
+.project-detail .members .members-add-btn{
+    background-color: var(--ongoing-color);
+    font-size: 0.8rem;
+    text-align: end;
+    margin-bottom: 10px;
+}
+
+.project-detail span{
+    margin-left: 5px;
+}
