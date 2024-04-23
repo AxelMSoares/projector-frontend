@@ -16,7 +16,7 @@ function NewProjectForm({ jwt, userData }) {
 
     async function getCategories() {
         try {
-            const response = await fetch('http://localhost:3000/categories', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/categories`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ function NewProjectForm({ jwt, userData }) {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/projects/create', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

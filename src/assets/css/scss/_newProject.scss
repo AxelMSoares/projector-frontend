@@ -195,13 +195,15 @@
 }
 
 .project-detail .project-date-field,
-.project-detail .project-status-field{
+.project-detail .project-status-field,
+.project-detail .project-categorie-field{
     display: flex;
     flex-wrap: wrap;
 }
 
 .project-detail .project-date-field button,
-.project-detail .project-status-field button{
+.project-detail .project-status-field button,
+.project-detail .project-categorie-field button{
     background-color: var(--ongoing-color);
     color: var(--light-color);
     border: 0;

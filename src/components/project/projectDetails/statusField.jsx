@@ -9,7 +9,8 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     const [statusList, setStatusList] = useState([]);
     const data = {
         project_description: project.project_description,
-        project_status_id: newStatus
+        project_status_id: newStatus,
+        project_category_id: project.project_category_id,
     }
 
     if (project.project_deadline){

@@ -11,6 +11,8 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         return null;
     }
 
+    console.log(members);
+
     useEffect(() => {
         setMembers(membersList);
     }, [membersList]);
@@ -31,8 +33,6 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
                 if (!response.ok) {
                     console.log("Une erreur est survenue lors de la suppression du membre", data.error);
-                } else {
-                    getMembers();
                 }
 
             } catch (error) {
@@ -42,6 +42,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
     }
 
     async function updateRole(memberId, newRole) {
+        console.log(memberId, newRole);
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/update/${memberId}`, {
                 method: 'PUT',
@@ -57,7 +58,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             if (!response.ok) {
                 console.log("Une erreur est survenue lors de la mise à jour du rôle du membre", data.error);
             } else {
-                getMembers();
+                setMembers(members.map(member => member.id === memberId ? {...member, role: newRole} : member));
                 setEditingMemberId(null);
                 setNewRole('');
             }

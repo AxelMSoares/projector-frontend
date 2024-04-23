@@ -103,7 +103,6 @@ export default function ProjectDetails({ jwt, userData }) {
     }
 
     async function updateProject(dataToUpdate) {
-
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/update/${projectUuid}`, {
                 method: "PUT",
@@ -159,7 +158,7 @@ export default function ProjectDetails({ jwt, userData }) {
                     <p className="detail">Auteur: <span className="capitalize-first-letter">{project.username}</span></p>
                     <p className="detail">Crée le: <span>{formatDate(project.project_created)}</span></p>
                     < DescriptionField project={project} />
-                    < CategoryField project={project} />
+                    < CategoryField project={project} jwt={jwt} onUpdate={updateProject}/>
                     < Deadline project={project} userData={userData} onUpdate={updateProject} />
                     < StatusField project={project} userData={userData} onUpdate={updateProject} jwt={jwt} />
                     < ProjectMembers projectUuid={projectUuid} jwt={jwt} userData={userData} project={project} membersList={membersList} />

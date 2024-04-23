@@ -9,7 +9,8 @@ export default function Deadline ( { project, userData , onUpdate }) {
     const data = {
         project_description: project.project_description,
         project_deadline: ( newDeadline ? newDeadline : null ),
-        project_status_id: project.project_status_id
+        project_status_id: project.project_status_id,
+        project_category_id: project.project_category_id,
     }
 
     useEffect(() => {
