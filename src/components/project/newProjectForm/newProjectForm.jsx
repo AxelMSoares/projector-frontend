@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getCategories } from "../../../api/getCategories";
+import { createNewProject } from "../../../api/createNewProject";
 
 function NewProjectForm({ jwt, userData }) {
     const navigate = useNavigate();
@@ -9,21 +11,14 @@ function NewProjectForm({ jwt, userData }) {
     useEffect(() => {
         if (!jwt) {
             navigate('/connexion'); // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
-        } else {
-            getCategories(); // Charger les catégories si l'utilisateur est connecté
         }
+
+        fetchCategories();
     }, [jwt, navigate]);
 
-    async function getCategories() {
+    async function fetchCategories() {
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/categories`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': jwt
-                }
-            });
-            const data = await response.json();
+            const data = await getCategories(jwt);
             setCategories(data);
         } catch (error) {
             console.error('Erreur lors du chargement des catégories :', error);
@@ -54,22 +49,7 @@ function NewProjectForm({ jwt, userData }) {
         }
 
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/create`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': jwt
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.status === 400) {
-                setErrorMsg('Ce projet existe déjà');
-            } else if (response.status === 201) {
-                window.location.href = "/mes-projets"; // Correction de la redirection
-            } else {
-                setErrorMsg('Erreur lors de la création du projet');
-            }
+            const response = await createNewProject(jwt, data);
         } catch (error) {
             console.error('Erreur lors de la création du projet', error);
             setErrorMsg('Erreur lors de la création du projet'); // Gestion de l'erreur par défaut

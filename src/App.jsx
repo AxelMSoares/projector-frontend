@@ -44,15 +44,15 @@ function App() {
         },
         {
           path: '/nouveau-projet',
-          element: <NewProjectForm jwt = { jwt } userData = { userData } />
+          element: <NewProjectForm jwt={jwt} userData={userData} />
         },
         {
           path: '/mes-projets',
-          element: <ProjectList jwt = { jwt } />
+          element: <ProjectList jwt={jwt} />
         },
         {
           path: '/detail-projet/',
-          element: <ProjectDetails jwt = { jwt } userData = { userData } />
+          element: <ProjectDetails jwt={jwt} userData={userData} />
         },
         {
           path: '/politique-de-confidentialite',
@@ -60,7 +60,7 @@ function App() {
         },
         {
           path: '/projet/tchat/',
-          element: <Tchat jwt={jwt} userData={userData}/>
+          element: <Tchat jwt={jwt} userData={userData} />
         }
       ]
     }
@@ -78,8 +78,6 @@ function App() {
   }
 
   function Root() {
-
-
     return (
       <>
         {connected ? <UsersHeader onConnect={onConnectChangeHandler} /> : <PublicHeader />}
@@ -88,8 +86,6 @@ function App() {
       </>
     )
   }
-
-
 
   return (
     <>

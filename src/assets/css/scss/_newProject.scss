@@ -96,6 +96,25 @@
 
 }
 
+.project-list .filters {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.project-list .filters p{
+    margin-right: 20px;
+
+}
+
+.project-list .filters button{
+    margin-right: 10px;
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+}
+
 .project-list h2 {
     margin-bottom: 30px;
 }
@@ -137,6 +156,11 @@
     padding: 20px;
     border-radius: 5px;
     margin-top: 10px;
+    position: relative;
+}
+
+.project-detail span{
+    margin-left: 5px;
 }
 
 .project-detail h2 {
@@ -196,14 +220,16 @@
 
 .project-detail .project-date-field,
 .project-detail .project-status-field,
-.project-detail .project-categorie-field{
+.project-detail .project-categorie-field,
+.project-detail .project-description-field{
     display: flex;
     flex-wrap: wrap;
 }
 
 .project-detail .project-date-field button,
 .project-detail .project-status-field button,
-.project-detail .project-categorie-field button{
+.project-detail .project-categorie-field button,
+.project-detail .project-description-field button{
     background-color: var(--ongoing-color);
     color: var(--light-color);
     border: 0;
@@ -219,8 +245,4 @@
     font-size: 0.8rem;
     text-align: end;
     margin-bottom: 10px;
-}
-
-.project-detail span{
-    margin-left: 5px;
 }

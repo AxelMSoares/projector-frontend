@@ -1,10 +1,10 @@
 import Cookies from 'js-cookie';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { login } from '../../../api/login';
 
 function LoginForm({ onConnect }) {
 
-  const navigate = useNavigate();
   const location = useLocation();
   const [newUserMsg, setNewUserMsg] = useState('');
   
@@ -29,32 +29,19 @@ function LoginForm({ onConnect }) {
       pwd: document.getElementById('pwd').value
     };
 
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(loginData)
-    });
-
-    if (response.status !== 200) {
-      window.alert('Utilisateur ou mot de passe incorrects');
-      return;
-    }
-
     // Get the respose data and the token
-    const responseData = await response.json();
-    const responseJwt = responseData.token;
+    const response = await login(loginData);
+    const responseJwt = response.token;
 
     // Save the token in a cookie and the data in the client cookie
     Cookies.set('jwt', responseJwt);
-    Cookies.set('userData', JSON.stringify(responseData));
+    Cookies.set('userData', JSON.stringify(response));
 
     // Update the state of the parent component
     onConnect(true);
 
     // Redirect to projects page  
-    if (responseData) {
+    if (response) {
       window.location.href = '/';
     }
   }

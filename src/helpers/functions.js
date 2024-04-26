@@ -35,7 +35,8 @@ export function cleanString(string) {
 
     const regex = /<[^>]*>/g;
     const cleanedString = string.replace(regex, '').trim();
-    return escape(cleanedString); // Return the cleaned string
+    return cleanedString;
+   
 }
 
 // Transform a date format to DD/MM/YYYY

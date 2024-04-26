@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { formatDateToYYYYMMDD } from '../../../helpers/functions';
 
-export default function CategoryField({ project, jwt, onUpdate }) {
+export default function CategoryField({ project, jwt, onUpdate, userData }) {
 
     const [editingCategorie, setEditingCategorie] = useState(false);
     const [categoriesList, setCategoriesList] = useState('');
@@ -76,7 +76,7 @@ export default function CategoryField({ project, jwt, onUpdate }) {
         ) : (
         <div className='project-categorie-field'>
             <p className="detail">Categorie: <span>{categorieName}</span></p>
-            <button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Editer</button>
+            { (userData.username === project.username) ? <button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Editer</button> : null}
         </div>
     )
     )

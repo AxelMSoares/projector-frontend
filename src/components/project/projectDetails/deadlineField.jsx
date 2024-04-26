@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { formatDate, checkDateIsPassed } from '../../../helpers/functions';
+import { formatDate, checkDateIsPassed, formatDateToYYYYMMDD } from '../../../helpers/functions';
 
 export default function Deadline ( { project, userData , onUpdate }) {
 
@@ -15,7 +15,7 @@ export default function Deadline ( { project, userData , onUpdate }) {
 
     useEffect(() => {
         setDeadline(project.project_deadline);
-    }, [project]);
+    }, [project.project_deadline]);
     
     function deadlineUpdate() {
         onUpdate(data);
@@ -42,21 +42,21 @@ export default function Deadline ( { project, userData , onUpdate }) {
                                 )}
                             </p>
                         )}
-                        {userData.username === project.username && (
+                        {userData.username === project.username ? (
                             <div>
                                 {editingDeadline ? (
                                     <>
                                         <button onClick={deadlineUpdate}>Confirmer</button>
                                         <button onClick={() => {
-                                            setEditingDeadline(false);
                                             setNewDeadline(deadline); // Reset the input value if cancel
+                                            setEditingDeadline(false);
                                         }}>Annuler</button>
                                     </>
                                 ) : (
                                     <button onClick={() => setEditingDeadline(true)}>Éditer la deadline</button>
                                 )}
                             </div>
-                        )}
+                        ) : null}
                     </div>
     )
 }

@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { deleteProjectMember } from '../../../api/deleteProjectMember';
+import { updateProjectDetails } from '../../../api/updateProject';
+import { UpdateProjectMember } from '../../../api/updateProjectMember';
 
 export default function ProjectMembers({ projectUuid, jwt, userData, project, membersList }) {
 
@@ -11,8 +14,6 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         return null;
     }
 
-    console.log(members);
-
     useEffect(() => {
         setMembers(membersList);
     }, [membersList]);
@@ -21,51 +22,32 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce membre ?");
         if (confirmation) {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/delete/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": jwt
-                    }
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    console.log("Une erreur est survenue lors de la suppression du membre", data.error);
-                }
-
+                await deleteProjectMember(id, jwt);
+                setMembers(members.filter(member => member.id !== id));
             } catch (error) {
-                console.log("Une erreur est survenue lors de la suppression du membre", error);
+                console.log("Une erreur est survenue lors de la suppression du membre");
             }
         }
     }
 
-    async function updateRole(memberId, newRole) {
-        console.log(memberId, newRole);
+    async function updateRole(id) {
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/update/${memberId}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": jwt
-                },
-                body: JSON.stringify({ role: newRole })
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                console.log("Une erreur est survenue lors de la mise à jour du rôle du membre", data.error);
-            } else {
-                setMembers(members.map(member => member.id === memberId ? {...member, role: newRole} : member));
-                setEditingMemberId(null);
-                setNewRole('');
-            }
-
+            await UpdateProjectMember(jwt, id, newRole);
+            setEditingMemberId(false);
         } catch (error) {
             console.log("Une erreur est survenue lors de la mise à jour du rôle du membre", error);
         }
+
+        // Update the members list after the role has been updated
+        const newMembersList = members.map(member => {
+            if (member.id === id) {
+                return { ...member, role: newRole };
+            }
+            return member;
+        });
+
+        setMembers(newMembersList);
+        
     }
 
     return (

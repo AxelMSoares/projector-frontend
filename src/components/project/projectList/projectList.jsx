@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
+import { getUserProjects } from '../../../api/getUserProjects';
 
 export default function ProjectList({ jwt }) {
 
@@ -9,6 +10,7 @@ export default function ProjectList({ jwt }) {
     const userData = Cookies.get('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const [projects, setProjects] = useState([]);
+    const [asc, setAsc] = useState(true);
 
     useEffect(() => {
         if (!jwt) {
@@ -18,20 +20,8 @@ export default function ProjectList({ jwt }) {
 
         async function fetchData() {
             try {
-                const response = await fetch(`http://localhost:3000/projects/${userUUID}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': jwt
-                    }
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    setProjects(data); // Update the state with the projects
-                } else {
-                    console.error('Erreur lors de la récupération des projets:', response.statusText);
-                }
+                const response = await getUserProjects(userUUID, jwt);
+                setProjects(response); // Update the state with the projects
             } catch (error) {
                 console.error('Erreur lors de la récupération des projets:', error.message);
             }
@@ -39,6 +29,58 @@ export default function ProjectList({ jwt }) {
 
         fetchData(); // Call the function to get the projects
     }, [jwt, navigate, userUUID]); // Dependency array
+
+    // Function to filter the projects by name
+    const filterByName = () => {
+        if (asc) {
+            const sortedProjects = projects.sort((a, b) => a.project_name.localeCompare(b.project_name));
+            setProjects([...sortedProjects]);
+            setAsc(false);
+        } else {
+            const sortedProjects = projects.sort((a, b) => b.project_name.localeCompare(a.project_name));
+            setProjects([...sortedProjects]);
+            setAsc(true);
+        }
+    }
+
+    // Function to filter the projects by creation date
+    const filterByCreationDate = () => {
+        if (asc) {
+            const sortedProjects = projects.sort((a, b) => a.project_created.localeCompare(b.project_created));
+            setProjects([...sortedProjects]);
+            setAsc(false);
+        } else {
+            const sortedProjects = projects.sort((a, b) => b.project_created.localeCompare(a.project_created));
+            setProjects([...sortedProjects]);
+            setAsc(true);
+        }
+    }
+
+    // Function to filter the projects by category
+    const filterByCategory = () => {
+        if (asc) {
+            const sortedProjects = projects.sort((a, b) => a.category_name.localeCompare(b.category_name));
+            setProjects([...sortedProjects]);
+            setAsc(false);
+        } else {
+            const sortedProjects = projects.sort((a, b) => b.category_name.localeCompare(a.category_name));
+            setProjects([...sortedProjects]);
+            setAsc(true);
+        }
+    }
+
+    // Function to filter the projects by deadline
+    const filterByDeadline = () => {
+        if (asc) {
+            const sortedProjects = projects.sort((a, b) => a.project_deadline.localeCompare(b.project_deadline));
+            setProjects([...sortedProjects]);
+            setAsc(false);
+        } else {
+            const sortedProjects = projects.sort((a, b) => b.project_deadline.localeCompare(a.project_deadline));
+            setProjects([...sortedProjects]);
+            setAsc(true);
+        }
+    }
 
     const handleProjectClick = (uuid) => {
         window.location.href = `/detail-projet/?uuid=${uuid}`;
@@ -49,16 +91,23 @@ export default function ProjectList({ jwt }) {
             {projects.length > 0 ? (
                 <div className="project-list">
                     <h2>Mes Projets:</h2>
+                    <div className="filters">
+                        <p>Trier par:</p>
+                        <button onClick={filterByName}>Nom</button>
+                        <button onClick={filterByCreationDate}>Date de création</button>
+                        <button onClick={filterByCategory}>Catégorie</button>
+                        {/* <button onClick={filterByDeadline}>Deadline</button> */}
+                    </div>
                     {projects.map(project => (
                         <div key={project.uuid} className="project">
-                                <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
-                                    <p className='project-title'>{project.project_name}</p>
-                                    <p>{project.project_description}</p>
-                                    <p>Créé le: {formatDate(project.project_created)}</p>
-                                    <p>Catégorie: {project.category_name}</p>
-                                    { project.project_deadline ? <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p> : <p> Deadline: <span className="success-text">Pas de data limite</span></p>}
-                                    <p>Statut: <span className={ checkStatus(project.status_name) }>{project.status_name}</span></p>
-                                </div>
+                            <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
+                                <p className='project-title'>{project.project_name}</p>
+                                <p>{project.project_description}</p>
+                                <p>Créé le: {formatDate(project.project_created)}</p>
+                                <p>Catégorie: {project.category_name}</p>
+                                {project.project_deadline ? <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p> : <p> Deadline: <span className="success-text">Pas de data limite</span></p>}
+                                <p>Statut: <span className={checkStatus(project.status_name)}>{project.status_name}</span></p>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -10,10 +10,11 @@ function UsersHeader({onConnect}) {
 
 	const onLogoutHandler = (e) => {
 		e.preventDefault();
-		// Destroy the cookies
 		onConnect(false);
+		// Destroy the cookies
 		Cookies.remove('jwt', { path: '/' });
 		Cookies.remove('userData', { path: '/' });
+		// Redirect to the home page
 		window.location.href = '/';
 	}
 
