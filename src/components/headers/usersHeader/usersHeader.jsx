@@ -31,6 +31,7 @@ function UsersHeader({onConnect}) {
 						</li>
 						<li><Link className="page-link" to="/nouveau-projet">Nouveau Projet</Link></li>
 						<li><Link className="page-link" to="/mes-projets">Mes Projets</Link></li>
+						<li><Link className="page-link" to="/projets/participations">Mes participations</Link> </li>
 					</ul>
 				</div>
 				<div className="nav-bar-right">

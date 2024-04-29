@@ -69,7 +69,8 @@
 .header-container ul li a {
     text-decoration: none;
     color: var(--default-color);
-    padding: 10px 20px;
+    padding: 10px 10px;
+    margin-right: 5px;
     transition: all .3s ease;
     border-radius: 5px;
 }

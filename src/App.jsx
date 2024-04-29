@@ -13,6 +13,7 @@ import PrivacyPolicy from '../src//components/privacyPolicy/privacyPolicy.jsx'
 import ProjectDetails from './components/project/projectDetails/projectDetails.jsx';
 import Tchat from './components/project/projectTchat/tchat.jsx';
 import NewProjectMember from './components/project/newProjectMember/newProjectMember.jsx';
+import UserIsProjectMember from './components/userIsProjectMember/userIsProjectMember.jsx';
 import './assets/css/main.css'
 
 function App() {
@@ -66,6 +67,10 @@ function App() {
         {
           path: '/projet/nouveau-membre',
           element: <NewProjectMember />
+        },
+        {
+          path: '/projets/participations',
+          element: <UserIsProjectMember jwt={jwt} userData={userData}/>
         }
       ]
     }

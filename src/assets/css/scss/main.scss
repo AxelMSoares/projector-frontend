@@ -26,7 +26,7 @@ $text-font: "Inter", sans-serif;
 @import '_footer';
 @import '_login';
 @import '_register';
-@import '_newProject';
+@import '_project';
 @import '_tchat';
 @import '_newMembers';
 
@@ -53,6 +53,10 @@ input {
     border-radius: 5px;
     border: 0;
     height: 30px;
+}
+
+button {
+    cursor: pointer;
 }
 
 .error {
