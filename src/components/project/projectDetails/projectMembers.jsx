@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { deleteProjectMember } from '../../../api/deleteProjectMember';
 import { updateProjectDetails } from '../../../api/updateProject';
 import { UpdateProjectMember } from '../../../api/updateProjectMember';
+import Cookies from 'js-cookie';
 
 export default function ProjectMembers({ projectUuid, jwt, userData, project, membersList }) {
 
     const [members, setMembers] = useState([]);
     const [editingMemberId, setEditingMemberId] = useState(null);
     const [newRole, setNewRole] = useState('');
+    const [message, setMessage] = useState('');
 
     if (!jwt) {
         window.location.href = '/connexion';
@@ -16,7 +18,20 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
     useEffect(() => {
         setMembers(membersList);
+        setMessage(Cookies.get('message'));
     }, [membersList]);
+
+    useEffect(() => {
+
+        // Set the message to null after 5 seconds
+        if (message) {
+            setTimeout(() => {
+                setMessage('');
+                Cookies.remove('message');
+            }, 5000);
+        }
+    }, [message]);
+
 
     async function deleteMember(id) {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce membre ?");
@@ -24,6 +39,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             try {
                 await deleteProjectMember(id, jwt);
                 setMembers(members.filter(member => member.id !== id));
+                setMessage('Le membre a bien été supprimé');
             } catch (error) {
                 console.log("Une erreur est survenue lors de la suppression du membre");
             }
@@ -47,13 +63,20 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         });
 
         setMembers(newMembersList);
-        
+
+    }
+
+    function addMember() {
+        // Add a member to the project
+        window.location.href = `/projet/nouveau-membre/?uuid=${projectUuid}`;
+        return;
     }
 
     return (
         <div className="members" >
+            {message ? <p className="success">{message}</p> : null}
             <p>Membres:</p>
-            { (project.username === userData.username) ? (<button className="members-add-btn" > Ajouter un membre </button>) : null}
+            {(project.username === userData.username) ? (<button className="members-add-btn" onClick={addMember}> Ajouter un membre </button>) : null}
             <ul>
                 {(project.username === userData.username) && (
                     <li><p>Pseudo:</p><p>Role:</p><p>Gestion:</p></li>

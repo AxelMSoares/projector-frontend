@@ -1,0 +1,54 @@
+.newProjectMember{
+    background-color: var(--secondary-background-color);
+    color: var(--light-color);
+    text-align: center;
+    padding: 20px 0;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+}
+
+.newProjectMember h3{
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.newProjectMember input{
+    margin-bottom: 20px;
+}
+
+.newProjectMember .membersList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    background-color: var(--light-color);
+    color: var(--dark-color);
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.newProjectMember .membersList div{
+    border: 1px solid var(--dark-color);
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    align-items: center;
+}
+
+.newProjectMember .membersList div input{
+    margin: 10px 20px 10px 10px;
+}
+
+.newProjectMember button{
+    background-color: var(--primary-color);
+    color: var(--light-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
