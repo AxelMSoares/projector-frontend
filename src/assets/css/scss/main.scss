@@ -188,3 +188,16 @@ button {
     position: absolute;
     right: 20px;
 }
+
+.clicked{
+    background-color: var(--fourth-color)!important;
+    border: 1px solid var(--light-color)!important;
+}
+
+#delete-filters{
+    background: transparent;
+    color: var(--light-color);
+    font-size: 0.6rem;
+    margin-left: -5px;
+    padding: 0;
+}

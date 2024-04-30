@@ -10,7 +10,10 @@ export default function ProjectList({ jwt }) {
     const userData = Cookies.get('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const [projects, setProjects] = useState([]);
-    const [asc, setAsc] = useState(true);
+    const [asc, setAsc] = useState('');
+    const [nameFilterclicked, setNameFilterClicked] = useState('');
+    const [creationDateFilterClicked, setCreationDateFilterClicked] = useState('');
+    const [categoryFilterClicked, setCategoryFilterClicked] = useState('');
 
     useEffect(() => {
         if (!jwt) {
@@ -18,17 +21,18 @@ export default function ProjectList({ jwt }) {
             return; // Return to prevent the rest of the function from executing
         }
 
-        async function fetchData() {
-            try {
-                const response = await getUserProjects(userUUID, jwt);
-                setProjects(response); // Update the state with the projects
-            } catch (error) {
-                console.error('Erreur lors de la récupération des projets:', error.message);
-            }
-        }
 
         fetchData(); // Call the function to get the projects
     }, [jwt, navigate, userUUID]); // Dependency array
+
+    async function fetchData() {
+        try {
+            const response = await getUserProjects(userUUID, jwt);
+            setProjects(response); // Update the state with the projects
+        } catch (error) {
+            console.error('Erreur lors de la récupération des projets:', error.message);
+        }
+    }
 
     // Function to filter the projects by name
     const filterByName = () => {
@@ -36,10 +40,14 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.project_name.localeCompare(b.project_name));
             setProjects([...sortedProjects]);
             setAsc(false);
+            setAllBtnsToDefault();
+            setNameFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_name.localeCompare(a.project_name));
             setProjects([...sortedProjects]);
             setAsc(true);
+            setAllBtnsToDefault();
+            setNameFilterClicked('clicked');
         }
     }
 
@@ -49,10 +57,14 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.project_created.localeCompare(b.project_created));
             setProjects([...sortedProjects]);
             setAsc(false);
+            setAllBtnsToDefault();
+            setCreationDateFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_created.localeCompare(a.project_created));
             setProjects([...sortedProjects]);
             setAsc(true);
+            setAllBtnsToDefault();
+            setCreationDateFilterClicked('clicked');
         }
     }
 
@@ -62,10 +74,14 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.category_name.localeCompare(b.category_name));
             setProjects([...sortedProjects]);
             setAsc(false);
+            setAllBtnsToDefault();
+            setCategoryFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.category_name.localeCompare(a.category_name));
             setProjects([...sortedProjects]);
             setAsc(true);
+            setAllBtnsToDefault();
+            setCategoryFilterClicked('clicked');
         }
     }
 
@@ -82,6 +98,21 @@ export default function ProjectList({ jwt }) {
         }
     }
 
+    function handleDeleteFilters() {
+        setAllBtnsToDefault();
+        setAsc('');
+        fetchData();
+    }
+
+    // Reset the buttons to the default
+    function setAllBtnsToDefault() {
+        setNameFilterClicked('');
+        setCreationDateFilterClicked('');
+        setCategoryFilterClicked('');
+    }
+
+
+    // Redirect to the project details on click
     const handleProjectClick = (uuid) => {
         window.location.href = `/detail-projet/?uuid=${uuid}`;
     }
@@ -93,10 +124,13 @@ export default function ProjectList({ jwt }) {
                     <h2>Mes Projets:</h2>
                     <div className="filters">
                         <p>Trier par:</p>
-                        <button onClick={filterByName}>Nom</button>
-                        <button onClick={filterByCreationDate}>Date de création</button>
-                        <button onClick={filterByCategory}>Catégorie</button>
-                        {/* <button onClick={filterByDeadline}>Deadline</button> */}
+                        <button className={nameFilterclicked} onClick={filterByName}>Nom</button>
+                        {nameFilterclicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
+                        <button className={creationDateFilterClicked} onClick={filterByCreationDate}>Date de création</button>
+                        {creationDateFilterClicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
+                        <button className={categoryFilterClicked} onClick={filterByCategory}>Catégorie</button>
+                        {categoryFilterClicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
+                        {asc === '' ? asc : asc ? <p>Décroissant</p> : <p>Croissant</p>}
                     </div>
                     {projects.map(project => (
                         <div key={project.uuid} className="project">
