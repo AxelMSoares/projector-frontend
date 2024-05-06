@@ -11,7 +11,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
 
     const data = {
         project_status_id: project.project_status_id,
-        project_deadline: formatDateToYYYYMMDD(project.project_deadline),
+        project_deadline: project.project_deadline ? formatDateToYYYYMMDD(project.project_deadline) : null,
         project_description: project.project_description
     }
 

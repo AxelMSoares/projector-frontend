@@ -7,7 +7,7 @@ export default function DescriptionField({project, userData, onUpdate}) {
     const [newDescription, setNewDescription] = useState(project.project_description || '');
     const data = {
         project_description: cleanString(newDescription),
-        project_deadline: formatDateToYYYYMMDD(project.project_deadline),
+        project_deadline: project.project_deadline ? formatDateToYYYYMMDD(project.project_deadline) : null,
         project_status_id: project.project_status_id,
         project_category_id: project.project_category_id,
     }
