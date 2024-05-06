@@ -10,6 +10,7 @@ import Deadline from "./deadlineField";
 import CategoryField from "./categoryField";
 import StatusField from "./statusField";
 import DescriptionField from "./descriptionField";
+import TasksField from "./tasksField";
 
 
 export default function ProjectDetails({ jwt, userData }) {
@@ -124,6 +125,7 @@ export default function ProjectDetails({ jwt, userData }) {
                             < Deadline project={project} userData={userData} onUpdate={updateProject} />
                             < StatusField project={project} userData={userData} onUpdate={updateProject} jwt={jwt} />
                             < ProjectMembers projectUuid={projectUuid} jwt={jwt} userData={userData} project={project} membersList={membersList} />
+                            <TasksField project={project} userData={userData}/>
                             <button className="tchat-access-btn" onClick={redirectToTchat}>Acceder au tchat du projet</button>
                         </div>
                     </>)

@@ -266,6 +266,45 @@
     margin-bottom: 10px;
 }
 
+.project-detail .tasks-field{
+    border-radius: 5px;
+    border: 2px solid var(--light-color);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.project-detail .tasks-field h3{
+    margin-bottom: 10px;
+}
+
+.project-detail .tasks-field .task-add-btn{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    text-align: end;
+    margin-bottom: 10px;
+}
+
+.project-detail .tasks-field li{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    border: 1px solid var(--light-color);
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+.project-detail .tasks-field li:first-child{
+    border-radius: 5px 5px 0 0;
+}
+
+.project-detail .tasks-field li:last-child{
+    border-radius: 0 0 5px 5px;
+}
+
 .projects-participate{
     background-color: var(--secondary-background-color);
     color: var(--light-color);
