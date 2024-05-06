@@ -76,7 +76,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
         ) : (
         <div className='project-categorie-field'>
             <p className="detail">Categorie: <span>{categorieName}</span></p>
-            { (userData.username === project.username) ? <button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Editer</button> : null}
+            { (userData.username === project.username) ? <div><button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Éditer</button></div> : null}
         </div>
     )
     )

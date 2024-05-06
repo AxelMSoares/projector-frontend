@@ -210,13 +210,25 @@
 
 .project-detail .members .members-delete-btn,
 .project-detail .members .members-edit-btn,
-.project-detail .members .members-add-btn{
+.project-detail .members .members-add-btn,
+.project-detail .members .members-leave-btn{
     background-color: var(--error-color);
     padding: 5px 10px;
     color: var(--light-color);
     border: 0;
     border-radius: 5px;
     font-size: 0.6rem;
+}
+
+.project-detail .members .member{
+   position: relative;
+}
+
+.project-detail .members .members-leave-btn {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .project-detail .members .members-edit-btn{
@@ -230,6 +242,7 @@
 .project-detail .project-description-field{
     display: flex;
     flex-wrap: wrap;
+    margin-bottom: 5px;
 }
 
 .project-detail .project-date-field button,

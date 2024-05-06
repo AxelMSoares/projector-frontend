@@ -66,6 +66,21 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
     }
 
+    async function leaveProject(id, jwt) {
+        const confirmation = confirm("Êtes-vous sûr de vouloir quitter le projet ?");
+
+        if (confirmation) {
+            try {
+                console.log(id, jwt);
+                await deleteProjectMember(id, jwt);
+            } catch (error) {
+                console.log("Une erreur est survenue lors de la suppression du membre");
+            }
+
+            window.location.href = `/mes-projets/`;
+        }
+    }
+
     function addMember() {
         // Add a member to the project
         window.location.href = `/projet/nouveau-membre/?uuid=${projectUuid}`;
@@ -76,11 +91,14 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         <div className="members" >
             {message ? <p className="success">{message}</p> : null}
             <p>Membres:</p>
-            {(project.username === userData.username) ? (<button className="members-add-btn" onClick={addMember}> Ajouter un membre </button>) : null}
+            {(project.username === userData.username) ?
+                (<button className="members-add-btn"
+                    onClick={addMember}> Ajouter un membre </button>)
+                : null}
             <ul>
-                {(project.username === userData.username) && (
+                {(project.username === userData.username) ? (
                     <li><p>Pseudo:</p><p>Role:</p><p>Gestion:</p></li>
-                )}
+                ) : <li><p>Pseudo:</p><p>Role:</p></li>}
                 {members.map((member) => (
                     <li key={member.id} className="member">
                         <p>{member.username}</p>
@@ -91,7 +109,13 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                                 onChange={(e) => setNewRole(e.target.value)}
                             />
                         ) : (
-                            <p>{member.role}</p>
+                            <>
+                                <p>{member.role}</p>
+                                {userData.username === member.username ?
+                                    (<button className="members-leave-btn"
+                                        onClick={() => leaveProject(member.id, jwt)}>Se retirer du projet</button>)
+                                    : null}
+                            </>
                         )}
                         {(project.username === userData.username) && (
                             <div>

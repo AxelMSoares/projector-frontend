@@ -53,7 +53,7 @@ export default function Deadline ( { project, userData , onUpdate }) {
                                         }}>Annuler</button>
                                     </>
                                 ) : (
-                                    <button onClick={() => setEditingDeadline(true)}>Éditer la deadline</button>
+                                    <button onClick={() => setEditingDeadline(true)}>Éditer</button>
                                 )}
                             </div>
                         ) : null}

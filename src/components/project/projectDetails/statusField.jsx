@@ -74,7 +74,7 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
         ) : (
             <div className="project-status-field">
                 <p className="detail">Statut: <span className={checkStatus(statusName)}>{statusName}</span></p>
-                {(userData.username === project.username) ? <button onClick={() => setEditingStatus(true)}>Editer</button> : null}
+                {(userData.username === project.username) ? <div><button onClick={() => setEditingStatus(true)}>Éditer</button></div> : null}
             </div>
         )
     )
