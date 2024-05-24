@@ -1,0 +1,53 @@
+.new-project-task-field{
+    color: var(--light-color);
+    background: var(--secondary-background-color);
+    border-radius: 5px;
+    padding: 50px;
+    max-width: 1400px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.new-project-task-field h2{
+    font-size: 1.4em;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.new-project-task-field div{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.new-project-task-field div label{
+    margin-bottom: 0.5em;
+}
+
+.new-project-task-field div input{
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--light-color);
+    margin-bottom: 1em;
+}
+
+.new-project-task-field div textarea{
+    margin-bottom: 2em;
+    border-radius: 5px;
+    border: 0;
+    height: 100px;
+    resize: none;
+    padding: 10px;
+}
+
+.new-project-task-field div button{
+    color: var(--light-color);
+    background: var(--ongoing-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 1em;
+    text-transform: uppercase;
+}

@@ -14,6 +14,7 @@ import ProjectDetails from './components/project/projectDetails/projectDetails.j
 import Tchat from './components/project/projectTchat/tchat.jsx';
 import NewProjectMember from './components/project/newProjectMember/newProjectMember.jsx';
 import UserIsProjectMember from './components/userIsProjectMember/userIsProjectMember.jsx';
+import NewProjectTask from './components/project/newProjectTask/newProjectTask.jsx';
 import './assets/css/main.css'
 
 function App() {
@@ -71,6 +72,10 @@ function App() {
         {
           path: '/projets/participations',
           element: <UserIsProjectMember jwt={jwt} userData={userData}/>
+        },
+        {
+          path: '/projet/nouvelle-tache',
+          element: <NewProjectTask jwt={jwt} userData={userData}/>
         }
       ]
     }
