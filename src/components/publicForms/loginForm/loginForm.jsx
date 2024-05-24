@@ -7,8 +7,12 @@ function LoginForm({ onConnect }) {
 
   const location = useLocation();
   const [newUserMsg, setNewUserMsg] = useState('');
-  
 
+  if (Cookies.get('jwt') && Cookies.get('userData')) {
+    window.location.href = '/';
+    return null;
+  }
+  
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const registerSuccess = searchParams.get('success');

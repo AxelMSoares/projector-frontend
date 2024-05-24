@@ -8,6 +8,11 @@ function RegisterForm() {
     const [errorMsg, setErrorMsg] = useState([]);
     const [formValidated, setFormValidated] = useState(false);
 
+    if (Cookies.get('jwt') && Cookies.get('userData')) {
+        window.location.href = '/';
+        return null;
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -76,7 +81,7 @@ function RegisterForm() {
 
                 // Get the respose
                 const responseData = await response.json();
-                
+
                 if (response.ok) {
                     Cookies.set('newUserMsg', "Compte créé avec succès! Vous pouvez dès à present vous connecter.");
                     window.location.href = '/connexion?success=true';
