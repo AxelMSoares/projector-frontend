@@ -137,8 +137,8 @@ export default function ProjectList({ jwt }) {
                             <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
                                 <p className='project-title'>{project.project_name}</p>
                                 <p>{project.project_description}</p>
-                                <p>Créé le: {formatDate(project.project_created)}</p>
-                                <p>Catégorie: {project.category_name}</p>
+                                <p>Créé le: <span>{formatDate(project.project_created)}</span></p>
+                                <p>Catégorie: <span>{project.category_name}</span></p>
                                 {project.project_deadline ? <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p> : <p> Deadline: <span className="success-text">Pas de data limite</span></p>}
                                 <p>Statut: <span className={checkStatus(project.status_name)}>{project.status_name}</span></p>
                             </div>

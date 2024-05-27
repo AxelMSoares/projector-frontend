@@ -30,9 +30,9 @@ export default function UserIsProjectMember({ jwt, userData }) {
             <ul>
                 {projects.length > 0 ? projects.map((project) => (
                     <li key={project.uuid} onClick={(e) => redirectToProjectDetails(project.uuid)}>
-                        <p>Nom: {project.project_name}</p>
-                        <p>Description: {project.project_description}</p>
-                        <p>Mon role: {project.role}</p>
+                        <p>Nom: <span>{project.project_name}</span></p>
+                        <p>Description: <span>{project.project_description}</span></p>
+                        <p>Mon role: <span>{project.role}</span></p>
                     </li>
                 )) : <p>Vous ne participez à aucun projet pour le moment.</p>}
             </ul>

@@ -104,7 +104,6 @@
 
 .project-list .filters p{
     margin-right: 20px;
-
 }
 
 .project-list .filters button{
@@ -138,6 +137,10 @@
 .project-list .project a {
     color:var(--light-color);
     text-decoration: none;
+}
+
+.project-list .project p span{
+    margin-left: 5px;
 }
 
 .project-list .same-line{
@@ -297,6 +300,11 @@
     padding: 10px;
 }
 
+.project-detail .tasks-field li p{
+    width: 30%;
+    text-align: center;
+}
+
 .project-detail .tasks-field li:first-child{
     border-radius: 5px 5px 0 0;
 }
@@ -321,6 +329,10 @@
 .projects-participate h2 {
     margin-bottom: 20px;
     margin-left: 20px;
+}
+
+.projects-participate p span{
+    margin-left: 5px;
 }
 
 .projects-participate li{
