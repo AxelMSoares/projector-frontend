@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { checkStatus } from "../../../helpers/functions";
 import { formatDateToYYYYMMDD } from "../../../helpers/functions";
+import { getProjectStatus } from "../../../api/getProjectStatus";
 
 export default function StatusField({ project, userData, jwt, onUpdate }) {
     const [statusName, setStatusName] = useState('');
@@ -13,11 +14,11 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
         project_category_id: project.project_category_id,
     }
 
-    if (project.project_deadline){
+    if (project.project_deadline) {
         data.project_deadline = formatDateToYYYYMMDD(project.project_deadline);
     } else {
         data.project_deadline = null;
-    
+
     }
 
     useEffect(() => {
@@ -27,26 +28,11 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     }, [project]);
 
     async function getStatus() {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_status`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": jwt
-                }
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                console.log("Une erreur est survenue lors de la récupération des statuts", data.error);
-            } else {
-                setStatusList(data);
-            }
-
-        } catch (error) {
-            console.log("Une erreur est survenue lors de la récupération des statuts", error);
+        const data = await getProjectStatus(jwt);
+        if (data) {
+            setStatusList(data);
         }
+
     }
 
     function updateStatus() {
@@ -57,18 +43,19 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     return (
         editingStatus ? (
             <div className="project-status-field">
-                    <select onChange={(e) => setNewStatus(e.target.value)}>
-                        {statusList.map((status) => (
-                            <option key={status.id} value={status.id}>{status.status_name}</option>
-                        ))}
-                    </select>
-                    <div>
-                        <button onClick={() => updateStatus()}>Confirmer</button>
-                        <button onClick={() => {
-                            setEditingStatus(false);
-                            setNewStatus(project.project_status_id)
-                        }}> Annuler </button>
-                    </div>
+                <p className="detail">Statut:</p>
+                <select onChange={(e) => setNewStatus(e.target.value)}>
+                    {statusList.map((status) => (
+                        <option key={status.id} value={status.id}>{status.status_name}</option>
+                    ))}
+                </select>
+                <div>
+                    <button onClick={() => updateStatus()}>Confirmer</button>
+                    <button onClick={() => {
+                        setEditingStatus(false);
+                        setNewStatus(project.project_status_id)
+                    }}> Annuler </button>
+                </div>
             </div>
 
         ) : (

@@ -51,8 +51,6 @@ export default function ProjectDetails({ jwt, userData }) {
 
     }
 
-
-
     if (!projectUuid) {
         window.location.href = '/mes-projets';
         return null;

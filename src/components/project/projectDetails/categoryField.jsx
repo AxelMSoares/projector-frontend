@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { formatDateToYYYYMMDD } from '../../../helpers/functions';
+import { getCategories } from '../../../api/getCategories';
 
 export default function CategoryField({ project, jwt, onUpdate, userData }) {
 
@@ -15,7 +16,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
         project_description: project.project_description
     }
 
-    if (newCategorie){
+    if (newCategorie) {
         data.project_category_id = newCategorie;
     } else {
         data.project_category_id = 1;
@@ -29,24 +30,11 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     }, [project]);
 
     async function getCategoriesList() {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/categories`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': jwt
-                }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                setCategoriesList(data);
-            } else {
-                console.error('Erreur lors de la récupération des catégories:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Erreur lors de la récupération des catégories:', error.message);
+        const response = await getCategories(jwt);
+        if (response) {
+            setCategoriesList(response);
         }
+
     }
 
     async function updateProjectCategorie(data) {
@@ -62,8 +50,9 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     return (
         editingCategorie ? (
             <div className='project-categorie-field'>
+                <p className="detail">Categorie:</p>
                 <select onChange={(e) => setNewCategorie(e.target.value)}>
-                    {categoriesList.map((category => (
+                    {categoriesList.length > 0 && categoriesList.map((category => (
                         <option key={category.id} value={category.id}>{category.category_name}</option>
                     )))}
                 </select>
@@ -74,10 +63,10 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
                 }} >Annuler</button>
             </div >
         ) : (
-        <div className='project-categorie-field'>
-            <p className="detail">Categorie: <span>{categorieName}</span></p>
-            { (userData.username === project.username) ? <div><button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Éditer</button></div> : null}
-        </div>
-    )
+            <div className='project-categorie-field'>
+                <p className="detail">Categorie: <span>{categorieName}</span></p>
+                {(userData.username === project.username) ? <div><button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Éditer</button></div> : null}
+            </div>
+        )
     )
 }
