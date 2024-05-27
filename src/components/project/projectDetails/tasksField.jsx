@@ -15,7 +15,7 @@ export default function TasksField({ project, jwt, userData }) {
     const [newTaskDescription, setNewTaskDescription] = useState('');
     const [newTaskName, setNewTaskName] = useState('');
     const [newTaskStatus, setNewTaskStatus] = useState(1);
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState({message: '', className: ''});
     const [editingTaskId, setEditingTaskId] = useState(null);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ export default function TasksField({ project, jwt, userData }) {
     useEffect(() => {
         if (message) {
             setTimeout(() => {
-                setMessage('');
+                setMessage({message: '', className: ''});
             }, 5000);
         }
     }
@@ -63,7 +63,7 @@ export default function TasksField({ project, jwt, userData }) {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?");
         if (confirmation) {
             await deleteProjectTask(jwt, taskId);
-            setMessage('La tâche a bien été supprimée');
+            setMessage({ message: 'Tâche supprimée', className: 'success'});
             fetchTasksList();
         }
     }
@@ -78,7 +78,7 @@ export default function TasksField({ project, jwt, userData }) {
         if (!data.task_name || !data.task_description) {
             data.task_name = tasksList.filter((task) => task.task_id == id)[0].task_name;
             data.task_description = tasksList.filter((task) => task.task_id == id)[0].task_description;
-            setMessage('Merci de remplir tous les champs');
+            setMessage({ message: 'Le nom et la description de la tâche ne peuvent pas être vide', className: 'error' });
             setEditingTaskId(null);
             return;
         }
@@ -135,7 +135,7 @@ export default function TasksField({ project, jwt, userData }) {
                     </li>
                     )
                 }) : <li> Pas de tâches pour le moment</li>}
-                {message ? <div className="task-message">{message}</div> : null}
+                {message ? <div className={message.className}>{message.message}</div> : null}
             </ul>
         </div>
     );

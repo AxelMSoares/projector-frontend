@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createNewProjectTask } from "../../../api/createNewProjectTask";
+import { cleanString } from "../../../helpers/functions";
 
 export default function NewProjectTask({jwt, userData}) {
 
@@ -21,7 +22,7 @@ export default function NewProjectTask({jwt, userData}) {
             return;
         }
 
-        if(data.task_name === '' || data.task_description === '') {
+        if(cleanString(data.task_name) === '' || cleanString(data.task_description) === '') {
             alert('Veuillez remplir tous les champs');
             return;
         }
