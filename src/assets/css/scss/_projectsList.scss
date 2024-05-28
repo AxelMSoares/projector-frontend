@@ -29,6 +29,24 @@
     cursor: pointer;
 }
 
+.project-list .filters .filter-name{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.project-list .filters .filter-name span{
+    margin-left: 5px;
+}
+
+.project-list .filters .filter-name #delete-filters{
+    border: 1px solid var(--light-color);
+    padding: 6px;
+}
+
 .project-list h2 {
     margin-bottom: 30px;
 }

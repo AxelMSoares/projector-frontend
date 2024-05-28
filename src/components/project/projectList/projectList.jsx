@@ -11,9 +11,10 @@ export default function ProjectList({ jwt }) {
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const [projects, setProjects] = useState([]);
     const [asc, setAsc] = useState('');
-    const [nameFilterclicked, setNameFilterClicked] = useState('');
-    const [creationDateFilterClicked, setCreationDateFilterClicked] = useState('');
-    const [categoryFilterClicked, setCategoryFilterClicked] = useState('');
+    const [filterByName, setfilterByName] = useState(false);
+    const [filterByCreationDate, setfilterByCreationDate] = useState(false);
+    const [filterByCategory, setfilterByCategory] = useState(false);
+    const [filterName, setFilterName] = useState('');
 
     useEffect(() => {
         if (!jwt) {
@@ -35,80 +36,73 @@ export default function ProjectList({ jwt }) {
     }
 
     // Function to filter the projects by name
-    const filterByName = () => {
+    const filterProjectsByName = () => {
+        setfilterByName(true);
+        setfilterByCreationDate(false);
+        setfilterByCategory(false);
+        setFilterName('Nom');
+
         if (asc) {
             const sortedProjects = projects.sort((a, b) => a.project_name.localeCompare(b.project_name));
             setProjects([...sortedProjects]);
             setAsc(false);
             setAllBtnsToDefault();
-            setNameFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_name.localeCompare(a.project_name));
             setProjects([...sortedProjects]);
             setAsc(true);
             setAllBtnsToDefault();
-            setNameFilterClicked('clicked');
         }
     }
 
     // Function to filter the projects by creation date
-    const filterByCreationDate = () => {
+    const filterProjectsByCreationDate = () => {
+        setfilterByName(false);
+        setfilterByCreationDate(true);
+        setfilterByCategory(false);
+        setFilterName('Date de création');
+
         if (asc) {
             const sortedProjects = projects.sort((a, b) => a.project_created.localeCompare(b.project_created));
             setProjects([...sortedProjects]);
             setAsc(false);
             setAllBtnsToDefault();
-            setCreationDateFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_created.localeCompare(a.project_created));
             setProjects([...sortedProjects]);
             setAsc(true);
             setAllBtnsToDefault();
-            setCreationDateFilterClicked('clicked');
         }
     }
 
     // Function to filter the projects by category
-    const filterByCategory = () => {
+    const filterProjectsByCategory = () => {
+        setfilterByName(false);
+        setfilterByCreationDate(false);
+        setfilterByCategory(true);
+        setFilterName('Catégorie');
+
         if (asc) {
             const sortedProjects = projects.sort((a, b) => a.category_name.localeCompare(b.category_name));
             setProjects([...sortedProjects]);
             setAsc(false);
             setAllBtnsToDefault();
-            setCategoryFilterClicked('clicked');
         } else {
             const sortedProjects = projects.sort((a, b) => b.category_name.localeCompare(a.category_name));
             setProjects([...sortedProjects]);
             setAsc(true);
             setAllBtnsToDefault();
-            setCategoryFilterClicked('clicked');
         }
     }
 
-    // Function to filter the projects by deadline
-    const filterByDeadline = () => {
-        if (asc) {
-            const sortedProjects = projects.sort((a, b) => a.project_deadline.localeCompare(b.project_deadline));
-            setProjects([...sortedProjects]);
-            setAsc(false);
-        } else {
-            const sortedProjects = projects.sort((a, b) => b.project_deadline.localeCompare(a.project_deadline));
-            setProjects([...sortedProjects]);
-            setAsc(true);
-        }
-    }
-
-    function handleDeleteFilters() {
-        setAllBtnsToDefault();
-        setAsc('');
+    // Reset the filters and buttons to the default
+    function resetFilters() {
+        setfilterByName(false);
+        setfilterByCreationDate(false);
+        setfilterByCategory(false);
+        setFilterName('');
         fetchData();
-    }
 
-    // Reset the buttons to the default
-    function setAllBtnsToDefault() {
-        setNameFilterClicked('');
-        setCreationDateFilterClicked('');
-        setCategoryFilterClicked('');
     }
 
 
@@ -124,13 +118,14 @@ export default function ProjectList({ jwt }) {
                     <h2>Mes Projets:</h2>
                     <div className="filters">
                         <p>Trier par:</p>
-                        <button className={nameFilterclicked} onClick={filterByName}>Nom</button>
-                        {nameFilterclicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
-                        <button className={creationDateFilterClicked} onClick={filterByCreationDate}>Date de création</button>
-                        {creationDateFilterClicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
-                        <button className={categoryFilterClicked} onClick={filterByCategory}>Catégorie</button>
-                        {categoryFilterClicked ? <button id="delete-filters" onClick={() => handleDeleteFilters()}>X</button> : null}
-                        {asc === '' ? asc : asc ? <p>Décroissant</p> : <p>Croissant</p>}
+                        <button className={filterByName ? "clicked" : ""} onClick={(e) => filterProjectsByName()}>Nom {filterByName ? (asc ? '▲' : '▼') : null}</button>
+                        <button className={filterByCreationDate ? "clicked" : ""} onClick={(e) => filterProjectsByCreationDate()}>Date de création {filterByCreationDate ? (asc ? '▲' : '▼') : null}</button>
+                        <button className={filterByCategory ? "clicked" : ""} onClick={(e) => filterProjectsByCategory()}>Catégorie {filterByCategory ? (asc ? '▲' : '▼') : null}</button>
+                        {filterByName || filterByCreationDate || filterByCategory ?
+                            <div className='filter-name'>
+                                <p>Projets triés par: <span>{filterName}</span></p>
+                                <button id="delete-filters" onClick={(e) => resetFilters()}>X</button>
+                            </div> : null}
                     </div>
                     {projects.map(project => (
                         <div key={project.uuid} className="project">
