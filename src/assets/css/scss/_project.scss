@@ -365,8 +365,41 @@
     border-radius: 5px 5px 0 0;
 }
 
+.project-detail .tasks-field li:first-child .filter{
+    cursor: pointer;
+}
+
+.project-detail .tasks-field li:first-child .filter-clicked{
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+
 .project-detail .tasks-field li:last-child{
     border-radius: 0 0 5px 5px;
+}
+
+.project-detail .tasks-field .filtered{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.project-detail .tasks-field .delete-filter{
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 20px;
+    margin-left: 20px;
+    font-size: 0.8rem;
+}
+
+.project-detail .tasks-field .tasks-ratio{
+    text-align: end;
 }
 
 .projects-participate{
