@@ -14,6 +14,7 @@ export default function NewProjectMember() {
     const [membersList, setMembersList] = useState([]);
     const [search, setSearch] = useState('');
     const [newMembersUsernames, setNewMembersUsernames] = useState([]);
+    const [userUUIDMapping, setUserUUIDMapping] = useState({});
 
     // Get the project uuid in the url
     const urlParams = new URLSearchParams(location.search);
@@ -36,13 +37,19 @@ export default function NewProjectMember() {
             const filteredUsers = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()));
             setFilteredUsers(filteredUsers);
         } else {
-            setFilteredUsers(users); // Afficher tous les utilisateurs lorsque la recherche est vide
+            setFilteredUsers(users); // Show all users if the search input is empty
         }
     }, [search, users]);
 
     // Get the users lists
     async function getUsers() {
         const usersList = await getAllUser(jwt);
+        // Create a mapping between the username and the user uuid for prevent the users uuid to appear in the html code
+        const uuidMapping = {};
+        usersList.forEach(user => {
+            uuidMapping[user.username] = user.uuid;
+        });
+        setUserUUIDMapping(uuidMapping);
         setUsers(usersList);
     }
 
@@ -61,21 +68,17 @@ export default function NewProjectMember() {
         return membersList.filter(member => member.username === user.username).length !== 0;
     }
 
-    // Check if the searched user is already a member of the project
-    function checkSearchedUserIsMember(search) {
-        return membersList.some((member) => member.username.includes(search));
-    }
-
     // Handle the checkbox change
     function handleCheckboxChange(event) {
-        const value = event.target.value;
-        const isChecked = event.target.checked;
         const username = event.target.id;
+        // Get the user uuid based on the username
+        const uuid = userUUIDMapping[username];
+        const isChecked = event.target.checked;
         if (isChecked) {
-            setNewMembers(prevMembers => [...prevMembers, value]);
+            setNewMembers(prevMembers => [...prevMembers, uuid]);
             setNewMembersUsernames(prevMembers => [...prevMembers, username]);
         } else {
-            setNewMembers(prevMembers => prevMembers.filter(member => member !== value));
+            setNewMembers(prevMembers => prevMembers.filter(member => member !== uuid));
             setNewMembersUsernames(prevMembers => prevMembers.filter(member => member !== username));
         }
     }
@@ -120,7 +123,7 @@ export default function NewProjectMember() {
     }
 
     const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || user.username === userData.username);
-    
+
     return (
         <div className="newProjectMember">
             <h3>Ajouter des membres</h3>
@@ -137,8 +140,8 @@ export default function NewProjectMember() {
                         if (userData.username !== user.username && !checkIfMemberExists(user)) {
                             return (
                                 <div key={user.username}>
-                                    <input type="checkbox" id={user.username} value={user.uuid} onChange={handleCheckboxChange} />
-                                    <label htmlFor={user.uuid}>{user.username}</label>
+                                    <input type="checkbox" id={user.username} value={user.username} onChange={handleCheckboxChange} />
+                                    <label htmlFor={user.username}>{user.username}</label>
                                 </div>
                             );
                         } else {
