@@ -31,6 +31,7 @@
      border-radius: 5px;
      padding: 40px 20px;
      margin: 40px 0;
+     position: relative;
 }
 
 .project-detail .members li{
@@ -71,6 +72,7 @@
     font-size: 0.6rem;
 }
 
+
 .project-detail .members .member{
    position: relative;
 }
@@ -80,6 +82,22 @@
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.project-detail .members .search-members-field{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.project-detail .members .search-members-field label{
+    margin-right: 20px;
+}
+
+.project-detail .members .search-members-field input {
+    max-width: 240px;
+    width: 100%;
 }
 
 .project-detail .members .members-edit-btn{
@@ -116,10 +134,13 @@
 }
 
 .project-detail .members .members-add-btn{
+    position: absolute;
     background-color: var(--ongoing-color);
     font-size: 0.8rem;
-    text-align: end;
-    margin-bottom: 10px;
+    top: 20px;
+    right: 20px;
+    max-width: 140px;
+    width: 100%;
 }
 
 .project-detail .tasks-field{
