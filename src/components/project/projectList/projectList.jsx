@@ -46,12 +46,10 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.project_name.localeCompare(b.project_name));
             setProjects([...sortedProjects]);
             setAsc(false);
-            setAllBtnsToDefault();
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_name.localeCompare(a.project_name));
             setProjects([...sortedProjects]);
             setAsc(true);
-            setAllBtnsToDefault();
         }
     }
 
@@ -66,12 +64,10 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.project_created.localeCompare(b.project_created));
             setProjects([...sortedProjects]);
             setAsc(false);
-            setAllBtnsToDefault();
         } else {
             const sortedProjects = projects.sort((a, b) => b.project_created.localeCompare(a.project_created));
             setProjects([...sortedProjects]);
             setAsc(true);
-            setAllBtnsToDefault();
         }
     }
 
@@ -86,12 +82,10 @@ export default function ProjectList({ jwt }) {
             const sortedProjects = projects.sort((a, b) => a.category_name.localeCompare(b.category_name));
             setProjects([...sortedProjects]);
             setAsc(false);
-            setAllBtnsToDefault();
         } else {
             const sortedProjects = projects.sort((a, b) => b.category_name.localeCompare(a.category_name));
             setProjects([...sortedProjects]);
             setAsc(true);
-            setAllBtnsToDefault();
         }
     }
 
@@ -104,7 +98,6 @@ export default function ProjectList({ jwt }) {
         fetchData();
 
     }
-
 
     // Redirect to the project details on click
     const handleProjectClick = (uuid) => {
