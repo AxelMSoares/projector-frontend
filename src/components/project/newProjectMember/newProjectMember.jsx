@@ -1,7 +1,6 @@
 import { getAllUser } from "../../../api/getAllUsers"
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
-import { useLocation } from "react-router-dom";
 import { createNewProjectMember } from "../../../api/createNewProjectMember";
 import { getMembersList } from "../../../api/getMembersList";
 
@@ -15,18 +14,18 @@ export default function NewProjectMember() {
     const [membersList, setMembersList] = useState([]);
     const [search, setSearch] = useState('');
     const [newMembersUsernames, setNewMembersUsernames] = useState([]);
-    const location = useLocation();
 
     // Get the project uuid in the url
     const urlParams = new URLSearchParams(location.search);
     const projectUuid = urlParams.get('uuid');
 
-    
+    // Check if all the filtered users are already members of the project
+
+
     // Get the users list and the project members list
     useEffect(() => {
         getUsers();
         getProjectMembers();
-        newMembersUsernames;
     }, []);
 
     // 
@@ -62,6 +61,11 @@ export default function NewProjectMember() {
         return membersList.filter(member => member.username === user.username).length !== 0;
     }
 
+    // Check if the searched user is already a member of the project
+    function checkSearchedUserIsMember(search) {
+        return membersList.some((member) => member.username.includes(search));
+    }
+
     // Handle the checkbox change
     function handleCheckboxChange(event) {
         const value = event.target.value;
@@ -81,7 +85,7 @@ export default function NewProjectMember() {
 
         if (newMembers.length === 0) {
             return;
-        } 
+        }
 
         const membersToAdd = newMembersUsernames.join(', ');
 
@@ -110,6 +114,13 @@ export default function NewProjectMember() {
         })
     }
 
+    // Redirect to the project details page
+    function returnToProject() {
+        window.location.href = `/detail-projet/?uuid=${projectUuid}`;
+    }
+
+    const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || user.username === userData.username);
+    
     return (
         <div className="newProjectMember">
             <h3>Ajouter des membres</h3>
@@ -119,9 +130,11 @@ export default function NewProjectMember() {
             </div>
 
             <div className="membersList">
-                {filteredUsers.map(user => {
-                    if ((userData.username !== user.username)) {
-                        if (!checkIfMemberExists(user)) {
+                {search && allFilteredUsersAreMembers ? (
+                    <p>Aucun utilisateur trouvé avec ce pseudo ou l'utilisateur est déjà membre du projet.</p>
+                ) : filteredUsers.length > 0 ?
+                    filteredUsers.map(user => {
+                        if (userData.username !== user.username && !checkIfMemberExists(user)) {
                             return (
                                 <div key={user.username}>
                                     <input type="checkbox" id={user.username} value={user.uuid} onChange={handleCheckboxChange} />
@@ -131,13 +144,12 @@ export default function NewProjectMember() {
                         } else {
                             return null;
                         }
-
-                    } else {
-                        return null;
-                    }
-                })}
+                    }) : <p>Aucun utilisateur trouvé avec ce pseudo ou l'utilisateur est déjà membre du projet.</p>
+                }
+                {newMembers.length > 0 ? <p>{newMembers.length} membres sélectionnés</p> : null}
             </div>
-            <button onClick={addNewMembers}>Ajouter</button>
+            <button className="return-project-btn" onClick={(e) => returnToProject()}>Annuler</button>
+            <button className="add-member-btn" onClick={addNewMembers}>Ajouter</button>
         </div>
     )
 }

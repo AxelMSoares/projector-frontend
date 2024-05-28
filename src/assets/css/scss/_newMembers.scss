@@ -45,10 +45,31 @@
 }
 
 .newProjectMember button{
-    background-color: var(--primary-color);
     color: var(--light-color);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
+    transition: all .3s linear;
+    font-weight: 600;
     cursor: pointer;
+    border: 1px solid var(--light-color);
+}
+
+.newProjectMember .add-member-btn{
+    background-color: var(--ongoing-color);
+}
+
+.newProjectMember .return-project-btn{
+    background-color: var(--secondary-background-color);
+    margin-right: 20px;
+}
+
+.newProjectMember .add-member-btn:hover{
+    background-color: var(--success-color);
+    border: 2px solid var(--light-color);
+}
+
+.newProjectMember .return-project-btn:hover{
+    background-color: var(--fourth-color);
+    border: 2px solid var(--light-color);
 }
