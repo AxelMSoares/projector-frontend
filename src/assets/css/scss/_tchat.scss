@@ -38,6 +38,13 @@
     border: 1px solid var(--dark-color);
 }
 
+.tchat-background .return-btn{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+}
+
  .project-tchat .message{
     color: var(--light-color);
     font-weight: 400;

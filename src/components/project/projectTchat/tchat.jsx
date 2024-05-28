@@ -16,8 +16,8 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
     useEffect(() => {
         const invervalId = setInterval(() => {
-        // Call the function to get the project messages
-        getProjectMessages();
+            // Call the function to get the project messages
+            getProjectMessages();
         }, 1000); // Refresh the messages every 10 seconds
 
         return () => clearInterval(invervalId);
@@ -86,7 +86,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
             user_uuid: userData.uuid
         }
 
-        
+
 
         if (!data.message_content) {
             setErrorMessage("Veuillez saisir un message");
@@ -211,11 +211,16 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
         }
     }
 
+    function redirectToProject() {
+        window.location.href = `/detail-projet/?uuid=${projectUUID}`;
+    }
+
 
     return (
 
         <div className='tchat-background'>
             <p>Tchat:</p>
+            <button className="return-btn" onClick={(e)=>redirectToProject()}>Retourner au projet</button>
             <div className="project-tchat">
                 {Object.keys(groupedMessages).map(date => (
                     <div key={date} className="message-group">
