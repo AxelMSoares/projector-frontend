@@ -5,6 +5,7 @@ import { updateTasks } from "../../../api/updateTasks";
 import { checkStatus } from "../../../helpers/functions";
 import { deleteProjectTask } from "../../../api/deleteProjectTask";
 import { cleanString } from "../../../helpers/functions";
+import Cookies from 'js-cookie';
 
 export default function TasksField({ project, jwt, userData }) {
 
@@ -67,6 +68,7 @@ export default function TasksField({ project, jwt, userData }) {
             return;
         }
 
+        Cookies.set('project_author', JSON.stringify({ author: project.username }));
         window.location.href = `/projet/nouvelle-tache/?uuid=${project.uuid}`;
         return null;
     }
