@@ -62,12 +62,22 @@ export default function TasksField({ project, jwt, userData }) {
 
     // Redirect to the add task page
     async function addTask() {
+        // If the user is not the author of the project, he can't add a task
+        if (!userIsAuthor) {
+            return;
+        }
+
         window.location.href = `/projet/nouvelle-tache/?uuid=${project.uuid}`;
         return null;
     }
 
     // Delete a task after a confirmation
     async function deleteTask(taskId) {
+        // If the user is not the author of the project, he can't delete a task
+        if (!userIsAuthor) {
+            return;
+        }
+
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?");
         if (confirmation) {
             await deleteProjectTask(jwt, taskId);
@@ -78,6 +88,11 @@ export default function TasksField({ project, jwt, userData }) {
 
     // Update a task
     async function updateTask(id) {
+        // If the user is not the author of the project, he can't update a task
+        if (!userIsAuthor) {
+            return;
+        }
+
         const data = {
             task_name: cleanString(newTaskName) !== '' ? cleanString(newTaskName) : tasksList.filter((task) => task.task_id == id)[0].task_name,
             task_description: cleanString(newTaskDescription) !== '' ? cleanString(newTaskDescription) : tasksList.filter((task) => task.task_id == id)[0].task_description,
