@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import { deleteProjectMember } from '../../../api/deleteProjectMember';
-import { updateProjectDetails } from '../../../api/updateProject';
 import { UpdateProjectMember } from '../../../api/updateProjectMember';
-import Cookies from 'js-cookie';
 import { cleanString } from '../../../helpers/functions';
+import Cookies from 'js-cookie';
 
 export default function ProjectMembers({ projectUuid, jwt, userData, project, membersList }) {
 
@@ -13,6 +12,9 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
     const [message, setMessage] = useState({ message: '', class: '' });
     const [userIsAuthor, setUserIsAuthor] = useState(false);
     const [searching, setSearching] = useState(false);
+    const [filteredByUsername, setFilteredByUsername] = useState(false);
+    const [filteredByRole, setFilteredByRole] = useState(false);
+    const [ascending, setAscending] = useState(true);
 
     // If the user is not connected, prevent user to see project members
     if (!jwt && !userData) {
@@ -26,13 +28,13 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         CheckIfUserIsAuthor();
     }, [membersList]);
 
-    // Set the message to null after 5 seconds
+    // Set the message to null after 10 seconds
     useEffect(() => {
         if (message) {
             setTimeout(() => {
                 setMessage({ message: '', class: '' });
                 Cookies.remove('message');
-            }, 5000);
+            }, 10000);
         }
     }, [message]);
 
@@ -43,6 +45,12 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
     // Delete a member from the project
     async function deleteMember(id) {
+
+        // Check if the user is an administrator or the author of the project
+        if (userData.statut !== "administrateur" && !userIsAuthor) {
+            return null;
+        }
+
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce membre ?");
         if (confirmation) {
             await deleteProjectMember(id, jwt);
@@ -110,9 +118,52 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             return;
         }
 
+        setFilteredByRole(false);
+        setFilteredByUsername(false);
+
         const searchedMembers = membersList.filter(member => member.username.toLowerCase().includes(searchedUser.toLowerCase()));
         setMembers(searchedMembers);
         setSearching(true);
+    }
+
+    // Filter the members by their username
+    function filterMembersByUsername() {
+        setFilteredByUsername(true);
+        setFilteredByRole(false);
+
+        if (ascending) {
+            const searchedMembers = membersList.sort((a, b) => a.username.localeCompare(b.username));
+            setMembers(searchedMembers);
+            setAscending(false);
+        } else {
+            const searchedMembers = membersList.sort((a, b) => b.username.localeCompare(a.username));
+            setMembers(searchedMembers);
+            setAscending(true);
+        }
+    }
+
+
+    // Filter the members by their role
+    function filterMembersByRole() {
+        setFilteredByRole(true);
+        setFilteredByUsername(false);
+
+        if (ascending) {
+            const searchedMembers = membersList.sort((a, b) => a.role.localeCompare(b.role));
+            setMembers(searchedMembers);
+            setAscending(false);
+        } else {
+            const searchedMembers = membersList.sort((a, b) => b.role.localeCompare(a.role));
+            setMembers(searchedMembers);
+            setAscending(true);
+        }
+    }
+
+    // Remove filters
+    function removeFilters() {
+        setMembers(membersList);
+        setFilteredByUsername(false);
+        setFilteredByRole(false);
     }
 
     return (
@@ -128,13 +179,26 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                 <label htmlFor='user-search'>Rechercher un membre:</label>
                 <input type="text" id="user-search" name="user-search" onChange={(e) => searchUser(e.target.value)} />
             </div>
-            {message.message ? <p className={message.class}>{message.message}</p> : null}
+            {filteredByUsername || filteredByRole ?
+                <div className='filter-field'>
+                    <p>Trié par: <span>{filteredByUsername ? "Pseudo" : "Role"}</span></p>
+                    <button className="members-remove-filters" onClick={(e) => removeFilters()}>Retirer les filtres</button>
+                </div>
+                : null}
+            {message.message ? <p className={"message " + message.class}>{message.message}</p> : null}
             <ul>
                 {userIsAuthor ?
                     (
-                        <li><p>Pseudo:</p><p>Role:</p><p>Gestion:</p></li>
+                        <li>
+                            <p className={filteredByUsername ? "filters-clicked" : "filters"} onClick={(e) => filterMembersByUsername()}>Pseudo: {filteredByUsername ? (ascending ? '▲' : '▼') : null }</p>
+                            <p className={filteredByRole ? "filters-clicked" : "filters"} onClick={(e) => filterMembersByRole()}>Role: {filteredByRole ? (ascending ? '▲' : '▼') : null }</p>
+                            <p>Gestion:</p>
+                        </li>
                     ) :
-                    <li><p>Pseudo:</p><p>Role:</p></li>
+                    <li>
+                        <p className={filteredByUsername ? "filters-clicked" : "filters"} onClick={(e) => filterMembersByUsername()}>Pseudo: {filteredByUsername ? (ascending ? '▲' : '▼') : null }</p>
+                        <p className={filteredByRole ? "filters-clicked" : "filters"} onClick={(e) => filterMembersByRole()}>Role: {filteredByRole ? (ascending ? '▲' : '▼') : null }</p>
+                    </li>
                 }
                 {members && members.length > 0 ? members.map((member) => (
                     <li key={member.id} className="member">
