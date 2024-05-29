@@ -15,6 +15,7 @@ export default function NewProjectMember() {
     const [search, setSearch] = useState('');
     const [newMembersUsernames, setNewMembersUsernames] = useState([]);
     const [userUUIDMapping, setUserUUIDMapping] = useState({});
+    const [projectAuthor, setProjectAuthor] = useState('');
 
     // Get the project uuid in the url
     const urlParams = new URLSearchParams(location.search);
@@ -25,11 +26,10 @@ export default function NewProjectMember() {
 
     // Get the users list and the project members list
     useEffect(() => {
+        Cookies.get('project_author') ? setProjectAuthor(JSON.parse(Cookies.get('project_author'))) : setProjectAuthor('');
         getUsers();
         getProjectMembers();
     }, []);
-
-    // 
 
     // Filter the users list based on the search input
     useEffect(() => {
@@ -40,6 +40,13 @@ export default function NewProjectMember() {
             setFilteredUsers(users); // Show all users if the search input is empty
         }
     }, [search, users]);
+
+    // Check if the user is the project author
+    function checkIfUserIsAuthor(userData, projectAuthor) {
+        if (projectAuthor) {
+            return userData.username === projectAuthor.author;
+        }
+    }
 
     // Get the users lists
     async function getUsers() {
@@ -86,6 +93,11 @@ export default function NewProjectMember() {
     // Add the new members to the project
     function addNewMembers() {
 
+        if (!checkIfUserIsAuthor(userData, projectAuthor)) {
+            console.log("Vous n'êtes pas l'auteur du projet");
+            return;
+        }
+
         if (newMembers.length === 0) {
             return;
         }
@@ -110,7 +122,10 @@ export default function NewProjectMember() {
             createNewProjectMember(data, jwt);
 
             // Stock the message in the cookies
-            Cookies.set('message', 'Membres ajoutés avec success');
+            Cookies.set('message', JSON.stringify({ message: 'Les membres ont bien été ajoutés au projet', class: 'success' }));
+
+            // Remove the project author from the cookies
+            Cookies.remove('project_author');
 
             // Redirect to the project details page
             window.location.href = `/detail-projet/?uuid=${projectUuid}`;
@@ -119,10 +134,11 @@ export default function NewProjectMember() {
 
     // Redirect to the project details page
     function returnToProject() {
+        Cookies.remove('project_author');
         window.location.href = `/detail-projet/?uuid=${projectUuid}`;
     }
 
-    const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || user.username === userData.username);
+    const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || checkIfUserIsAuthor());
 
     return (
         <div className="newProjectMember">
