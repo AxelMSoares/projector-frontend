@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { checkPasswordMatch, checkEmailMatch, checkPasswordFormat } from '../../../helpers/functions.js';
+import { cleanString } from '../../../helpers/functions.js';
+import { createNewUser } from '../../../api/createNewUser.js';
 import Cookies from 'js-cookie';
 
 function RegisterForm() {
 
     const [errorMsg, setErrorMsg] = useState([]);
-    const [formValidated, setFormValidated] = useState(false);
 
+    // If the user is already connected, redirect to the home page
     if (Cookies.get('jwt') && Cookies.get('userData')) {
         window.location.href = '/';
         return null;
@@ -18,6 +20,7 @@ function RegisterForm() {
 
         setErrorMsg([]);
 
+        // Get the form data
         const formData = {
             username: document.getElementById('username').value,
             email: document.getElementById('email').value,
@@ -27,69 +30,64 @@ function RegisterForm() {
             cgu: document.getElementById('cgu').checked
         }
 
-        if (!formData.username || !formData.email || !formData.emailConfirm || !formData.pwd || !formData.pwdConfirm) {
+        // If one of the fields is empty, return an error
+        if (!cleanString(formData.username) || !formData.email || !formData.emailConfirm || !formData.pwd || !formData.pwdConfirm) {
             const errorGen = 'Veuillez remplir tous les champs';
             setErrorMsg(prevErrors => [...prevErrors, errorGen]);
             return;
-
-        } else {
-
-            if (checkEmailMatch(formData.email, formData.emailConfirm) === false) {
-                const errorEmail = 'Les adresses email ne correspondent pas';
-                setErrorMsg(prevErrors => [...prevErrors, errorEmail]);
-            }
-
-            if (checkPasswordMatch(formData.pwd, formData.pwdConfirm) === false) {
-                const errorPwd = 'Les mots de passe ne correspondent pas';
-                setErrorMsg(prevErrors => [...prevErrors, errorPwd]);
-
-            } else {
-
-                if (!checkPasswordFormat(formData.pwd)) {
-                    const errorPwdFormat = 'Le format du mot de passe est invalide';
-                    setErrorMsg(prevErrors => [...prevErrors, errorPwdFormat]);
-                }
-
-            }
-
-            if (!formData.cgu) {
-                const errorCgu = 'Vous devez accepter les conditions d\'utilisation';
-                setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
-            }
-
-            if (errorMsg.length > 0) {
-                return;
-
-            } else {
-
-                setFormValidated(true);
-
-                const validatedForm = {
-                    username: formData.username.toLowerCase(),
-                    email: formData.email.toLowerCase(),
-                    pwd: formData.pwd,
-                    cgu: 1
-                }
-
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/create`, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(validatedForm)
-                });
-
-                // Get the respose
-                const responseData = await response.json();
-
-                if (response.ok) {
-                    Cookies.set('newUserMsg', "Compte créé avec succès! Vous pouvez dès à present vous connecter.");
-                    window.location.href = '/connexion?success=true';
-                } else if (response.status === 400) {
-                    setErrorMsg(prevErrors => [...prevErrors, responseData.error]);
-                }
-            }
         }
+
+        // Check if the email and the confirmation email match
+        if (checkEmailMatch(formData.email, formData.emailConfirm) === false) {
+            const errorEmail = 'Les adresses email ne correspondent pas';
+            setErrorMsg(prevErrors => [...prevErrors, errorEmail]);
+            return;
+        }
+
+        // Check if the password and the confirmation password match
+        if (checkPasswordMatch(formData.pwd, formData.pwdConfirm) === false) {
+            const errorPwd = 'Les mots de passe ne correspondent pas';
+            setErrorMsg(prevErrors => [...prevErrors, errorPwd]);
+
+        }
+
+        // Check if the password format is correct
+        if (!checkPasswordFormat(formData.pwd)) {
+            const errorPwdFormat = 'Le format du mot de passe est invalide';
+            setErrorMsg(prevErrors => [...prevErrors, errorPwdFormat]);
+        }
+
+        // Check if the user accepted the terms of use
+        if (!formData.cgu) {
+            const errorCgu = 'Vous devez accepter les conditions d\'utilisation';
+            setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
+        }
+
+        // If there are errors, return
+        if (errorMsg.length > 0) {
+            return;
+        }
+
+        // Create the user object
+        const validatedForm = {
+            username: formData.username.toLowerCase(),
+            email: formData.email.toLowerCase(),
+            pwd: formData.pwd,
+            cgu: 1
+        }
+
+        // Send the data to the backend
+        const response = await createNewUser(validatedForm);
+
+        // Get the response and if the user was created, redirect to the login page
+        if (response.ok) {
+            Cookies.set('newUserMsg', "Compte créé avec succès! Vous pouvez dès à present vous connecter.");
+            window.location.href = '/connexion?success=true';
+        } else {
+            const errorCreatingUser = 'Erreur lors de la création de l\'utilisateur';
+            setErrorMsg(prevErrors => [...prevErrors, errorCreatingUser]);
+        }
+
     }
 
     return (
