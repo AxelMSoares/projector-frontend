@@ -107,8 +107,7 @@
 
 .project-list .filters button:hover,
 .clicked:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
+    box-shadow: 0 0 2px 2px var(--light-color);
 }
 
 

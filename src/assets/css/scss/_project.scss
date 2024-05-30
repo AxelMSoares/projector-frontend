@@ -186,8 +186,7 @@
 
 .project-detail .members .filters:hover,
 .project-detail .members .filters-clicked:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
+    box-shadow: 0 0 2px 2px var(--light-color);
 }
 
 .project-detail .project-date-field,
@@ -353,8 +352,7 @@
 
 .project-detail .tasks-field li:first-child .filter:hover,
 .project-detail .tasks-field li:first-child .filter-clicked:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
+    box-shadow: 0 0 2px 2px var(--light-color);
 }
 
 .project-detail .tasks-field li:last-child{
