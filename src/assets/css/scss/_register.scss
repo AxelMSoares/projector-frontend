@@ -78,9 +78,16 @@
 
 .checkbox-input input {
     height: auto;
+    margin-right: 10px;
 }
 
-.checkbox-input label {
+.checkbox-input{
     display: flex;
     flex-direction: row;
+}
+
+.checkbox-input p{
+    color: var(--ongoing-color);
+    text-decoration: underline;
+    cursor: pointer;
 }

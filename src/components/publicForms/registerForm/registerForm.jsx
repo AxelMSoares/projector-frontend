@@ -59,7 +59,7 @@ function RegisterForm() {
 
         // Check if the user accepted the terms of use
         if (!formData.cgu) {
-            const errorCgu = 'Vous devez accepter les conditions d\'utilisation';
+            const errorCgu = 'Vous devez accepter les conditions d\'utilisation pour pouvoir vous inscrire.';
             setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
         }
 
@@ -88,6 +88,10 @@ function RegisterForm() {
             setErrorMsg(prevErrors => [...prevErrors, errorCreatingUser]);
         }
 
+    }
+
+    function redirectToPrivacyPolicy() {
+        window.location.href = '/politique-de-confidentialite';
     }
 
     return (
@@ -132,10 +136,10 @@ function RegisterForm() {
                         </div>
                     </div>
                     <div className="checkbox-input">
-                        <label>
-                            <input type="checkbox" id="cgu" name="cgu" />
-                            J'accepte la politique d'utilisation
-                        </label>
+                        <input type="checkbox" id="cgu" name="cgu" />
+                        <p onClick={(e)=> redirectToPrivacyPolicy()}>
+                            J'accepte la politique de confidentialité et les conditions d'utilisation
+                        </p>
                     </div>
                     {errorMsg.length > 0 &&
                         <ul className="error">
