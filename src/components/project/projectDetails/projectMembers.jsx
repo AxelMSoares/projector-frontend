@@ -71,6 +71,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         // Check if the role is not empty
         if (newRole == '') {
             setMessage({ message: 'Le rôle ne peut pas être vide', class: 'error' });
+            setEditingMemberId(false);
             return null;
         }
 
@@ -105,6 +106,11 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
     // Redirect to the add member page
     function addMember() {
+         // Check if the user is an administrator or the author of the project
+        if (userData.statut !== "administrateur" && !userIsAuthor) {
+            return null;
+        }
+
         Cookies.set('project_author', JSON.stringify({ author: project.username }));
         window.location.href = `/projet/nouveau-membre/?uuid=${projectUuid}`;
         return;
@@ -181,7 +187,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             </div>
             {filteredByUsername || filteredByRole ?
                 <div className='filter-field'>
-                    <p>Trié par: <span>{filteredByUsername ? "Pseudo" : "Role"}</span></p>
+                    <p>Membres triés par: <span>{filteredByUsername ? "Pseudo" : "Role"}</span></p>
                     <button className="members-remove-filters" onClick={(e) => removeFilters()}>Retirer les filtres</button>
                 </div>
                 : null}

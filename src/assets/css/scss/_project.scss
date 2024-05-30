@@ -113,10 +113,12 @@
 .project-detail .members .members-edit-btn{
     background-color: var(--ongoing-color);
     margin-right: 10px;
+    transition: all .3s ease;
 }
 
 .project-detail .members .members-delete-btn{
     background-color: var(--error-color);
+    transition: all .3s ease;
 }
 
 .project-detail .members .filter-field{
@@ -137,6 +139,15 @@
     padding: 5px 10px;
     font-size: 0.8rem;
     margin-right: 10px;
+    transition: all .3s ease;
+}
+
+.project-detail .members .members-add-btn:hover,
+.project-detail .members .members-edit-btn:hover,
+.project-detail .members .members-delete-btn:hover,
+.project-detail .members .filter-field button:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .members .message{
@@ -144,12 +155,21 @@
 }
 
 .project-detail .members .filters{
+    border-radius: 5px;
     cursor:pointer;
+    transition: all .3s ease;
 }
+
 
 .project-detail .members .filters-clicked{
     background-color: var(--secondary-color);
     border-radius: 5px;
+}
+
+.project-detail .members .filters:hover,
+.project-detail .members .filters-clicked:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .project-date-field,
@@ -177,7 +197,15 @@
     margin-left: 10px;
     font-size: 0.8em;
     padding: 2px 10px;
+    transition: all .3s ease;
+}
 
+.project-detail .project-date-field button:hover,
+.project-detail .project-status-field button:hover,
+.project-detail .project-categorie-field button:hover,
+.project-detail .project-description-field button:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .tasks-field{
@@ -200,6 +228,12 @@
     font-size: 0.8rem;
     text-align: end;
     margin-bottom: 10px;
+    transition: all .3s ease;
+}
+
+.project-detail .tasks-field .task-add-btn:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .tasks-field li{
@@ -231,12 +265,12 @@
 }
 
 .project-detail .tasks-field .author p{
-    width: 25%;
+    width: 20%;
     text-align: center;
 }
 
 .project-detail .tasks-field .author .action-buttons{
-    width: 25%;
+    width: 20%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -251,6 +285,7 @@
     padding: 5px 10px;
     margin-bottom: 5px;
     font-size: 0.6rem;
+    transition: all .3s ease;
 }
 
 .project-detail .tasks-field .author .action-buttons .edit{
@@ -259,6 +294,12 @@
 
 .project-detail .tasks-field .author .action-buttons .delete{
     background-color: var(--error-color);
+}
+
+.project-detail .tasks-field .author .action-buttons .edit:hover,
+.project-detail .tasks-field .author .action-buttons .delete:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .tasks-field .user p{
@@ -272,11 +313,20 @@
 
 .project-detail .tasks-field li:first-child .filter{
     cursor: pointer;
+    border-radius: 5px;
+    transition: all .3s ease;
 }
 
 .project-detail .tasks-field li:first-child .filter-clicked{
     background-color: var(--secondary-color);
     border-radius: 5px;
+    transition: all .3s ease;
+}
+
+.project-detail .tasks-field li:first-child .filter:hover,
+.project-detail .tasks-field li:first-child .filter-clicked:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .tasks-field li:last-child{
@@ -293,14 +343,19 @@
 
 .project-detail .tasks-field .delete-filter{
     cursor: pointer;
-    background-color: var(--secondary-color);
-    width: 20px;
-    height: 20px;
+    background-color: var(--fourth-color);
+    padding: 4px 8px;
     border-radius: 5px;
     text-align: center;
     line-height: 20px;
     margin-left: 20px;
     font-size: 0.8rem;
+    transition: all .3s ease;
+}
+
+.project-detail .tasks-field .delete-filter:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .tasks-field .tasks-ratio{
@@ -336,4 +391,41 @@
     padding: 20px;
     box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.6);
     cursor: pointer;
+    transition: all .3s ease;
+}
+
+.projects-participate li:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
+}
+
+.tchat-access-btn{
+    color: var(--light-color);
+    text-decoration: none;
+    background-color: var(--ongoing-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 0;
+    margin-right: auto;
+    margin-left: auto;
+    transition: all .3s ease;
+}
+
+.delete-project-btn{
+    display: inline;
+    color: var(--light-color);
+    background-color: var(--error-color);
+    border: 0;
+    border-radius: 5px;
+    font-size: 0.8em;
+    padding: 5px 10px;
+    position: absolute;
+    right: 20px;
+    transition: all .3s ease;
+}
+
+.tchat-access-btn:hover,
+.delete-project-btn:hover{
+    box-shadow: 0 0 5px var(--light-color);
+    border: 2px solid var(--light-color);
 }

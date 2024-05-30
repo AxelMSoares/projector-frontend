@@ -95,9 +95,14 @@ export default function TasksField({ project, jwt, userData }) {
             return;
         }
 
+        if (cleanString(newTaskName) === '' && cleanString(newTaskDescription) === '') {
+            setMessage({ message: 'Veuillez remplir tous les champs', className: 'error' });
+            return;
+        }
+
         const data = {
-            task_name: cleanString(newTaskName) !== '' ? cleanString(newTaskName) : tasksList.filter((task) => task.task_id == id)[0].task_name,
-            task_description: cleanString(newTaskDescription) !== '' ? cleanString(newTaskDescription) : tasksList.filter((task) => task.task_id == id)[0].task_description,
+            task_name: cleanString(newTaskName),
+            task_description: cleanString(newTaskDescription),
             task_status_id: newTaskStatus
         }
 
@@ -149,16 +154,10 @@ export default function TasksField({ project, jwt, userData }) {
             {userIsAuthor ?
                 <button className="task-add-btn" onClick={(e) => addTask()}>Ajouter nouvelle tache</button>
                 : null}
-            {filterByName ?
+            {filterByName || filterByStatus?
                 <div className="filtered">
-                    <p>Tâches filtrées par Nom</p>
-                    <p className="delete-filter" onClick={(e) => resetFilter()}>X</p>
-                </div>
-                : null}
-            {filterByStatus ?
-                <div className="filtered">
-                    <p>Tâches filtrées par Status</p>
-                    <p className="delete-filter" onClick={(e) => resetFilter()}>X</p>
+                    <p>Tâches triées par: <span>{filterByName ? "Nom" : "Status"}</span></p>
+                    <p className="delete-filter" onClick={(e) => resetFilter()}>Retirer les filtres</p>
                 </div>
                 : null}
             <ul>
