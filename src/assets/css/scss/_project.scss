@@ -240,6 +240,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: center;
     border: 1px solid var(--light-color);
     border-collapse: collapse;
     padding: 10px;
@@ -295,7 +296,16 @@
 .project-detail .tasks-field .author .action-buttons .delete{
     background-color: var(--error-color);
 }
+.project-detail .tasks-field .author .action-buttons .confirm{
+    background-color: var(--success-color);
+}
 
+.project-detail .tasks-field .author .action-buttons .cancel{
+    background-color: var(--fourth-color);
+}
+
+.project-detail .tasks-field .author .action-buttons .confirm:hover,
+.project-detail .tasks-field .author .action-buttons .cancel:hover,
 .project-detail .tasks-field .author .action-buttons .edit:hover,
 .project-detail .tasks-field .author .action-buttons .delete:hover{
     border: 2px solid var(--light-color);

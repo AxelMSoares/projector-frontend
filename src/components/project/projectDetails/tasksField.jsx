@@ -180,8 +180,8 @@ export default function TasksField({ project, jwt, userData }) {
                                     </select>
                                     <textarea defaultValue={task.task_description} onChange={(e) => setNewTaskDescription(e.target.value)}></textarea>
                                     <div className="action-buttons">
-                                        <button className="edit" onClick={(e) => updateTask(task.task_id)}>Valider</button>
-                                        <button className="delete" onClick={(e) => setEditingTaskId(null)}>Annuler</button>
+                                        <button className="confirm" onClick={(e) => updateTask(task.task_id)}>Valider</button>
+                                        <button className="cancel" onClick={(e) => setEditingTaskId(null)}>Annuler</button>
                                     </div>
                                 </>
                                 :
