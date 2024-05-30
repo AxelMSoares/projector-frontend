@@ -228,8 +228,8 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                             <div>
                                 {editingMemberId === member.id ? (
                                     <>
-                                        <button className="members-edit-btn" onClick={() => updateRole(member.id, cleanString(newRole))}> Confirmer </button>
-                                        <button className="members-delete-btn" onClick={() => {
+                                        <button className="members-confirm-btn" onClick={() => updateRole(member.id, cleanString(newRole))}> Confirmer </button>
+                                        <button className="members-cancel-btn" onClick={() => {
                                             setEditingMemberId(null);
                                             setNewRole('');
                                         }}

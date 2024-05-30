@@ -60,6 +60,8 @@
     text-align: center;
 }
 
+.project-detail .members .members-confirm-btn,
+.project-detail .members .members-cancel-btn,
 .project-detail .members .members-delete-btn,
 .project-detail .members .members-edit-btn,
 .project-detail .members .members-add-btn,
@@ -70,8 +72,17 @@
     border: 0;
     border-radius: 5px;
     font-size: 0.6rem;
+    transition: all .3s ease;
 }
 
+.project-detail .members .members-confirm-btn{
+    background-color: var(--success-color);
+    margin-right: 10px;
+}
+
+.project-detail .members .members-cancel-btn{
+    background-color: var(--fourth-color);
+}
 
 .project-detail .members .member{
    position: relative;
@@ -82,6 +93,13 @@
     right: 20px;
     top: 50%;
     transform: translateY(-50%);
+}
+
+.project-detail .members .members-confirm-btn:hover,
+.project-detail .members .members-cancel-btn:hover,
+.project-detail .members .members-leave-btn:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
 }
 
 .project-detail .members .search-members-field{
