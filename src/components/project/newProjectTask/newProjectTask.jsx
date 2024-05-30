@@ -3,24 +3,32 @@ import { createNewProjectTask } from "../../../api/createNewProjectTask";
 import { cleanString } from "../../../helpers/functions";
 import Cookies from 'js-cookie';
 
-export default function NewProjectTask({jwt, userData}) {
+export default function NewProjectTask({ jwt, userData }) {
 
     const projectUUID = new URLSearchParams(window.location.search).get('uuid');
     const [projectAuthor, setProjectAuthor] = useState('');
+    const [message, setMessage] = useState({content: '', class: ''});
 
     if (!jwt || !userData) {
         window.location.href = '/';
     }
 
     useEffect(() => {
-        
+
         setProjectAuthor(Cookies.get('project_author') ? JSON.parse(Cookies.get('project_author')) : '');
         checkIfUserIsAuthor();
-    }
-    , [projectUUID]);
+    }, [projectUUID]);
+
+    useEffect(() => {
+        if (message.content !== '') {
+            setTimeout(() => {
+                setMessage({content: '', class: ''});
+            }, 5000);
+        }
+    }, [message]);
 
     function checkIfUserIsAuthor() {
-        if (projectAuthor){
+        if (projectAuthor) {
             return projectAuthor.author == userData.username;
         }
     }
@@ -38,12 +46,12 @@ export default function NewProjectTask({jwt, userData}) {
             task_status_id: 1
         }
 
-        if(data.project_uuid === null) {
+        if (data.project_uuid === null) {
             return;
         }
 
-        if(cleanString(data.task_name) === '' || cleanString(data.task_description) === '') {
-            alert('Veuillez remplir tous les champs');
+        if (cleanString(data.task_name) === '' || cleanString(data.task_description) === '') {
+            setMessage({content: 'Veuillez remplir tous les champs.', class: 'error-message'});
             return;
         }
 
@@ -54,7 +62,7 @@ export default function NewProjectTask({jwt, userData}) {
         await createNewProjectTask(jwt, data);
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
         return null;
-    
+
     }
 
     // Cancel the creation of the new task and redirect to the project detail page
@@ -71,8 +79,11 @@ export default function NewProjectTask({jwt, userData}) {
                 <input type="text" id="taskName" name="taskName" />
                 <label htmlFor="taskDescription">Description de la tâche:</label>
                 <textarea id="taskDescription" name="taskDescription" />
-                <button onClick={(e)=>cancel()}> Annuler</button>
-                <button onClick={createTask}>Créer nouvelle tâche</button>
+                {message && <p className={message.class}>{message.content}</p>}
+                <div className="buttons-field">
+                    <button className="new-task-cancel" onClick={(e) => cancel()}> Annuler</button>
+                    <button className="new-task-btn" onClick={createTask}>Créer nouvelle tâche</button>
+                </div>
             </div>
         </div>
     )

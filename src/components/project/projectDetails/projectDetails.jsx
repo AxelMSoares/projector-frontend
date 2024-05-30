@@ -124,9 +124,10 @@ export default function ProjectDetails({ jwt, userData }) {
                             < StatusField project={project} userData={userData} onUpdate={updateProject} jwt={jwt} />
                             < ProjectMembers projectUuid={projectUuid} jwt={jwt} userData={userData} project={project} membersList={membersList} />
                             < TasksField project={project} userData={userData} jwt={jwt} />
-                            <button className="tchat-access-btn" onClick={redirectToTchat}>Acceder au tchat du projet</button>
+                            <button className="tchat-access-btn" onClick={redirectToTchat}>Acceder au tchat du projet (Bêta)</button>
                         </div>
-                    </>)
+                    </>
+                )
             }
         </div>
     );
