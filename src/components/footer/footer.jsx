@@ -12,6 +12,7 @@ function Footer() {
                     </ul>
                 </div>
             </div>
+            <div className="copyright"><p>Tous droits réservés. Projector Copyright 2024 TM</p></div>
         </footer>
     )
 }
