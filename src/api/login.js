@@ -9,14 +9,13 @@ export async function login(loginData) {
         });
 
         if (response.status !== 200) {
-            window.alert('Utilisateur ou mot de passe incorrects');
-            return;
+            return ({ message: 'Login failed' });
         }
 
         const data = await response.json();
         return data;
         
     } catch (error) {
-        console.log("Une erreur est survenue lors de la connexion", error);
+        console.log("Une erreur est survenue lors de la connexion");
     }
 }
