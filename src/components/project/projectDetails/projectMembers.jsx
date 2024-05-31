@@ -172,6 +172,10 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         setFilteredByRole(false);
     }
 
+    function redirectToUserProfile(username) {
+        window.location.href = `/utilisateur/${username}`;
+    }
+
     return (
         <div className="members" >
             <p>Membres: {members && members.length > 0 ? <span>{members.length}</span> : null}</p>
@@ -208,7 +212,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                 }
                 {members && members.length > 0 ? members.map((member) => (
                     <li key={member.id} className="member">
-                        <p>{member.username}</p>
+                        <p onClick={(e) => redirectToUserProfile(member.username)}><a className='user-link'>{member.username}</a></p>
                         {editingMemberId === member.id ? (
                             <input
                                 type="text"

@@ -88,6 +88,12 @@
    position: relative;
 }
 
+.project-detail .members .member .user-link{
+    color: var(--ongoing-color);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .project-detail .members .members-leave-btn {
     position: absolute;
     right: 20px;
