@@ -9,6 +9,7 @@ function PrivacyPolicy() {
             <h3>Utilisation des Données Personnelles</h3>
             <p>Les adresses e-mails collectées sont utilisées pour :</p>
             <ul>
+                <li>- Récuperation du mot de passe en cas d'oublie.</li>
                 <li>- Valider les inscriptions des utilisateurs sur notre site.</li>
                 <li>- Envoyer des notifications importantes liées à l'utilisation de notre site, telles que des confirmations d'inscription, des alertes de sécurité, et des mises à jour de notre service.</li>
             </ul>

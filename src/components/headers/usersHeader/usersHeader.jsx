@@ -36,7 +36,7 @@ function UsersHeader({onConnect}) {
 				</div>
 				<div className="nav-bar-right">
 					<ul>
-						<li> Bienvenue: <span className="username-view"> { data['username'] } </span></li>
+						<li> Bienvenue: <Link className="username-view" to={"/utilisateur/" + data['username']}> { data['username'] } </Link></li>
 						<li id="logout-btn"><button href="" onClick={onLogoutHandler}>Se Deconnecter</button></li>
 					</ul>
 				</div>

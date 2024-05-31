@@ -1,0 +1,125 @@
+.profile{
+    background-color: var(--secondary-background-color);
+    color: var(--light-color);
+    max-width: 1000px;
+    width: 100%;
+    padding: 80px;
+    margin: 0 auto;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile h1{
+    font-size: 2rem;
+    margin-bottom: 60px;
+}
+
+.profile .success{
+    margin-top: -20px;
+}
+
+.profile .profile-pic{
+    max-width: 200px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.profile p{
+    font-size: 1rem;
+    margin-bottom: 20px;
+
+}
+
+.profile .loading-profile{
+    text-align: center;
+    margin: 40px;
+}
+
+.profile input,
+.profile textarea{
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.profile button{
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.profile .buttons-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+.profile .editing-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    max-width: 600px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.profile .edit-profile-btn{
+    background-color: var(--ongoing-color);
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    
+}
+
+.profile button:hover{
+    box-shadow: 0px 0px 4px 2px var(--light-color);
+}
+
+.profile .edit-profile-btn:hover{
+    background-color: var(--fourth-color);
+}
+
+.profile .delete-account-btn{
+    background-color: var(--error-color);
+    color: var(--light-color);
+    margin-right: auto;
+    margin-left: auto;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.profile .error-text{
+    font-size: 0.8rem;
+    margin-top: -15px;
+}
+
+.profile .validate-profile-edit-btn{
+    background-color: var(--success-color);
+    margin-right: 20px;
+}
+
+.profile .cancel-edit-btn{
+    background-color: var(--fourth-color);
+}
+
+.profile textarea{
+    resize: none;
+    border-radius: 5px;
+    height: 100px;
+}
+
+.profile span{
+    margin-left: 5px;
+}

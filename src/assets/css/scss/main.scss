@@ -5,7 +5,7 @@
     --primary-color: #547AA5;
     --secondary-color: #4F5165;
     --third-color: #50D8D7;
-    --fourth-color: #474044;
+    --fourth-color: #695e64;
     --success-color: #26a067;
     --error-color: #e93f39;
     --secondary-background-color: #293132;
@@ -33,6 +33,7 @@ $text-font: "Inter", sans-serif;
 @import '_projectsList';
 @import '_newProject';
 @import '_confidencyPolicy';
+@import '_profile';
 
 
 *{

@@ -56,7 +56,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
                         <option key={category.id} value={category.id}>{category.category_name}</option>
                     )))}
                 </select>
-                <button className='category-confirm-btn' onClick={() => updateProjectCategorie(data)} >Confirmer</button>
+                <button className='category-confirm-btn' onClick={() => updateProjectCategorie(data)} >Valider</button>
                 <button className='category-cancel-btn' onClick={() => {
                     setEditingCategorie(false);
                     setNewCategorie(categorieId);
