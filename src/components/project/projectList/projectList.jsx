@@ -117,7 +117,7 @@ export default function ProjectList({ jwt }) {
                         {filterByName || filterByCreationDate || filterByCategory ?
                             <div className='filter-name'>
                                 <p>Projets triés par: <span>{filterName}</span></p>
-                                <button id="delete-filters" onClick={(e) => resetFilters()}>X</button>
+                                <button id="delete-filters" onClick={(e) => resetFilters()}>Retirer les filtres</button>
                             </div> : null}
                     </div>
                     {projects.map(project => (

@@ -50,8 +50,8 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
                     ))}
                 </select>
                 <div>
-                    <button onClick={() => updateStatus()}>Confirmer</button>
-                    <button onClick={() => {
+                    <button className="status-confirm-btn" onClick={() => updateStatus()}>Confirmer</button>
+                    <button className="status-cancel-btn" onClick={() => {
                         setEditingStatus(false);
                         setNewStatus(project.project_status_id)
                     }}> Annuler </button>

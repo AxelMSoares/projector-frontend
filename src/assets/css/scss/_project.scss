@@ -225,6 +225,22 @@
     box-shadow: 0 0 5px var(--light-color);
 }
 
+.project-detail .project-date-field .deadline-confirm-btn,
+.project-detail .project-status-field .status-confirm-btn,
+.project-detail .project-categorie-field .category-confirm-btn,
+.project-detail .project-description-field .desc-confirm-btn{
+    background-color: var(--success-color);
+    border: 1px solid var(--light-color);
+}
+
+.project-detail .project-date-field .deadline-cancel-btn,
+.project-detail .project-status-field .status-cancel-btn,
+.project-detail .project-categorie-field .category-cancel-btn,
+.project-detail .project-description-field .desc-cancel-btn{
+    background-color: var(--fourth-color);
+    border: 1px solid var(--light-color);
+}
+
 .project-detail .tasks-field{
     border-radius: 5px;
     border: 2px solid var(--light-color);

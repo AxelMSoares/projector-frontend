@@ -49,8 +49,8 @@ export default function DescriptionField({ project, userData, onUpdate }) {
                 <div>
                     {editingDescription ? (
                         <>
-                            <button onClick={descriptionUpdate}>Confirmer</button>
-                            <button onClick={() => {
+                            <button className="desc-confirm-btn" onClick={descriptionUpdate}>Confirmer</button>
+                            <button className="desc-cancel-btn" onClick={() => {
                                 setEditingDescription(false);
                                 setNewDescription(description); // Reset the input value if cancel
                             }}>Annuler</button>

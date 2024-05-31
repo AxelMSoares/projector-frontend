@@ -49,8 +49,8 @@ export default function Deadline({ project, userData, onUpdate }) {
                 <div>
                     {editingDeadline ? (
                         <>
-                            <button onClick={deadlineUpdate}>Confirmer</button>
-                            <button onClick={() => {
+                            <button className="deadline-confirm-btn"  onClick={deadlineUpdate}>Confirmer</button>
+                            <button className="deadline-cancel-btn"  onClick={() => {
                                 setNewDeadline(deadline); // Reset the input value if cancel
                                 setEditingDeadline(false);
                             }}>Annuler</button>

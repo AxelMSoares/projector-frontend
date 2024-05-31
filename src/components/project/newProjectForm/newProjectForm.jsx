@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCategories } from "../../../api/getCategories";
 import { createNewProject } from "../../../api/createNewProject";
+import { cleanString } from "../../../helpers/functions";
 
 function NewProjectForm({ jwt, userData }) {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ function NewProjectForm({ jwt, userData }) {
         }
 
 
-        if (!data.project_name || !data.project_description || !data.project_category_id) {
+        if (!cleanString(data.project_name) || !cleanString(data.project_description) || !data.project_category_id) {
             setErrorMsg('Veuillez remplir tous les champs obligatoires');
             return;
         }
