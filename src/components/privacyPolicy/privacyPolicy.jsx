@@ -17,7 +17,7 @@ function PrivacyPolicy() {
             <h3>Partage des Données Personnelles</h3>
             <p>Nous ne partageons pas vos adresses e-mails avec des tiers sans votre consentement, sauf si cela est requis par la loi ou pour protéger nos droits.</p>
             <h3>Sécurité des Données Personnelles</h3>
-            <p>Nous prenons des mesures de sécurité appropriées pour protéger vos adresses e-mails contre l'accès non autorisé, la divulgation, la modification ou la destruction. Ces mesures comprennent le chiffrement des données et des contrôles d'accès stricts.</p>
+            <p>Nous prenons des mesures de sécurité appropriées pour protéger vos adresses e-mails contre l'accès non autorisé, la divulgation, la modification ou la destruction. Ces mesures comprennent des contrôles d'accès stricts.</p>
             <h3>Droits de l'utilisateur</h3>
             <p>Conformément à la législation sur la protection des données, vous avez le droit de :</p>
             <ul>
