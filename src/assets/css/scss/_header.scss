@@ -87,6 +87,8 @@
 
 .username-view {
     text-transform: capitalize;
+    color: var(--primary-color)!important;
+    text-decoration: underline!important;
 }
 
 #logout-btn button{

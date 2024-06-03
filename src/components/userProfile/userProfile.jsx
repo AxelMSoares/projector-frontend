@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { getUserByUsername } from '../../api/getUserByUsername';
-import { formatDate } from '../../helpers/functions';
 import { updateUser } from '../../api/updateUser';
+import { deleteUser } from '../../api/deleteUser';
+import { login } from '../../api/login';
+import { updateUserPassword } from '../../api/updateUserPassword';
+import { checkPasswordFormat } from '../../helpers/functions';
+import { formatDate } from '../../helpers/functions';
 import { cleanString } from '../../helpers/functions';
+import Cookies from 'js-cookie';
 
 export default function UserProfile({ jwt, userData }) {
 
@@ -19,6 +24,8 @@ export default function UserProfile({ jwt, userData }) {
     const [newBio, setNewBio] = useState('');
     const [message, setMessage] = useState({ content: '', class: '' });
     const [errorMsg, setErrorMsg] = useState('');
+    const [passwordEditing, setPasswordEditing] = useState(false);
+    const messageRef = useRef(null);
 
     useEffect(() => {
         fetchUserInfos();
@@ -38,6 +45,7 @@ export default function UserProfile({ jwt, userData }) {
     // Display the message for 10 seconds
     useEffect(() => {
         if (message.content) {
+            messageRef.current.scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => {
                 setMessage({ content: '', class: '' });
             }, 10000);
@@ -98,6 +106,64 @@ export default function UserProfile({ jwt, userData }) {
         }
     }
 
+    async function handleDeleteAccount() {
+
+        if (!userProfile || !jwt) {
+            return;
+        }
+
+        const confirm = window.confirm('Êtes-vous sûr de vouloir supprimer votre compte?');
+
+        if (confirm) {
+            // Call the delete account function
+            await deleteUser(jwt, user.uuid);
+            Cookies.remove('jwt');
+            Cookies.remove('userData');
+            window.location.href = '/';
+        }
+    }
+
+    async function handleUpdatePassword(username) {
+        // Check if the user is the owner of the profile before editing
+        if (!userProfile || !jwt) {
+            return;
+        }
+
+        const currentPwd = cleanString(document.querySelector('.current-pwd').value);
+        const newPwd = cleanString(document.querySelector('.new-pwd').value);
+        const newPwdConfirm = cleanString(document.querySelector('.new-pwd-confirm').value);
+
+        if (currentPwd === '' || newPwd === '' || newPwdConfirm === '') {
+            setErrorMsg('Tous les champs sont obligatoires.');
+            return;
+        }
+
+        if (!checkPasswordFormat(newPwd)) {
+            setErrorMsg('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.');
+            return;
+        }
+
+        if (newPwd !== newPwdConfirm) {
+            setErrorMsg('Les mots de passe ne correspondent pas.');
+            return;
+        }
+
+        const auth = await login({'username': username,'pwd': currentPwd});
+
+        if (!auth.token) {
+            setErrorMsg('Mot de passe actuel incorrect.');
+            return;
+        }
+
+        const result = await updateUserPassword(user.uuid, jwt, newPwd);
+
+        if(result.message === 'User updated'){
+            setMessage({content: 'Mot de passe mis à jour avec succès.', class: 'success'});
+            setPasswordEditing(false);
+        }
+    }
+
+
     if (!userLoaded) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
     }
@@ -120,7 +186,7 @@ export default function UserProfile({ jwt, userData }) {
                 </div> :
                 <>
                     {userProfile && <button className="edit-profile-btn" onClick={() => setEditing(true)}>Modifier mes informations</button>}
-                    {message ? <p className={message.class}>{message.content}</p> : null}
+                    {message ? <p ref={messageRef} className={message.class}>{message.content}</p> : null}
                     <img className="profile-pic" src="../../../public/images/avatar-neutre.png" alt="profile-pic" />
                     {user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
                     <p>Pseudo: {user.username}</p>
@@ -128,7 +194,26 @@ export default function UserProfile({ jwt, userData }) {
                     <p>Membre depuis le : <span>{formatDate(user.CREATED)}</span></p>
                     <p>Dernière connexion : <span>{user.lastLogin ? formatDate(user.lastLogin) : "Jamais connecté."}</span></p>
                     <p>Bio: <span>{user.bio ? user.bio : "Pas de bio pour l'instant."}</span></p>
-                    {userProfile && <button className='delete-account-btn'>Supprimer mon compte</button>}
+                    {userProfile ? <>
+                        {!passwordEditing ?
+                            <>
+                                <button className='pwd-modify-btn' onClick={(e) => setPasswordEditing(true)}>Changer le mot de passe</button>
+                                <button className='delete-account-btn' onClick={(e) => handleDeleteAccount()}>Supprimer mon compte</button>
+                            </>
+                            : <div className="pwd-editing-field">
+                                <label htmlFor="current-pwd">Mot de passe actuel:</label>
+                                <input type="password" className="current-pwd" id="current-pwd" />
+                                <label htmlFor="new-pwd">Nouveau mot de passe: </label>
+                                <input type="password" className="new-pwd" id="new-pwd" />
+                                <label htmlFor="new-pwd-confirm">Confirmer nouveau mot de passe:</label>
+                                <input type="password" className='new-pwd-confirm' id="new-pwd-confirm" />
+                                {errorMsg ? <p className="error">{errorMsg}</p> : null}
+                                <div className='buttons-field'>
+                                    <button className='pwd-cancel-btn' onClick={(e) => setPasswordEditing(false)}>Annuler</button>
+                                    <button className='pwd-validate-btn' onClick={(e) => handleUpdatePassword(user.username)}>Valider</button>
+                                </div>
+                            </div>}
+                    </> : null}
                 </>
             }
         </div>

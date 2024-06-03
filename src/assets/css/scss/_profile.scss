@@ -123,3 +123,38 @@
 .profile span{
     margin-left: 5px;
 }
+
+.profile .pwd-modify-btn{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.profile .buttons-field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.profile .pwd-editing-field{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 600px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.profile .pwd-cancel-btn{
+    background-color: var(--fourth-color);
+    margin-right: 20px;
+}
+
+.profile .pwd-validate-btn{
+    background-color: var(--success-color);
+}
