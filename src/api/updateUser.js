@@ -1,4 +1,4 @@
-export async function updateUser(uuid, jwt, data) {
+export async function updateUser(jwt, uuid, data) {
 
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/update/${uuid}`, {

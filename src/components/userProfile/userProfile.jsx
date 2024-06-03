@@ -9,6 +9,7 @@ import { checkPasswordFormat } from '../../helpers/functions';
 import { formatDate } from '../../helpers/functions';
 import { cleanString } from '../../helpers/functions';
 import Cookies from 'js-cookie';
+import ProfileImageUpload from './profileImageUpload';
 
 export default function UserProfile({ jwt, userData }) {
 
@@ -25,6 +26,7 @@ export default function UserProfile({ jwt, userData }) {
     const [message, setMessage] = useState({ content: '', class: '' });
     const [errorMsg, setErrorMsg] = useState('');
     const [passwordEditing, setPasswordEditing] = useState(false);
+    const [userImage, setUserImage] = useState(null);
     const messageRef = useRef(null);
 
     useEffect(() => {
@@ -52,6 +54,10 @@ export default function UserProfile({ jwt, userData }) {
         }
     }, [message]);
 
+    function handleImageUpload(imageUrl){
+        setUserImage(imageUrl);
+    };
+
     async function fetchUserInfos() {
         if (pseudo) {
             const result = await getUserByUsername(pseudo, jwt);
@@ -76,8 +82,8 @@ export default function UserProfile({ jwt, userData }) {
 
         // If any change has been made, dont update
         if (newUsername === user.username && newEmail === user.email && newBio === user.bio) {
-            setEditing(false);
-            return;
+            // setEditing(false);
+            // return;
         }
 
         // Check if the email and the confirmation email are the same
@@ -94,16 +100,18 @@ export default function UserProfile({ jwt, userData }) {
         const data = {
             username: newUsername,
             email: newEmail,
-            bio: cleanString(newBio)
+            bio: cleanString(newBio),
+            profilePicture: userImage
         }
 
-        const result = await updateUser(user.uuid, jwt, data);
+        const result = await updateUser(jwt, user.uuid, data);
 
         if (result.message === 'User updated') {
+            setMessage({ content: 'Profil mis à jour avec succès.', class: 'success' });
             setEditing(false);
-            setMessage({ content: 'Profil mis à jour avec succès.', class: "success" });
             fetchUserInfos();
         }
+
     }
 
     async function handleDeleteAccount() {
@@ -148,7 +156,7 @@ export default function UserProfile({ jwt, userData }) {
             return;
         }
 
-        const auth = await login({'username': username,'pwd': currentPwd});
+        const auth = await login({ 'username': username, 'pwd': currentPwd });
 
         if (!auth.token) {
             setErrorMsg('Mot de passe actuel incorrect.');
@@ -157,8 +165,8 @@ export default function UserProfile({ jwt, userData }) {
 
         const result = await updateUserPassword(user.uuid, jwt, newPwd);
 
-        if(result.message === 'User updated'){
-            setMessage({content: 'Mot de passe mis à jour avec succès.', class: 'success'});
+        if (result.message === 'User updated') {
+            setMessage({ content: 'Mot de passe mis à jour avec succès.', class: 'success' });
             setPasswordEditing(false);
         }
     }
@@ -173,10 +181,11 @@ export default function UserProfile({ jwt, userData }) {
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
+                    < ProfileImageUpload onImageUpload={handleImageUpload} />
                     <label htmlFor={"username"}>Pseudo:</label><input type="text" id="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     <label htmlFor={"email"}>Email:</label><input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     <label htmlFor={"conf-email"}>Confirmation email:</label><input type="email" id="conf-email" value={ConfNewEmail} onChange={(e) => setConfNewEmail(e.target.value)} />
-                    <label htmlFor={"bio"}>Bio:</label><textarea id="bio" onChange={(e) => setNewBio(e.target.value)} placeholder='Ecrivez ici une bio...'>{user.bio ? user.bio : ""}</textarea>
+                    <label htmlFor={"bio"}>Bio:</label><textarea id="bio" onChange={(e) => setNewBio(e.target.value)} placeholder='Ecrivez ici une bio...' defaultValue={user.bio ? user.bio : ""}></textarea>
                     {errorMsg ? <p className="error">{errorMsg}</p> : null}
                     <div className='buttons-box'>
                         <button className='validate-profile-edit-btn' onClick={(e) => handleUpdateUser()}>Enregistrer</button>
@@ -187,7 +196,7 @@ export default function UserProfile({ jwt, userData }) {
                 <>
                     {userProfile && <button className="edit-profile-btn" onClick={() => setEditing(true)}>Modifier mes informations</button>}
                     {message ? <p ref={messageRef} className={message.class}>{message.content}</p> : null}
-                    <img className="profile-pic" src="../../../public/images/avatar-neutre.png" alt="profile-pic" />
+                    {user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="../../../images/avatar-neutre.png" alt="profile-pic" />}
                     {user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
                     <p>Pseudo: {user.username}</p>
                     {userProfile && <><p>Email: {user.email}</p><p className='error-text'>( L'adresse email n'est visible que par vous. Elle est utilisée pour la confirmation du compte, la récupération du mot de passe ou pour les notifications importantes. )</p></>}

@@ -158,3 +158,34 @@
 .profile .pwd-validate-btn{
     background-color: var(--success-color);
 }
+
+.profile .image-field{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 600px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 40px;
+}
+
+.profile .image-field .success{
+    margin-top: 10px;
+}
+
+.profile .image-field img{
+    max-width: 250px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.profile .image-field .image-preview{
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    max-width: 250px;
+    width: 100%;
+}
