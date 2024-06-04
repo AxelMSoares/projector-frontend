@@ -1,10 +1,13 @@
-export async function uploadImage(image) {
+export async function uploadImage(image, jwt) {
   const formData = new FormData();
   formData.append('image', image);
 
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_UPLOAD_URL}`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`, {
       method: 'POST',
+      headers: {
+        'Authorization': jwt
+      },
       body: formData
     });
 

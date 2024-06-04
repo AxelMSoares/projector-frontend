@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { uploadImage } from '../../api/uploadImage';
 
-export default function ProfileImageUpload({onImageUpload}) {
+export default function ProfileImageUpload({onImageUpload, jwt}) {
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
@@ -34,15 +34,13 @@ export default function ProfileImageUpload({onImageUpload}) {
       // If the image is valid
       setError(null);
 
-      const response = await uploadImage(image);
-      setImageUrl(response.imageUrl);
-
-      if(response.message === 'Image uploaded'){
+      const response = await uploadImage(image, jwt);
+      
+      if(response.message === 'Image uploaded successfully'){
+        onImageUpload(response.imageUrl);
         setError({ content: 'Image téléchargée avec succès', class: 'success' });
         setImagePreview(null);
-        onImageUpload(imageUrl);
       }
-
     }
   }
 

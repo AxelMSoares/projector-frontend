@@ -76,7 +76,6 @@ export default function UserProfile({ jwt, userData }) {
 
         // Check if the user is the owner of the profile before editing
         if (!userProfile) {
-            console.log('Not the owner of the profile');
             return;
         }
 
@@ -181,7 +180,7 @@ export default function UserProfile({ jwt, userData }) {
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
-                    < ProfileImageUpload onImageUpload={handleImageUpload} />
+                    < ProfileImageUpload  jwt={jwt} onImageUpload={handleImageUpload} />
                     <label htmlFor={"username"}>Pseudo:</label><input type="text" id="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     <label htmlFor={"email"}>Email:</label><input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     <label htmlFor={"conf-email"}>Confirmation email:</label><input type="email" id="conf-email" value={ConfNewEmail} onChange={(e) => setConfNewEmail(e.target.value)} />
