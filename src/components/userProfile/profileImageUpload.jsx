@@ -1,20 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { uploadImage } from '../../api/uploadImage';
+import { deleteImage } from '../../api/deleteImage';
 
-export default function ProfileImageUpload({onImageUpload, jwt}) {
+export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
 
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const [userHasImage, setUserHasImage] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setError(null);
     }
-    , 5000);
+      , 5000);
   }, [error]);
 
+  useEffect(() => {
+    checkIfUserHasImage(user);
+  }, [user]);
+
+  function checkIfUserHasImage(user) {
+    if (user.profilePicture !== null) {
+      setImagePreview(user.profilePicture);
+      setImageUrl(user.profilePicture);
+      setUserHasImage(true);
+    }
+  }
 
   async function handleUpload() {
 
@@ -35,28 +48,59 @@ export default function ProfileImageUpload({onImageUpload, jwt}) {
       setError(null);
 
       const response = await uploadImage(image, jwt);
-      
-      if(response.message === 'Image uploaded successfully'){
+
+      if (response.message === 'Image uploaded successfully') {
         onImageUpload(response.imageUrl);
+        setImagePreview(response.imageUrl);
+        setImageUrl(response.imageUrl);
+        setUserHasImage(true);
         setError({ content: 'Image téléchargée avec succès', class: 'success' });
-        setImagePreview(null);
       }
+    }
+  }
+
+  async function handleDelete(jwt, user) {
+    if (userHasImage === false) {
+      setError({ content: 'Aucune image à supprimer', class: 'error' });
+      return;
+    }
+
+    const imageName = imageUrl.split('/').pop();
+
+    // Delete the image
+    const response = await deleteImage(jwt, imageName);
+
+    if (response.message === 'Image deleted successfully') {
+      onImageUpload(null);
+      setUserHasImage(false);
+      setImagePreview(null);
+      setError({ content: 'Image supprimée avec succès', class: 'success' });
     }
   }
 
   return (
     <div className='image-field'>
-      {imagePreview && <div className='image-preview'><p>Prévisualiser l'image:</p><img src={imagePreview} /></div>}
-      <input
-        type="file"
-        accept='image/jpeg, image/png'
-        onChange={(e) => {
-          setImagePreview(URL.createObjectURL(e.target.files[0]));
-          setImage(e.target.files[0]);
-        }}
-      />
-      {imagePreview && <button onClick={handleUpload}>Upload</button>}
-      {error && <p className={error.class}>{error.content}</p>}
+      {userHasImage ?
+        <>
+          {error && <p className={error.class}>{error.content}</p>}
+          <img src={imagePreview} />
+          <button className="delete-picture-btn" onClick={() => handleDelete(jwt, user)}>Supprimer image</button>
+
+        </> :
+        <>
+          <input
+            type="file"
+            accept='image/jpeg, image/png'
+            onChange={(e) => {
+              setImagePreview(URL.createObjectURL(e.target.files[0]));
+              setImage(e.target.files[0]);
+            }}
+          />
+          {imagePreview && <div className='image-preview'><p>Prévisualiser l'image:</p><img src={imagePreview} /></div>}
+          {error && <p className={error.class}>{error.content}</p>}
+          {imagePreview && <button className="upload-btn" onClick={handleUpload}>Upload</button>}
+        </>
+      }
     </div>
   );
 };

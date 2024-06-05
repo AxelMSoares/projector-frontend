@@ -26,6 +26,12 @@
     margin-right: 5px;
 }
 
+.project-detail .detail .author-link{
+    color: var(--ongoing-color);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .project-detail .members{
      border: 2px solid var(--light-color);
      border-radius: 5px;

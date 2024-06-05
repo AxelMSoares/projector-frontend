@@ -79,12 +79,6 @@ export default function UserProfile({ jwt, userData }) {
             return;
         }
 
-        // If any change has been made, dont update
-        if (newUsername === user.username && newEmail === user.email && newBio === user.bio) {
-            // setEditing(false);
-            // return;
-        }
-
         // Check if the email and the confirmation email are the same
         if (newEmail !== ConfNewEmail) {
             setErrorMsg('Les adresses email ne correspondent pas.');
@@ -180,7 +174,7 @@ export default function UserProfile({ jwt, userData }) {
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
-                    < ProfileImageUpload  jwt={jwt} onImageUpload={handleImageUpload} />
+                    < ProfileImageUpload  jwt={jwt} user={user} onImageUpload={handleImageUpload} />
                     <label htmlFor={"username"}>Pseudo:</label><input type="text" id="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     <label htmlFor={"email"}>Email:</label><input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     <label htmlFor={"conf-email"}>Confirmation email:</label><input type="email" id="conf-email" value={ConfNewEmail} onChange={(e) => setConfNewEmail(e.target.value)} />

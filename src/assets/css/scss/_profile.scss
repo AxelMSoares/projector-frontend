@@ -172,7 +172,36 @@
 }
 
 .profile .image-field .success{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.profile .image-field input[type=file]{
+    border: 2px solid var(--light-color);
+    padding: 30px;
+}
+
+.profile .image-field input[type=file]::file-selector-button{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 4px 8px;
+    cursor: pointer; 
+}
+
+.profile .image-field .upload-btn{
+    background-color: var(--ongoing-color);
+    color: var(--light-color);
     margin-top: 10px;
+}
+
+.profile .image-field .delete-picture-btn{
+    background-color: var(--error-color);
+    color: var(--light-color);
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all .3s ease;
 }
 
 .profile .image-field img{

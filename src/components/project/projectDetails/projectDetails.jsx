@@ -1,9 +1,9 @@
 import { getProjectDetails } from "../../../api/getprojectDetails";
 import { getMembersList } from "../../../api/getMembersList";
 import { updateProjectDetails } from "../../../api/updateProject";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { formatDate, checkDateIsPassed, checkStatus, checkAdminStatus, checkProjectAuthor, checkProjectMember } from '../../../helpers/functions';
+import { formatDate, checkAdminStatus, checkProjectAuthor, checkProjectMember } from '../../../helpers/functions';
 import DeleteProjectBtn from "./deleteProjectBtn";
 import ProjectMembers from "./projectMembers";
 import Deadline from "./deadlineField";
@@ -94,6 +94,8 @@ export default function ProjectDetails({ jwt, userData }) {
         window.location.href = `/projet/tchat/?uuid=${projectUuid}`;
     }
 
+    console.log(project);
+
     async function checkIfUserIsAuthorised(userData, project, membersList) {
         // Check if the user is a admin
         if (!checkAdminStatus(userData.statut)) {
@@ -107,6 +109,11 @@ export default function ProjectDetails({ jwt, userData }) {
         }
     }
 
+    function redirectToUserProfil() {
+        window.location.href = `/utilisateur/${project.username}`;
+        return null;
+    }
+
     return (
         <div className="project-detail-body">
             {errorMsg ?
@@ -116,7 +123,7 @@ export default function ProjectDetails({ jwt, userData }) {
                         <div className="project-detail">
                             < DeleteProjectBtn jwt={jwt} projectUuid={projectUuid} project={project} userData={userData} />
                             <h2 className="capitalize-first-letter">{project.project_name}</h2>
-                            <p className="detail">Auteur: <span className="capitalize-first-letter">{project.username}</span></p>
+                            <p className="detail">Auteur: <span className="capitalize-first-letter author-link" onClick={(e) => redirectToUserProfil()}>{project.username}</span></p>
                             <p className="detail">Crée le: <span>{formatDate(project.project_created)}</span></p>
                             < DescriptionField project={project} userData={userData} onUpdate={updateProject} />
                             < CategoryField project={project} jwt={jwt} userData={userData} onUpdate={updateProject} />
