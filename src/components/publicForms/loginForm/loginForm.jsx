@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { login } from '../../../api/login';
 
@@ -22,9 +22,10 @@ function LoginForm({ onConnect }) {
     if (registerSuccess) {
       setNewUserMsg('Inscription réussie, veuillez vous connecter');
       // Erase the message after 10 seconds
-      setTimeout(() => {
+      const timer = setTimeout(() => {
         setNewUserMsg('');
       }, 10000);
+      return () => clearTimeout(timer);
     }
   }, [location.search]);
 

@@ -21,9 +21,10 @@ export default function NewProjectTask({ jwt, userData }) {
 
     useEffect(() => {
         if (message.content !== '') {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setMessage({content: '', class: ''});
             }, 5000);
+            return () => clearTimeout(timer);
         }
     }, [message]);
 

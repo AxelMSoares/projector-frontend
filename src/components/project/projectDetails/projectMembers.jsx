@@ -31,10 +31,11 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
     // Set the message to null after 10 seconds
     useEffect(() => {
         if (message) {
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setMessage({ message: '', class: '' });
                 Cookies.remove('message');
-            }, 10000);
+            }, 5000);
+            return () => clearTimeout(timer);
         }
     }, [message]);
 

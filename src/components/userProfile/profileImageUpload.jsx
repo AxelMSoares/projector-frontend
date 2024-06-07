@@ -11,10 +11,11 @@ export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
   const [userHasImage, setUserHasImage] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setError(null);
     }
       , 5000);
+    return () => clearTimeout(timer);
   }, [error]);
 
   useEffect(() => {

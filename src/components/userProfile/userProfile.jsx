@@ -48,9 +48,10 @@ export default function UserProfile({ jwt, userData }) {
     useEffect(() => {
         if (message.content) {
             messageRef.current.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 setMessage({ content: '', class: '' });
             }, 10000);
+            return () => clearTimeout(timer);
         }
     }, [message]);
 
