@@ -5,8 +5,8 @@
     max-width: 800px;
     width: 100%;
     border-radius: 20px;
-    margin-top: 100px;
     padding: 30px;
+    margin-top: 100px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
@@ -51,7 +51,7 @@
 .register-field .sign-up-link {
     margin-top: 40px;
     margin-bottom: 40px;
-    color: #fff;
+    color: var(--light-color);
 }
 
 .register-field button {
@@ -65,9 +65,27 @@
     margin-bottom: 20px;
 }
 
+.register-field .pwd-recommendations {
+    width: 50%;
+    font-size: 0.8em;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+.register-field .pwd-recommendations li {
+    list-style-type: disc;
+    margin-left: 40px;
+}
+
 .register-field a {
     margin-bottom: 40px;
     color: var(--default-color);
+}
+
+.register-field .error{
+    list-style: none;
 }
 
 .register-field button:hover,
@@ -79,6 +97,7 @@
 .checkbox-input input {
     height: auto;
     margin-right: 10px;
+    border: 8px solid black!important;
 }
 
 .checkbox-input{
@@ -90,4 +109,11 @@
     color: var(--ongoing-color);
     text-decoration: underline;
     cursor: pointer;
+}
+
+.register-field .error-text .errorfield,
+.register-field .checkbox-input .errorfield {
+    color: var(--error-color)!important;
+    border: 2px solid var(--error-color)!important;
+    font-weight: 600;
 }

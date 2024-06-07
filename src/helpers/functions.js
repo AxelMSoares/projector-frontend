@@ -9,7 +9,16 @@ export function checkPasswordFormat(password) {
 
 // Check if the email is valid
 export function checkEmailFormat(email) {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    
+    if (!email) return false; // Return false if the email is empty
+
+    if(email.includes(' ')) return false; // Return false if the email contains a space
+
+    if(email.length < 5) return false; // Return false if the email is too short
+
+    // Check if the email contains an @ and contains a dot after the @
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,8}$/;
+
     return emailRegex.test(email);
 }
 

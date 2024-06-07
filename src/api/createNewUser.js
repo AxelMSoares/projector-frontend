@@ -9,10 +9,16 @@ export async function createNewUser(user) {
         });
 
         if (response.ok) {
+            console.log(response.status);
             return response;
+        } else {
+            const errorData = await response.json();
+            return errorData;
         }
-        
+
+
     } catch (error) {
-        console.log("Erreur lors de la création de l'utilisateur");
+        console.log("Erreur lors de la création de l'utilisateur", error.message);
+        throw error;
     }
-}
+}   
