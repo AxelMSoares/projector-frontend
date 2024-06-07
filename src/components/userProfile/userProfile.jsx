@@ -190,7 +190,7 @@ export default function UserProfile({ jwt, userData }) {
                 <>
                     {userProfile && <button className="edit-profile-btn" onClick={() => setEditing(true)}>Modifier mes informations</button>}
                     {message ? <p ref={messageRef} className={message.class}>{message.content}</p> : null}
-                    {user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="../../../images/avatar-neutre.png" alt="profile-pic" />}
+                    {user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="/images/avatar-neutre.png" alt="profile-pic" />}
                     {user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
                     <p>Pseudo: {user.username}</p>
                     {userProfile && <><p>Email: {user.email}</p><p className='error-text'>( L'adresse email n'est visible que par vous. Elle est utilisée pour la confirmation du compte, la récupération du mot de passe ou pour les notifications importantes. )</p></>}

@@ -34,7 +34,7 @@ function UsersHeader({onConnect}) {
 				</div>
 				<div className="nav-bar-right">
 					<ul>
-						<li><img className="profile-picture" src={data.profilePicture != null ? data.profilePicture : "../../../public/images/avatar-neutre.png" } /><Link className="username-view" to={"/utilisateur/" + data['username']}> { data['username'] } </Link></li>
+						<li><img className="profile-picture" src={data.profilePicture != null ? data.profilePicture : "/images/avatar-neutre.png" } /><Link className="username-view" to={"/utilisateur/" + data['username']}> { data['username'] } </Link></li>
 						<li id="logout-btn"><button href="" onClick={onLogoutHandler}>Se Deconnecter</button></li>
 					</ul>
 				</div>
