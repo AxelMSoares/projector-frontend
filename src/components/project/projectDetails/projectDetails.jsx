@@ -94,8 +94,6 @@ export default function ProjectDetails({ jwt, userData }) {
         window.location.href = `/projet/tchat/?uuid=${projectUuid}`;
     }
 
-    console.log(project);
-
     async function checkIfUserIsAuthorised(userData, project, membersList) {
         // Check if the user is a admin
         if (!checkAdminStatus(userData.statut)) {

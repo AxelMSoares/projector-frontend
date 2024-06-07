@@ -9,18 +9,19 @@ import Cookies from 'js-cookie';
 
 export default function TasksField({ project, jwt, userData }) {
 
+    const [userIsAuthor, setuserIsAuthor] = useState(false);
     const [tasksList, setTasksList] = useState([]);
     const [taskStatus, setTaskStatus] = useState([]);
     const [tasksLoaded, setTasksLoaded] = useState(false);
-    const [userIsAuthor, setuserIsAuthor] = useState(false);
+    const [currentTask, setCurrentTask] = useState([]);
     const [newTaskDescription, setNewTaskDescription] = useState('');
     const [newTaskName, setNewTaskName] = useState('');
-    const [newTaskStatus, setNewTaskStatus] = useState(1);
+    const [newTaskStatus, setNewTaskStatus] = useState(null);
     const [message, setMessage] = useState({ message: '', className: '' });
+    const [asc, setAsc] = useState(true);
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [filterByName, setFilterByName] = useState(false);
     const [filterByStatus, setFilterByStatus] = useState(false);
-    const [asc, setAsc] = useState(true);
 
     // Fetch the tasks list and the task status when the project uuid is set
     useEffect(() => {
@@ -34,18 +35,14 @@ export default function TasksField({ project, jwt, userData }) {
     // If a message exist, display the message and set it to a empty string after 5 seconds
     useEffect(() => {
         if (message) {
-            setTimeout(() => {
-                setMessage({ message: '', className: '' });
-            }, 5000);
+            const timer = setTimeout(() => setMessage({ message: '', className: '' }), 5000);
+            return () => clearTimeout(timer);
         }
     }, [message]);
 
     // Check if the user is the author of the project
     function checkIfUserIsAuthor() {
-        if (project.username == userData.username) {
-            setuserIsAuthor(true)
-            return;
-        }
+        setuserIsAuthor(project.username == userData.username);
     }
 
     // Fetch the tasks list
@@ -95,20 +92,46 @@ export default function TasksField({ project, jwt, userData }) {
             return;
         }
 
-        if (cleanString(newTaskName) === '' && cleanString(newTaskDescription) === '') {
+        // Start the data object with the current task data
+        let data = {
+            task_name: currentTask.task_name,
+            task_description: currentTask.task_description,
+            task_status_id: currentTask.task_status_id
+        }
+
+        // If we have a newTaskName or newTaskDescription, we verify if the string is not empty
+        if ((newTaskName && cleanString(newTaskName) === '') || (newTaskDescription && cleanString(newTaskDescription) === '')) {
             setMessage({ message: 'Veuillez remplir tous les champs', className: 'error' });
             return;
         }
 
-        const data = {
-            task_name: cleanString(newTaskName),
-            task_description: cleanString(newTaskDescription),
-            task_status_id: newTaskStatus
+        // If we have a newTaskName, we update the data object
+        if (newTaskName) {
+            data.task_name = newTaskName;
         }
 
+        // If we have a newTaskDescription, we update the data object
+        if (newTaskDescription) {
+            data.task_description = newTaskDescription;
+        }
+
+        // If we have a newTaskStatus, we update the data object
+        if (newTaskStatus) {
+            data.task_status_id = newTaskStatus;
+        }
+
+        // Update the task
         await updateTasks(jwt, id, data);
         fetchTasksList();
         setEditingTaskId(null);
+
+        // Reset the newTaskDescription, the newTaskName and the newTaskStatus
+        setNewTaskDescription('');
+        setNewTaskName('');
+        setNewTaskStatus(null);
+
+        // Display a success message
+        setMessage({ message: 'Tâche modifiée', className: 'success' });
     }
 
     // Filter the tasks by name
@@ -144,17 +167,16 @@ export default function TasksField({ project, jwt, userData }) {
         fetchTasksList();
     }
 
-
     return (
         <div className="tasks-field">
             <h3>Taches:</h3>
             {tasksLoaded ?
-                <p className={ tasksList.length - tasksList.filter((task) => task.task_status_id == 4).length == 0 ? "tasks-ratio success-text" : "tasks-ratio"}>{tasksList.filter((task) => task.task_status_id == 4).length} / {tasksList.length}</p>
+                <p className={tasksList.length - tasksList.filter((task) => task.task_status_id == 4).length == 0 ? "tasks-ratio success-text" : "tasks-ratio"}>{tasksList.filter((task) => task.task_status_id == 4).length} / {tasksList.length}</p>
                 : null}
             {userIsAuthor ?
                 <button className="task-add-btn" onClick={(e) => addTask()}>Ajouter nouvelle tache</button>
                 : null}
-            {filterByName || filterByStatus?
+            {filterByName || filterByStatus ?
                 <div className="filtered">
                     <p>Tâches triées par: <span>{filterByName ? "Nom" : "Status"}</span></p>
                     <p className="delete-filter" onClick={(e) => resetFilter()}>Retirer les filtres</p>
@@ -172,13 +194,18 @@ export default function TasksField({ project, jwt, userData }) {
                         return (<li key={task.task_id} className={userIsAuthor ? "author" : "user"}>
                             {editingTaskId === task.task_id ?
                                 <>
-                                    <input type="text" defaultValue={task.task_name} onChange={(e) => setNewTaskName(e.target.value)} />
-                                    <select onChange={(e) => setNewTaskStatus(e.target.value)}>
+                                    <input type="text" defaultValue={currentTask.task_name} onChange={(e) => setNewTaskName(e.target.value)} />
+                                    <select defaultValue={currentTask.task_status_id} onChange={(e) => setNewTaskStatus(e.target.value)}>
                                         {taskStatus.map((status) => {
-                                            return <option key={status.id} value={status.id}>{status.status_name}</option>
+                                            return <option
+                                                key={status.id}
+                                                value={status.id}
+                                            >
+                                                {status.status_name}
+                                            </option>
                                         })}
                                     </select>
-                                    <textarea defaultValue={task.task_description} onChange={(e) => setNewTaskDescription(e.target.value)}></textarea>
+                                    <textarea defaultValue={currentTask.task_description} onChange={(e) => setNewTaskDescription(e.target.value)}></textarea>
                                     <div className="action-buttons">
                                         <button className="confirm" onClick={(e) => updateTask(task.task_id)}>Valider</button>
                                         <button className="cancel" onClick={(e) => setEditingTaskId(null)}>Annuler</button>
@@ -191,7 +218,10 @@ export default function TasksField({ project, jwt, userData }) {
                                     <p>{task.task_description}</p>
                                     {userIsAuthor ?
                                         <div className="action-buttons">
-                                            <button className="edit" onClick={(e) => setEditingTaskId(task.task_id)}>Éditer</button>
+                                            <button className="edit" onClick={(e) => {
+                                                setCurrentTask(task);
+                                                setEditingTaskId(task.task_id);
+                                            }}>Éditer</button>
                                             <button className="delete" onClick={(e) => deleteTask(task.task_id)}>Supprimer</button>
                                         </div>
                                         :
