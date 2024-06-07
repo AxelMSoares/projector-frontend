@@ -141,7 +141,7 @@ export default function NewProjectMember() {
     const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || checkIfUserIsAuthor());
 
     return (
-        <div className="newProjectMember">
+        <main className="newProjectMember">
             <h3>Ajouter des membres</h3>
             <div>
                 <p>Rechercher par pseudo:</p>
@@ -169,6 +169,6 @@ export default function NewProjectMember() {
             </div>
             <button className="return-project-btn" onClick={(e) => returnToProject()}>Annuler</button>
             <button className="add-member-btn" onClick={addNewMembers}>Ajouter</button>
-        </div>
+        </main>
     )
 }

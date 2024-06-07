@@ -83,7 +83,7 @@ function LoginForm({ onConnect }) {
   }
 
   return (
-    <div>
+    <main>
       {newUserMsg ? <div className='success'>{newUserMsg}</div> : null}
       <form className="login-field" action="" method="post">
         <h1>Connexion</h1>
@@ -96,7 +96,7 @@ function LoginForm({ onConnect }) {
         {errorMessage ? <div className='error'>{errorMessage}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>
       </form>
-    </div>
+    </main>
   )
 }
 

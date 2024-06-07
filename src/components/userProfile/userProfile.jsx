@@ -171,7 +171,7 @@ export default function UserProfile({ jwt, userData }) {
     }
 
     return (
-        <div className='profile'>
+        <main className='profile'>
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
@@ -219,6 +219,6 @@ export default function UserProfile({ jwt, userData }) {
                     </> : null}
                 </>
             }
-        </div>
+        </main>
     );
 }

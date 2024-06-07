@@ -54,6 +54,17 @@ body {
     line-height: 1.6em;
 }
 
+#root{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+
+}
+
+main{
+    flex: 1;
+}
+
 input {
     border-radius: 5px;
     border: 0;

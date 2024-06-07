@@ -73,7 +73,7 @@ export default function NewProjectTask({ jwt, userData }) {
     }
 
     return (
-        <div className="new-project-task-field">
+        <main className="new-project-task-field">
             <h2>Nouvelle tâche:</h2>
             <div>
                 <label htmlFor="taskName">Nom de la tâche:</label>
@@ -86,6 +86,6 @@ export default function NewProjectTask({ jwt, userData }) {
                     <button className="new-task-btn" onClick={createTask}>Créer nouvelle tâche</button>
                 </div>
             </div>
-        </div>
+        </main>
     )
 }

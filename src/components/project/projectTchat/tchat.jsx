@@ -218,7 +218,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
     return (
 
-        <div className='tchat-background'>
+        <main className='tchat-background'>
             <p>Tchat:</p>
             <button className="return-btn" onClick={(e)=>redirectToProject()}>Retourner au projet</button>
             <div className="project-tchat">
@@ -258,6 +258,6 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
                 <input type="text" id="new_message" name="new_message" placeholder="Votre message..." maxLength="255" />
             </form>
             <div ref={scrollRef}></div>
-        </div>
+        </main>
     );
 }

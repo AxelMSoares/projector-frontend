@@ -113,7 +113,7 @@ export default function ProjectDetails({ jwt, userData }) {
     }
 
     return (
-        <div className="project-detail-body">
+        <main className="project-detail-body">
             {errorMsg ?
                 <div className="error">{errorMsg}</div> :
                 (
@@ -134,6 +134,6 @@ export default function ProjectDetails({ jwt, userData }) {
                     </>
                 )
             }
-        </div>
+        </main>
     );
 } 
