@@ -44,13 +44,13 @@ export default function UserProfile({ jwt, userData }) {
         }
     }, [user]);
 
-    // Display the message for 10 seconds
+    // Display the message for 5 seconds
     useEffect(() => {
         if (message.content) {
             messageRef.current.scrollIntoView({ behavior: 'smooth' });
             const timer = setTimeout(() => {
                 setMessage({ content: '', class: '' });
-            }, 10000);
+            }, 5000);
             return () => clearTimeout(timer);
         }
     }, [message]);
