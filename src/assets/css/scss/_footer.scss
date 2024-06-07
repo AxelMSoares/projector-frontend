@@ -18,6 +18,27 @@
     color: var(--light-color);
 }
 
+.footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer ul li .icons-field{
+    fill: var(--light-color);
+    max-width: 200px;
+    width: 100%;
+}
+
+.footer ul li .icons-field a{
+    margin-right: 10px;
+}
+
+.footer ul li .icons-field a img{
+    color: var(--light-color);
+}
+
 .footer .copyright p{
     text-align: center;
     margin: 5px;
