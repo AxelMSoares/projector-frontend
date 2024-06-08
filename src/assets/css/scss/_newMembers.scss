@@ -4,6 +4,7 @@
     text-align: center;
     padding: 20px 0;
     max-width: 800px;
+    width: 100%;
     margin-right: auto;
     margin-left: auto;
     border-radius: 5px;
@@ -42,6 +43,7 @@
 
 .newProjectMember .membersList div input{
     margin: 10px 20px 10px 10px;
+    background-color: red;
 }
 
 .newProjectMember button{
@@ -74,4 +76,44 @@
     background-color: var(--fourth-color);
     border: 2px solid var(--light-color);
     box-shadow: 0 0 5px var(--light-color);
+}
+
+.newProjectMember .pagination{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.newProjectMember .pagination p{
+    margin-right: 10px;
+}
+
+.newProjectMember .pagination button{
+    background-color: var(--secondary-background-color);
+    color: var(--light-color);
+    padding: 4px 10px;
+    border: none;
+    border-radius: 5px;
+    transition: all .3s linear;
+    cursor: pointer;
+    border: 1px solid var(--light-color);
+    margin-right: 5px;
+    font-size: 0.6em;
+}
+
+.newProjectMember .pagination button:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
+}
+
+.newProjectMember .pagination .active{
+    background-color: var(--ongoing-color);
+}
+
+.newProjectMember .adverting{
+    padding: 0 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 0.6em;
 }

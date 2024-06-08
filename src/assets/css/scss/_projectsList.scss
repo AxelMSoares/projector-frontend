@@ -50,6 +50,7 @@
 
 .project-list h2 {
     margin-bottom: 30px;
+    font-size: 1.2em;
 }
 
 .project-list .project {
@@ -88,6 +89,51 @@
     flex-wrap:wrap;
     justify-content:space-between;
     margin-bottom: 10px;
+}
+
+.project-list .search-box{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.project-list .search-box input{
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.project-list .results-text{
+    margin-bottom: 20px;
+    margin-left: 20px;
+    text-decoration: underline;
+    font-size: 1em;
+}
+
+.project-list .pagination{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.project-list .pagination .pages-btn{
+    background-color: var(--fourth-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin-left: 10px;
+}
+
+.project-list .pagination .pages-btn:hover{
+    box-shadow: 0 0 2px 2px var(--light-color);
+}
+
+.project-list .pagination .active{
+    background-color: var(--ongoing-color);
 }
 
 .clicked{

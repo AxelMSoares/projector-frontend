@@ -431,10 +431,57 @@
 
 .projects-participate h2 {
     margin-bottom: 30px;
+    font-size: 1.2em;
 }
 
 .projects-participate p span{
     margin-left: 5px;
+}
+
+.projects-participate .filters .search-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.projects-participate .filters .search-wrapper input{
+    width: 60%;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.projects-participate .results-text{
+    margin-bottom: 20px;
+    margin-left: 20px;
+    text-decoration: underline;
+    font-size: 1em;
+}
+
+.projects-participate .pagination .pages-btn{
+    background-color: var(--fourth-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin-left: 10px;
+}
+
+.projects-participate .pagination .pages-btn:hover{
+    box-shadow: 0 0 2px 2px var(--light-color);
+}
+
+.projects-participate .pagination .active{
+    background-color: var(--ongoing-color);
+}
+
+.projects-participate .pagination{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
 }
 
 .projects-participate li{

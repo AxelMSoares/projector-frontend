@@ -3,13 +3,15 @@ import { getProjectsUserIsMember } from '../../api/getProjectsUserIsMember';
 import { formatDate } from '../../helpers/functions';
 
 export default function UserIsProjectMember({ jwt, userData }) {
-
     const [projects, setProjects] = useState([]);
     const [filterByName, setfilterByName] = useState(false);
     const [filterByCreationDate, setfilterByCreationDate] = useState(false);
     const [filterByCategory, setfilterByCategory] = useState(false);
     const [filterName, setFilterName] = useState('');
     const [asc, setAsc] = useState(true);
+    const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const projectsPerPage = 4; // Number of projects per page
 
     useEffect(() => {
         fetchData();
@@ -23,14 +25,12 @@ export default function UserIsProjectMember({ jwt, userData }) {
     async function fetchData() {
         const projectList = await getProjectsUserIsMember(jwt, userData.uuid);
         setProjects(projectList);
-
     }
 
     function redirectToProjectDetails(projectUuid) {
         window.location.href = `/detail-projet/?uuid=${projectUuid}`;
     }
 
-    // Function to filter the projects by name
     const filterProjectsByName = () => {
         setfilterByName(true);
         setfilterByCreationDate(false);
@@ -48,7 +48,6 @@ export default function UserIsProjectMember({ jwt, userData }) {
         }
     }
 
-    // Function to filter the projects by creation date
     const filterProjectsByCreationDate = () => {
         setfilterByName(false);
         setfilterByCreationDate(true);
@@ -66,7 +65,6 @@ export default function UserIsProjectMember({ jwt, userData }) {
         }
     }
 
-    // Function to filter the projects by category
     const filterProjectsByCategory = () => {
         setfilterByName(false);
         setfilterByCreationDate(false);
@@ -84,22 +82,36 @@ export default function UserIsProjectMember({ jwt, userData }) {
         }
     }
 
-    // Reset the filters and buttons to the default
     function resetFilters() {
         setfilterByName(false);
         setfilterByCreationDate(false);
         setfilterByCategory(false);
         setFilterName('');
         fetchData();
-
     }
 
-    console.log(projects);
+    const filteredProjects = projects.filter(project =>
+        project.project_name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const indexOfLastProject = currentPage * projectsPerPage;
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <main className='projects-participate'>
             <h2>Projets auxquels je participe:</h2>
             <div className="filters">
+                <div className='search-wrapper'>
+                    <input
+                        type="text"
+                        placeholder="Rechercher un projet par nom..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+                </div>
                 <p>Trier par:</p>
                 <button className={filterByName ? "clicked" : ""} onClick={(e) => filterProjectsByName()}>Nom {filterByName ? (asc ? '▲' : '▼') : null}</button>
                 <button className={filterByCreationDate ? "clicked" : ""} onClick={(e) => filterProjectsByCreationDate()}>Date de création {filterByCreationDate ? (asc ? '▲' : '▼') : null}</button>
@@ -110,21 +122,29 @@ export default function UserIsProjectMember({ jwt, userData }) {
                         <button id="delete-filters" onClick={(e) => resetFilters()}>Retirer les filtres</button>
                     </div> : null}
             </div>
-            {projects.length > 0 ?
+            {search ? <p className='results-text'>Résultats de la recherche:</p> : null}
+            {currentProjects.length > 0 ?
                 <ul>
-                    {projects.map((project) => (
+                    {currentProjects.map((project) => (
                         <li key={project.uuid} onClick={(e) => redirectToProjectDetails(project.uuid)}>
                             <p>Nom: <span>{project.project_name}</span></p>
                             <p>Description: <span>{project.project_description}</span></p>
                             <p>Date de création: <span>{formatDate(project.project_created)}</span></p>
                             <p>Catégorie: <span>{project.category_name}</span></p>
-                            <p>Mon role: <span>{project.role}</span></p>
+                            <p>Mon rôle: <span>{project.role}</span></p>
                         </li>
                     ))}
                 </ul> :
-                <p>Vous ne participez à aucun projet pour le moment.</p>
+                <p>Pas de résultats trouvés pour cette recherche.</p>
             }
-
+            <div className="pagination">
+                <p>Pages:</p>
+                {Array.from({ length: Math.ceil(filteredProjects.length / projectsPerPage) }, (_, i) => (
+                    <button className={currentPage === i + 1 ? 'pages-btn active' : 'pages-btn'} key={i + 1} onClick={() => paginate(i + 1)}>
+                        {i + 1}
+                    </button>
+                ))}
+            </div>
         </main>
-    )
+    );
 }
