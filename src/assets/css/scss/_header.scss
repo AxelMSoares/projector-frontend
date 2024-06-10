@@ -98,9 +98,15 @@
     box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.username-view {
+.header-container ul li .username-view {
     color: var(--primary-color)!important;
     text-decoration: underline!important;
+    display: flex;
+    align-items: center;
+}
+
+.header-container ul li .username-view img{
+    margin-right: 5px;
 }
 
 #logout-btn button{
@@ -130,4 +136,93 @@
 .user-special-statut {
     color: var(--success-color);
     margin-left: 5px;
+}
+
+@media (max-width: 1200px){
+
+    .header-container .nav-bar-right {
+        width: 35%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 980px){
+    .header-container {
+        margin-bottom: 40px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .header-container .nav-bar-right {
+        align-self: center;
+    }
+
+    .header-container .nav-bar-right #logout-btn button{
+        margin-left: 5px;
+        margin-right: 10px;
+    }
+
+    .header-container .nav-bar-left {
+        align-self: center;
+    }
+
+
+    
+}
+
+@media (max-width: 768px){
+    .header-container {
+        margin-bottom: 40px;
+    }
+
+    .header-container .nav-bar-left ul{
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .header-container .nav-bar-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .header-container .nav-bar-right ul {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .header-container #logo-link {
+        margin-right: 0;
+    }
+
+    .header-container #sign-in-btn a {
+        margin-top: 10px;
+    }
+
+    .header-container ul li {
+        margin-top: 0;
+    }
+
+    .header-container ul li a {
+        padding: 5px 10px;
+    }
+}
+
+@media (max-width : 420px){
+
+    .header-container{
+        font-size: 0.9em;
+    }
+
+    .header-container #logo-link {
+        font-size: 1.2em;
+    }
+
+    .header-container #logout-btn button {
+        padding: 8px 5px;
+        font-size: 0.5em;
+    }
 }

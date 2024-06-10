@@ -117,3 +117,45 @@
     border: 2px solid var(--error-color)!important;
     font-weight: 600;
 }
+
+@media (max-width: 810px) {
+    .register-field {
+        padding: 20px;
+        margin-left: 2%;
+        margin-right: 2%;
+        width: 96%;
+    }
+
+    .register-field h1 {
+        margin-top: 20px;
+        font-size: 1.5em;
+    }
+
+    .register-field input {
+        padding: 5px 10px;
+    }
+
+    .register-field button {
+        padding: 5px 10px;
+    }
+
+    .register-field .pwd-recommendations{
+       max-width: 50%;
+    }
+
+    .register-field .side-inputs {
+        width: 100%;
+    }
+
+    .register-field .side-inputs div,
+    .register-field div,
+    .register-field label {
+        width: 100%;
+    }
+
+    .register-field .error-text .errorfield,
+    .register-field .checkbox-input .errorfield {
+        font-size: 0.8em;
+    }
+    
+}

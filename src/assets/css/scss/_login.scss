@@ -52,3 +52,10 @@
 #login-mail {
     display: none;
 }
+
+@media (max-width: 768px) {
+    .login-field {
+        padding: 20px;
+        width: 90%;
+    }
+}

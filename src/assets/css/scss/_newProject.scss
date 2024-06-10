@@ -87,3 +87,10 @@
 .new-project-field .radio-field input {
     height: 16px;
 }
+
+@media (max-width: 768px) {
+    .new-project-field {
+        width: 90%;
+        padding: 0 20px;
+    }
+}

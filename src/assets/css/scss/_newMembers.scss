@@ -117,3 +117,24 @@
     margin-top: 20px;
     font-size: 0.6em;
 }
+
+@media (max-width: 800px) {
+    .newProjectMember{
+        width: 96%;
+    }
+}
+
+@media (max-width: 420px) {
+    .newProjectMember h3{
+        font-size: 1.2em;
+    }
+
+    .newProjectMember label,
+    .newProjectMember p{
+        font-size: 0.8em;
+    }
+
+    .newProjectMember button{
+        font-size: 0.6em;
+    }
+}

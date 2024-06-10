@@ -188,7 +188,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             }
             <div className='search-members-field'>
                 <label htmlFor='user-search'>Rechercher un membre:</label>
-                <input type="text" id="user-search" name="user-search" onChange={(e) => searchUser(e.target.value)} />
+                <input type="text" id="user-search" name="user-search" placeholder="Rechercher par pseudo..." onChange={(e) => searchUser(e.target.value)} />
             </div>
             {filteredByUsername || filteredByRole ?
                 <div className='filter-field'>
@@ -230,7 +230,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                             </>
                         )}
                         {userIsAuthor && (
-                            <div>
+                            <div className='action-btns'>
                                 {editingMemberId === member.id ? (
                                     <>
                                         <button className="members-confirm-btn" onClick={() => updateRole(member.id, cleanString(newRole))}> Valider </button>

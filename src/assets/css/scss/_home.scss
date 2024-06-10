@@ -66,3 +66,24 @@
 .content-wrapper .side-text {
     width: 50%;
 }
+
+@media (max-width: 768px) {
+
+    .background {
+        padding: 20px;
+        border-radius: 5px;
+    }
+    .content-wrapper .description {
+        font-size: 1em;
+    }
+
+    .content-wrapper .side-text {
+        width: 100%;
+    }
+
+
+    .content-wrapper #projector-image1 {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

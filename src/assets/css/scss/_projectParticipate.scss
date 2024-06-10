@@ -1,0 +1,186 @@
+.projects-participate{
+    background-color: var(--secondary-background-color);
+    color: var(--light-color);
+    max-width: 1400px;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.projects-participate h2 {
+    margin-bottom: 30px;
+    font-size: 1.2em;
+}
+
+.projects-participate p span{
+    margin-left: 5px;
+}
+
+.projects-participate .filters .search-wrapper{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+.projects-participate .filters .search-wrapper input{
+    width: 60%;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.projects-participate .results-text{
+    margin-bottom: 20px;
+    margin-left: 20px;
+    text-decoration: underline;
+    font-size: 1em;
+}
+
+.projects-participate .pagination .pages-btn{
+    background-color: var(--fourth-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin-left: 10px;
+}
+
+.projects-participate .pagination .pages-btn:hover{
+    box-shadow: 0 0 2px 2px var(--light-color);
+}
+
+.projects-participate .pagination .active{
+    background-color: var(--ongoing-color);
+}
+
+.projects-participate .pagination{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.projects-participate li{
+    border: 2px solid var(--ongoing-color);
+    width: 90%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 20px;
+    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    transition: all .3s ease;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.projects-participate li:hover{
+    border: 2px solid var(--light-color);
+    box-shadow: 0 0 5px var(--light-color);
+}
+
+.projects-participate .filters {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.projects-participate .filters p{
+    margin-right: 20px;
+}
+
+.projects-participate .filters button{
+    margin-right: 10px;
+    background-color: var(--fourth-color);
+    color: var(--light-color);
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.projects-participate .filters .filter-name{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.projects-participate .filters .filter-name span{
+    margin-left: 5px;
+}
+
+.projects-participate .filters .filter-name #delete-filters{
+    border: 1px solid var(--light-color);
+    padding: 6px;
+}
+
+.projects-participate .filters button:hover,
+.clicked:hover{
+    box-shadow: 0 0 2px 2px var(--light-color);
+}
+
+@media (max-width: 1400px){
+    .projects-participate{
+        width: 96%;
+        padding: 14px;
+    }
+
+    .projects-participate .search-wrapper{
+        width: 100%;
+    }
+
+    .projects-participate .search-wrapper input{
+        width: 80%;
+    }
+
+    
+}
+
+@media (max-width: 768px){
+    .projects-participate .filters .search-wrapper input{
+        width: 90%;
+    }
+
+    .projects-participate li{
+        width: 100%;
+    }
+    
+}
+
+@media (max-width: 460px){
+
+    .projects-participate{
+        font-size: 1em;
+        line-height: 1.6em;
+    }
+
+    .projects-participate .filters{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .projects-participate li p{
+        margin-bottom: 10px;
+    }
+
+    .projects-participate .filters p{
+        margin-bottom: 10px;
+    }
+
+    .projects-participate .filters button{
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .projects-participate li{
+        margin-bottom: 20px;
+    }
+}

@@ -44,3 +44,19 @@
     margin: 5px;
     font-size: 0.7em;
 }
+
+@media (max-width: 480px) {
+    .footer{
+        font-size: 0.8em;
+    }
+
+    .footer .footer-background .footer-wrapper ul{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+
+    .footer .footer-background .footer-wrapper ul li{
+        margin-bottom: 10px;
+    }
+}

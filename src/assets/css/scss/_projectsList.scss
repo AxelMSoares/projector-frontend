@@ -161,3 +161,47 @@
     border: 2px solid var(--light-color);
     box-shadow: 0 0 5px var(--light-color);
 }
+
+@media (max-width: 1400px) {
+
+    .project-list{
+        width: 96%;
+        padding: 14px;
+    }
+
+    .project-list .project .project-content{
+        padding: 20px;
+    }
+
+    .project-list .project-content{
+        padding: 20px 40px;
+    }
+
+    .project-list .search-box input{
+        width: 90%;
+    }
+}
+
+@media (max-width: 460px) {
+    .project-list{
+        font-size: 1em;
+        line-height: 1.6em;
+    }
+
+    .project-list .filters p{
+        margin-bottom: 10px;
+    }
+
+    .project-list .filters{
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .project-list .filters button{
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    
+}

@@ -218,3 +218,31 @@
     max-width: 250px;
     width: 100%;
 }
+
+@media (max-width: 1000px){
+    .profile{
+        width: 96%;
+    }
+}
+
+@media (max-width: 420px){
+
+    .profile{
+        padding: 30px;
+    }
+
+    .profile h1{
+        font-size: 1.4em;
+    }
+
+    .profile .edit-profile-btn{
+        top: 80px;
+        right: 50%;
+        transform: translateX(50%);
+    }
+
+    .profile label,
+    .profile p{
+        font-size: 0.8em;
+    }
+}
