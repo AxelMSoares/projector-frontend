@@ -72,11 +72,11 @@ function App() {
         },
         {
           path: '/projets/participations',
-          element: <UserIsProjectMember jwt={jwt} userData={userData}/>
+          element: <UserIsProjectMember jwt={jwt} userData={userData} />
         },
         {
           path: '/projet/nouvelle-tache',
-          element: <NewProjectTask jwt={jwt} userData={userData}/>
+          element: <NewProjectTask jwt={jwt} userData={userData} />
         },
         {
           path: '/utilisateur/:pseudo',
@@ -89,9 +89,18 @@ function App() {
   function ErrorPage() {
     const error = useRouteError();
     console.log(error);
+    if (error?.status === 404) {
+      return (
+        <div className='error-page'>
+          <h2>404 - Page non trouvée!</h2>
+          <p>La page que vous cherchez n'existe pas.</p>
+          <Link to='/' className='return-home'>Retour à l'accueil</Link>
+        </div>
+      );
+    }
     return (
-      <div>
-        <h2 className='error-page'>Zut! Une erreur est survenue!</h2>
+      <div className='error-page'>
+        <h2>Une erreur est survenue!</h2>
         <p>{error?.error?.toString() ?? error?.toString()}</p>
       </div>
     );
