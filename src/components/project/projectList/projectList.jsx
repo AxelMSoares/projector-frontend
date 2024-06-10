@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
 import { getUserProjects } from '../../../api/getUserProjects';
@@ -10,9 +10,9 @@ export default function ProjectList({ jwt }) {
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const [projects, setProjects] = useState([]);
     const [asc, setAsc] = useState('');
-    const [filterByName, setfilterByName] = useState(false);
-    const [filterByCreationDate, setfilterByCreationDate] = useState(false);
-    const [filterByCategory, setfilterByCategory] = useState(false);
+    const [filterByName, setFilterByName] = useState(false);
+    const [filterByCreationDate, setFilterByCreationDate] = useState(false);
+    const [filterByCategory, setFilterByCategory] = useState(false);
     const [filterName, setFilterName] = useState('');
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
@@ -20,7 +20,7 @@ export default function ProjectList({ jwt }) {
 
     useEffect(() => {
         if (!jwt) {
-            window.location.href = '/connexion'; //If the user is not connected, redirect him to the login page
+            window.location.href = '/connexion'; // If the user is not connected, redirect him to the login page
             return; // Return to prevent the rest of the function from executing
         }
 
@@ -38,9 +38,9 @@ export default function ProjectList({ jwt }) {
 
     // Function to filter the projects by name
     const filterProjectsByName = () => {
-        setfilterByName(true);
-        setfilterByCreationDate(false);
-        setfilterByCategory(false);
+        setFilterByName(true);
+        setFilterByCreationDate(false);
+        setFilterByCategory(false);
         setFilterName('Nom');
 
         if (asc) {
@@ -52,13 +52,13 @@ export default function ProjectList({ jwt }) {
             setProjects([...sortedProjects]);
             setAsc(true);
         }
-    }
+    };
 
     // Function to filter the projects by creation date
     const filterProjectsByCreationDate = () => {
-        setfilterByName(false);
-        setfilterByCreationDate(true);
-        setfilterByCategory(false);
+        setFilterByName(false);
+        setFilterByCreationDate(true);
+        setFilterByCategory(false);
         setFilterName('Date de création');
 
         if (asc) {
@@ -70,13 +70,13 @@ export default function ProjectList({ jwt }) {
             setProjects([...sortedProjects]);
             setAsc(true);
         }
-    }
+    };
 
     // Function to filter the projects by category
     const filterProjectsByCategory = () => {
-        setfilterByName(false);
-        setfilterByCreationDate(false);
-        setfilterByCategory(true);
+        setFilterByName(false);
+        setFilterByCreationDate(false);
+        setFilterByCategory(true);
         setFilterName('Catégorie');
 
         if (asc) {
@@ -88,13 +88,13 @@ export default function ProjectList({ jwt }) {
             setProjects([...sortedProjects]);
             setAsc(true);
         }
-    }
+    };
 
     // Reset the filters and buttons to the default
     function resetFilters() {
-        setfilterByName(false);
-        setfilterByCreationDate(false);
-        setfilterByCategory(false);
+        setFilterByName(false);
+        setFilterByCreationDate(false);
+        setFilterByCategory(false);
         setFilterName('');
         fetchData();
     }
@@ -102,20 +102,20 @@ export default function ProjectList({ jwt }) {
     // Redirect to the project details on click
     const handleProjectClick = (uuid) => {
         window.location.href = `/detail-projet/?uuid=${uuid}`;
-    }
-
-    // Get current projects based on pagination
-    const indexOfLastProject = currentPage * projectsPerPage;
-    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
-    const currentProjects = projects.slice(indexOfFirstProject, indexOfLastProject);
-
-    // Change page
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    };
 
     // Filter projects by search input
     const filteredProjects = projects.filter(project =>
         project.project_name.toLowerCase().includes(search.toLowerCase())
     );
+
+    // Get current projects based on pagination
+    const indexOfLastProject = currentPage * projectsPerPage;
+    const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+    const currentProjects = filteredProjects.slice(indexOfFirstProject, indexOfLastProject);
+
+    // Change page
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <main>
@@ -128,29 +128,43 @@ export default function ProjectList({ jwt }) {
                                 type="text"
                                 placeholder="Rechercher un projet par nom..."
                                 value={search}
-                                onChange={(e) => setSearch(e.target.value)}
+                                onChange={(e) => {
+                                    setSearch(e.target.value);
+                                    setCurrentPage(1); // Reset to first page on search
+                                }}
                             />
                         </div>
                         <p>Trier par:</p>
-                        <button className={filterByName ? "clicked" : ""} onClick={(e) => filterProjectsByName()}>Nom {filterByName ? (asc ? '▲' : '▼') : null}</button>
-                        <button className={filterByCreationDate ? "clicked" : ""} onClick={(e) => filterProjectsByCreationDate()}>Date de création {filterByCreationDate ? (asc ? '▲' : '▼') : null}</button>
-                        <button className={filterByCategory ? "clicked" : ""} onClick={(e) => filterProjectsByCategory()}>Catégorie {filterByCategory ? (asc ? '▲' : '▼') : null}</button>
-                        {filterByName || filterByCreationDate || filterByCategory ?
+                        <button className={filterByName ? "clicked" : ""} onClick={filterProjectsByName}>
+                            Nom {filterByName ? (asc ? '▲' : '▼') : null}
+                        </button>
+                        <button className={filterByCreationDate ? "clicked" : ""} onClick={filterProjectsByCreationDate}>
+                            Date de création {filterByCreationDate ? (asc ? '▲' : '▼') : null}
+                        </button>
+                        <button className={filterByCategory ? "clicked" : ""} onClick={filterProjectsByCategory}>
+                            Catégorie {filterByCategory ? (asc ? '▲' : '▼') : null}
+                        </button>
+                        {filterByName || filterByCreationDate || filterByCategory ? (
                             <div className='filter-name'>
                                 <p>Projets triés par: <span>{filterName}</span></p>
-                                <button id="delete-filters" onClick={(e) => resetFilters()}>Retirer les filtres</button>
-                            </div> : null}
+                                <button id="delete-filters" onClick={resetFilters}>Retirer les filtres</button>
+                            </div>
+                        ) : null}
                     </div>
                     {search ? <p className='results-text'>Resultats de la recherche:</p> : null}
-                    {filteredProjects && filteredProjects.length > 0 ? (
-                        filteredProjects.map(project => (
+                    {currentProjects && currentProjects.length > 0 ? (
+                        currentProjects.map(project => (
                             <div key={project.uuid} className="project">
                                 <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
                                     <p className='project-title'>{project.project_name}</p>
                                     <p>{project.project_description}</p>
                                     <p>Créé le: <span>{formatDate(project.project_created)}</span></p>
                                     <p>Catégorie: <span>{project.category_name}</span></p>
-                                    {project.project_deadline ? <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p> : <p> Deadline: <span className="success-text">Pas de data limite</span></p>}
+                                    {project.project_deadline ? (
+                                        <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p>
+                                    ) : (
+                                        <p>Deadline: <span className="success-text">Pas de date limite</span></p>
+                                    )}
                                     <p>Statut: <span className={checkStatus(project.status_name)}>{project.status_name}</span></p>
                                 </div>
                             </div>
@@ -160,8 +174,12 @@ export default function ProjectList({ jwt }) {
                     )}
                     <div className="pagination">
                         <p>Pages:</p>
-                        {Array.from({ length: Math.ceil(filteredProjects.length / projectsPerPage) }, (_, i) => (
-                            <button className={currentPage === i + 1 ? 'pages-btn active' : 'pages-btn'} key={i + 1} onClick={() => paginate(i + 1)}>
+                        {Array.from({ length: Math.ceil(filteredProjects.length / projectsPerPage) }).map((_, i) => (
+                            <button
+                                className={currentPage === i + 1 ? 'pages-btn active' : 'pages-btn'}
+                                key={i + 1}
+                                onClick={() => paginate(i + 1)}
+                            >
                                 {i + 1}
                             </button>
                         ))}

@@ -171,7 +171,7 @@ export default function TasksField({ project, jwt, userData }) {
         <div className="tasks-field">
             <h3>Taches:</h3>
             {tasksLoaded ?
-                <p className={tasksList.length - tasksList.filter((task) => task.task_status_id == 4).length == 0 ? "tasks-ratio success-text" : "tasks-ratio"}>{tasksList.filter((task) => task.task_status_id == 4).length} / {tasksList.length}</p>
+                <p className={tasksList.length - tasksList.filter((task) => task.task_status_id == 4).length == 0 ? "tasks-ratio success-text" : "tasks-ratio"}>Terminées: <span>{tasksList.filter((task) => task.task_status_id == 4).length} / {tasksList.length}</span></p>
                 : null}
             {userIsAuthor ?
                 <button className="task-add-btn" onClick={(e) => addTask()}>Ajouter nouvelle tache</button>
