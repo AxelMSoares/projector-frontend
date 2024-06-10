@@ -1,10 +1,14 @@
-import { useState } from 'react';
-import Cookies from 'js-cookie';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function UsersHeader({onConnect}) {
+function UsersHeader({ onConnect, userData }) {
 
-	const [data, setData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+	const [data, setData] = useState(userData);
+
+	useEffect(() => {
+		setData(userData);
+	}, [userData]);
 
 	const onLogoutHandler = (e) => {
 		e.preventDefault();
@@ -34,8 +38,8 @@ function UsersHeader({onConnect}) {
 				</div>
 				<div className="nav-bar-right">
 					<ul>
-						<li><img className="profile-picture" src={data.profilePicture != null ? data.profilePicture : "/images/avatar-neutre.png" } /><Link className="username-view" to={"/utilisateur/" + data['username']}> { data['username'] } </Link></li>
-						<li id="logout-btn"><button href="" onClick={onLogoutHandler}>Se Deconnecter</button></li>
+						<li><img className="profile-picture" src={userData.profilePicture != null ? userData.profilePicture : "/images/avatar-neutre.png" } /><Link className="username-view" to={"/utilisateur/" + data['username']}> { data['username'] } </Link></li>
+						<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
 					</ul>
 				</div>
 			</div>

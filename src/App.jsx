@@ -80,7 +80,7 @@ function App() {
         },
         {
           path: '/utilisateur/:pseudo',
-          element: <UserProfile jwt={jwt} userData={userData} />
+          element: <UserProfile jwt={jwt} userData={userData} setUserData={setUserData}/>
         }
       ]
     }
@@ -109,7 +109,7 @@ function App() {
   function Root() {
     return (
       <>
-        {connected ? <UsersHeader onConnect={onConnectChangeHandler} /> : <PublicHeader />}
+        {connected ? <UsersHeader onConnect={onConnectChangeHandler} userData={userData} /> : <PublicHeader />}
         <Outlet />
         <Footer />
       </>

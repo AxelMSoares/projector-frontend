@@ -11,13 +11,14 @@ import { cleanString } from '../../helpers/functions';
 import Cookies from 'js-cookie';
 import ProfileImageUpload from './profileImageUpload';
 
-export default function UserProfile({ jwt, userData }) {
+export default function UserProfile({ jwt, userData: userProp }) {
 
     // Get the pseudo from the URL
     const { pseudo } = useParams();
     const [user, setUser] = useState(null);
     const [userLoaded, setUserLoaded] = useState(false);
     const [userProfile, setUserProfile] = useState(false);
+    const [userData, setUserData] = useState(userProp);
     const [editing, setEditing] = useState(false);
     const [newUsername, setNewUsername] = useState('');
     const [newEmail, setNewEmail] = useState('');
@@ -55,9 +56,11 @@ export default function UserProfile({ jwt, userData }) {
         }
     }, [message]);
 
-    function handleImageUpload(imageUrl){
+    function handleImageUpload(imageUrl) {
         setUserImage(imageUrl);
-    };
+        setUserData({ ...userData, profilePicture: imageUrl });
+        updateCookiesWithNewImage(imageUrl);
+    }
 
     async function fetchUserInfos() {
         if (pseudo) {
@@ -101,11 +104,28 @@ export default function UserProfile({ jwt, userData }) {
         const result = await updateUser(jwt, user.uuid, data);
 
         if (result.message === 'User updated') {
+            updateCookiesWithNewData(data);
+            fetchUserInfos();
+            refreshPage();
             setMessage({ content: 'Profil mis à jour avec succès.', class: 'success' });
             setEditing(false);
-            fetchUserInfos();
         }
+    }
 
+    const refreshPage = () => {
+        window.location.reload();
+    }
+
+    function updateCookiesWithNewData(data) {
+        const updatedUserData = { ...user, ...data };
+        Cookies.set('userData', JSON.stringify(updatedUserData));
+        setUser(updatedUserData);
+    }
+
+    function updateCookiesWithNewImage(imageUrl) {
+        const updatedUserData = { ...user, profilePicture: imageUrl };
+        Cookies.set('userData', JSON.stringify(updatedUserData));
+        setUser(updatedUserData);
     }
 
     async function handleDeleteAccount() {
@@ -165,7 +185,6 @@ export default function UserProfile({ jwt, userData }) {
         }
     }
 
-
     if (!userLoaded) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
     }
@@ -175,7 +194,7 @@ export default function UserProfile({ jwt, userData }) {
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
-                    < ProfileImageUpload  jwt={jwt} user={user} onImageUpload={handleImageUpload} />
+                    < ProfileImageUpload jwt={jwt} user={user} onImageUpload={handleImageUpload} />
                     <label htmlFor={"username"}>Pseudo:</label><input type="text" id="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     <label htmlFor={"email"}>Email:</label><input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     <label htmlFor={"conf-email"}>Confirmation email:</label><input type="email" id="conf-email" value={ConfNewEmail} onChange={(e) => setConfNewEmail(e.target.value)} />
