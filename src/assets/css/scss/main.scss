@@ -13,13 +13,12 @@
     --ongoing-color: #4e8deb;
 }
 
-// En scss on peut ajouter des commentaires en utilisant des doubles slashs devant
 
-// On peut créer des variables pour les fonts:
+// Policy for the fonts used in the project:
 $default-font: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 $text-font: "Inter", sans-serif;
 
-// Imports, on decoupe notre code scss en plusieurs morceaux. Exemple: fonts, defaut, header, footer, main
+// Imports of scss files
 @import '_reset';
 @import '_header';
 @import '_home';
