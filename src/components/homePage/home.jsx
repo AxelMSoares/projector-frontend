@@ -20,7 +20,7 @@ function Home() {
                             <p className="description"><span>Travail en équipe ou en solo: </span> Vous pourrez travailler seul, en équipe ou avoir l'aide de la communauté dans vos projets. </p>
                             <div className="projector-image3"><img src="/images/architect.jpg" /></div>
                             <p className="description"><span>Flexibilité et personnalisation: </span> Créez vos propres tâches et attribuez les aux differents membres de vos projets. Suivez l'avancé des tâches en équipe.</p>
-                            <div className="projector-image4"><img src="/images/team-spirit.jpg" /></div>
+                            <div className="projector-image4"><img src="/images/teamwork.jpg" /></div>
                             <p className="description"><span>Envie de participer à la réalisation des projets de la communauté? </span> Bientôt on integrera une fonction qui vous permettra de postuler à un projet public et de proposer des tâches et solutions. Vous pourrez ainsi aider d'autres personnes à avancer dans leur projet.</p>
                         </div>
                     </div>
