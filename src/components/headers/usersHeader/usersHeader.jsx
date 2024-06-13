@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import UserMenu from './userMenu';
+import NavMenu from './navMenu';
 
 function UsersHeader({ onConnect, userData }) {
 
@@ -20,32 +22,46 @@ function UsersHeader({ onConnect, userData }) {
 		window.location.href = '/';
 	}
 
-    return (
-        <header>
-		<nav className="nav-bar">
-			<div className="header-container">
-				<div className="nav-bar-left">
-					<ul>
-						<li>
-							<Link to="/">
-                                <p id="logo-link">Projector</p>
-                            </Link>
-						</li>
-						<li><Link className="page-link" to="/nouveau-projet">Nouveau Projet</Link></li>
-						<li><Link className="page-link" to="/mes-projets">Mes Projets</Link></li>
-						<li><Link className="page-link" to="/projets/participations">Mes participations</Link> </li>
-					</ul>
+	const onDisconnect = () => {
+		onConnect(false);
+		// Destroy the cookies
+		Cookies.remove('jwt', { path: '/' });
+		Cookies.remove('userData', { path: '/' });
+		// Redirect to the home page
+		window.location.href = '/';
+	}
+
+	return (
+		<header>
+			<nav className="nav-bar">
+				<div className="header-container">
+					<div className="nav-bar-left">
+						<Link id="projector-logo" to="/">
+							<img src="/images/projector_logo.png" id="logo-link" />
+						</Link>
+						<ul className='nav-bar'>
+							<li><Link className="page-link" to="/nouveau-projet">Nouveau Projet</Link></li>
+							<li><Link className="page-link" to="/mes-projets">Mes Projets</Link></li>
+							<li><Link className="page-link" to="/projets/participations">Mes participations</Link> </li>
+						</ul>
+						<NavMenu />
+					</div>
+					<div id="middle-logo">
+						<Link to="/">
+							<img src="/images/projector_logo.png" id="logo-link" />
+						</Link>
+					</div>
+					<div className="nav-bar-right">
+						<ul className="big-screen-user-menu">
+							<li><Link className="username-view" to={"/utilisateur/" + data['username']}><img className="profile-picture" src={userData.profilePicture != null ? userData.profilePicture : "/images/avatar-neutre.png"} /> <span>{data['username']}</span> </Link></li>
+							<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
+						</ul>
+						<UserMenu userData={data} onDisconnect={onDisconnect}/>
+					</div>
 				</div>
-				<div className="nav-bar-right">
-					<ul>
-						<li><Link className="username-view" to={"/utilisateur/" + data['username']}><img className="profile-picture" src={userData.profilePicture != null ? userData.profilePicture : "/images/avatar-neutre.png" } /> <span>{ data['username'] }</span> </Link></li>
-						<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</header>
-    )
+			</nav>
+		</header>
+	)
 }
 
 export default UsersHeader;
