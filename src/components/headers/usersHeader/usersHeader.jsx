@@ -52,8 +52,8 @@ function UsersHeader({ onConnect, userData }) {
 						</Link>
 					</div>
 					<div className="nav-bar-right">
-						<ul className="big-screen-user-menu">
-							<li><Link className="username-view" to={"/utilisateur/" + data['username']}><img className="profile-picture" src={userData.profilePicture != null ? userData.profilePicture : "/images/avatar-neutre.png"} /> <span>{data['username']}</span> </Link></li>
+						<ul className="desktop-user-menu">
+							<li><Link className="username-view" to={data ? "/utilisateur/" + data['username'] : null}><img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} /> <span>{data && data['username']}</span> </Link></li>
 							<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
 						</ul>
 						<UserMenu userData={data} onDisconnect={onDisconnect}/>

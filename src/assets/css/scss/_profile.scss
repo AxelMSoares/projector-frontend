@@ -1,4 +1,4 @@
-.profile{
+.profile {
     background-color: var(--secondary-background-color);
     color: var(--light-color);
     max-width: 1000px;
@@ -10,240 +10,241 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 60px;
+    }
+
+    .success {
+        margin-top: -20px;
+    }
+
+    .profile-pic {
+        max-width: 200px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 20px;
+
+    }
+
+    .loading-profile {
+        text-align: center;
+        margin: 40px;
+    }
+
+    input,
+    textarea {
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+    button {
+        color: var(--light-color);
+        border: 0;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .buttons-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px;
+    }
+
+    .editing-profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        margin-top: 40px;
+        max-width: 600px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .edit-profile-btn {
+        background-color: var(--ongoing-color);
+        position: absolute;
+        top: 40px;
+        right: 40px;
+
+    }
+
+    button:hover {
+        box-shadow: 0px 0px 4px 2px var(--light-color);
+    }
+
+    .edit-profile-btn:hover {
+        background-color: var(--fourth-color);
+    }
+
+    .delete-account-btn {
+        background-color: var(--error-color);
+        color: var(--light-color);
+        margin-right: auto;
+        margin-left: auto;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .error-text {
+        font-size: 0.8rem;
+        margin-top: -15px;
+    }
+
+    .validate-profile-edit-btn {
+        background-color: var(--success-color);
+        margin-right: 20px;
+    }
+
+    .cancel-edit-btn {
+        background-color: var(--fourth-color);
+    }
+
+    textarea {
+        resize: none;
+        border-radius: 5px;
+        height: 100px;
+    }
+
+    span {
+        margin-left: 5px;
+    }
+
+    .pwd-modify-btn {
+        background-color: var(--ongoing-color);
+        color: var(--light-color);
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .buttons-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        margin-bottom: 40px;
+    }
+
+    .pwd-editing-field {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        max-width: 600px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+
+    .pwd-cancel-btn {
+        background-color: var(--fourth-color);
+        margin-right: 20px;
+    }
+
+    .pwd-validate-btn {
+        background-color: var(--success-color);
+    }
+
+    .image-field {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 600px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 40px;
+    }
+
+    .image-field .success {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .image-field input[type=file] {
+        border: 2px solid var(--light-color);
+        padding: 30px;
+    }
+
+    .image-field input[type=file]::file-selector-button {
+        background-color: var(--ongoing-color);
+        color: var(--light-color);
+        border: 0;
+        border-radius: 5px;
+        padding: 4px 8px;
+        cursor: pointer;
+    }
+
+    .image-field .upload-btn {
+        background-color: var(--ongoing-color);
+        color: var(--light-color);
+        margin-top: 10px;
+    }
+
+    .image-field .delete-picture-btn {
+        background-color: var(--error-color);
+        color: var(--light-color);
+        margin-top: 10px;
+        cursor: pointer;
+        transition: all .3s ease;
+    }
+
+    .image-field img {
+        max-width: 250px;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        border-radius: 10px;
+    }
+
+    .image-field .image-preview {
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: 10px;
+        max-width: 250px;
+        width: 100%;
+    }
 }
 
-.profile h1{
-    font-size: 2rem;
-    margin-bottom: 60px;
-}
-
-.profile .success{
-    margin-top: -20px;
-}
-
-.profile .profile-pic{
-    max-width: 200px;
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.profile p{
-    font-size: 1rem;
-    margin-bottom: 20px;
-
-}
-
-.profile .loading-profile{
-    text-align: center;
-    margin: 40px;
-}
-
-.profile input,
-.profile textarea{
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.profile button{
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.profile .buttons-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px;
-}
-
-.profile .editing-profile{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    margin-top: 40px;
-    max-width: 600px;
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-.profile .edit-profile-btn{
-    background-color: var(--ongoing-color);
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    
-}
-
-.profile button:hover{
-    box-shadow: 0px 0px 4px 2px var(--light-color);
-}
-
-.profile .edit-profile-btn:hover{
-    background-color: var(--fourth-color);
-}
-
-.profile .delete-account-btn{
-    background-color: var(--error-color);
-    color: var(--light-color);
-    margin-right: auto;
-    margin-left: auto;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.profile .error-text{
-    font-size: 0.8rem;
-    margin-top: -15px;
-}
-
-.profile .validate-profile-edit-btn{
-    background-color: var(--success-color);
-    margin-right: 20px;
-}
-
-.profile .cancel-edit-btn{
-    background-color: var(--fourth-color);
-}
-
-.profile textarea{
-    resize: none;
-    border-radius: 5px;
-    height: 100px;
-}
-
-.profile span{
-    margin-left: 5px;
-}
-
-.profile .pwd-modify-btn{
-    background-color: var(--ongoing-color);
-    color: var(--light-color);
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.profile .buttons-field{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 40px;
-}
-
-.profile .pwd-editing-field{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: 600px;
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-
-.profile .pwd-cancel-btn{
-    background-color: var(--fourth-color);
-    margin-right: 20px;
-}
-
-.profile .pwd-validate-btn{
-    background-color: var(--success-color);
-}
-
-.profile .image-field{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 600px;
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 40px;
-}
-
-.profile .image-field .success{
-    margin-top: 15px;
-    margin-bottom: 15px;
-}
-
-.profile .image-field input[type=file]{
-    border: 2px solid var(--light-color);
-    padding: 30px;
-}
-
-.profile .image-field input[type=file]::file-selector-button{
-    background-color: var(--ongoing-color);
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 4px 8px;
-    cursor: pointer; 
-}
-
-.profile .image-field .upload-btn{
-    background-color: var(--ongoing-color);
-    color: var(--light-color);
-    margin-top: 10px;
-}
-
-.profile .image-field .delete-picture-btn{
-    background-color: var(--error-color);
-    color: var(--light-color);
-    margin-top: 10px;
-    cursor: pointer;
-    transition: all .3s ease;
-}
-
-.profile .image-field img{
-    max-width: 250px;
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    border-radius: 10px;
-}
-
-.profile .image-field .image-preview{
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 10px;
-    max-width: 250px;
-    width: 100%;
-}
-
-@media (max-width: 1000px){
-    .profile{
+@media (max-width: 1000px) {
+    .profile {
         width: 96%;
     }
 }
 
-@media (max-width: 420px){
+@media (max-width: 420px) {
 
-    .profile{
+    .profile {
         padding: 30px;
-    }
 
-    .profile h1{
-        font-size: 1.4em;
-    }
+        h1 {
+            font-size: 1.4em;
+        }
 
-    .profile .edit-profile-btn{
-        top: 80px;
-        right: 50%;
-        transform: translateX(50%);
-    }
+        .edit-profile-btn {
+            top: 80px;
+            right: 50%;
+            transform: translateX(50%);
+        }
 
-    .profile label,
-    .profile p{
-        font-size: 0.8em;
+        label,
+        p {
+            font-size: 0.8em;
+        }
     }
 }

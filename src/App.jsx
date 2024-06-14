@@ -88,7 +88,6 @@ function App() {
 
   function ErrorPage() {
     const error = useRouteError();
-    console.log(error);
     if (error?.status === 404) {
       return (
         <div className='error-page'>

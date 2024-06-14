@@ -1,0 +1,179 @@
+.header-container {
+
+    .public-nav-bar-left {
+        display: flex;
+        align-items: center;
+        width: 40%;
+        margin-left: 40px;
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        #logo-link {
+            max-width: 160px;
+            width: 100%;
+        }
+    }
+
+    .public-nav-bar-right {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin-right: 50px;
+        width: 40%;
+        position: relative;
+
+
+        .responsive-icon-btn {
+            display: none;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .show,
+        .hide{
+            display: none;
+        }
+    }
+
+    #sign-in-btn a {
+        background-color: var(--secondary-background-color);
+        border: 3px solid var(--secondary-background-color);
+        color: var(--light-color);
+        border-radius: 5px;
+        padding: 5px 18px;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    #sign-up-btn a {
+        color: var(--primary-color);
+        padding: 5px 18px;
+        border: 3px solid var(--primary-color);
+        border-radius: 5px;
+        font-weight: 600;
+        margin-right: 10px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+}
+
+@media(max-width: 720px) {
+    .header-container {
+        .public-nav-bar-right {
+            .desktop{
+                display: none;
+            }
+
+            .show,
+            .hide {
+                display: flex;
+                position: absolute;
+                flex-direction: column;
+                align-items: center;
+                border-radius: 10px;
+                transition: all .5s ease;
+                z-index: 2000;
+                text-align: center;
+            }
+
+            .hide li,
+            .show li{
+                width: 100%;
+                margin-bottom: 5px;
+                border-radius: 5px;
+            }
+
+            .responsive-icon-btn {
+                display: flex;
+            }
+
+            .responsive-icon-btn svg {
+                height: 35px;
+                width: 35px;
+                fill: var(--secondary-background-color)
+            }
+
+            .hide {
+                display: none;
+            }
+
+            .show {
+                top: 40px;
+            }
+
+            .hide li a,
+            .show li a {
+                display: block;
+                padding: 8px 20px;
+                font-size: 0.8em;
+                color: var(--light-color);
+                background-color: var(--secondary-background-color);
+                text-decoration: none;
+                white-space: nowrap;
+
+            }
+
+            .show li:focus,
+            .show li:hover {
+               filter: drop-shadow(0 0 1px var(--third-color));
+                box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+            }
+
+            .show li .sign-in{
+                border: 2px solid var(--secondary-background-color);
+                border-radius: 5px;
+            }
+
+            .show li .sign-up{
+                background-color: var(--light-color);
+                color: var(--primary-color);
+                border: 2px solid var(--primary-color);
+                border-radius: 5px;
+            }
+
+        }
+    }
+}
+
+@media (max-width: 620px) {
+    .header-container {
+        .public-nav-bar-right {
+            margin-right: 20px;
+
+            .hide li a,
+            .show li a {
+                padding: 4px 8px !important;
+                font-size: 0.6em;
+            }
+        }
+
+        .public-nav-bar-left {
+            margin-left: 20px;
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .header-container {
+        .public-nav-bar-right {
+            .responsive-icon-btn svg {
+                height: 25px;
+                width: 25px;
+            }
+
+            .show{
+                top: 30px;
+            }
+        }
+    }
+
+}

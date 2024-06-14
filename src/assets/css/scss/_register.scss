@@ -5,157 +5,172 @@
     max-width: 800px;
     width: 100%;
     border-radius: 20px;
-    padding: 30px;
-    margin-top: 100px;
+    padding: 20px;
+    margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: center;
-}
 
-.register-field h1 {
-    margin-top: 50px;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 50px;
-}
+    h1 {
+        margin-top: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+    }
 
-.register-field input {
-    margin-top: 5px;
-    margin-bottom: 40px;
-    margin-left: 10px;
-    border-radius: 5px;
-    border: 0;
-    padding: 5px 20px;
-}
+    input {
+        margin-top: 5px;
+        margin-bottom: 40px;
+        margin-left: 10px;
+        border-radius: 5px;
+        border: 0;
+        padding: 5px 20px;
+    }
 
-.register-field label{
-    display: flex;
-    flex-direction: column;
-}
+    label {
+        display: flex;
+        flex-direction: column;
+    }
 
-.register-field .side-inputs {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
+    .side-inputs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 
-.register-field .side-inputs div {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
+    .side-inputs div {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
 
-.register-field .sign-up-link {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    color: var(--light-color);
-}
+    .sign-up-link {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        color: var(--light-color);
+    }
 
-.register-field button {
-    background-color: var(--secondary-color);
-    color: var(--light-color);
-    font-weight: 600;
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 10px;
-    transition: all .4s ease;
-    margin-bottom: 20px;
-}
+    button {
+        background-color: var(--secondary-color);
+        color: var(--light-color);
+        font-weight: 600;
+        padding: 10px 20px;
+        border: 0;
+        border-radius: 10px;
+        transition: all .4s ease;
+        margin-bottom: 20px;
+    }
 
-.register-field .pwd-recommendations {
-    width: 50%;
-    font-size: 0.8em;
-    margin-bottom: 20px;
-    margin-right: auto;
-    margin-left: auto;
-}
+    .pwd-recommendations {
+        width: 50%;
+        font-size: 0.8em;
+        margin-bottom: 20px;
+        margin-right: auto;
+        margin-left: auto;
+    }
 
 
-.register-field .pwd-recommendations li {
-    list-style-type: disc;
-    margin-left: 40px;
-}
+    .pwd-recommendations li {
+        list-style-type: disc;
+        margin-left: 40px;
+    }
 
-.register-field a {
-    margin-bottom: 40px;
-    color: var(--default-color);
-}
+    a {
+        margin-bottom: 40px;
+        color: var(--default-color);
+    }
 
-.register-field .error{
-    list-style: none;
-}
+    .error {
+        list-style: none;
+    }
 
-.register-field button:hover,
-.register-field button:focus {
-    background-color: var(--fourth-color);
-    box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
-}
+    button:hover,
+    button:focus {
+        background-color: var(--fourth-color);
+        box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+    }
 
-.checkbox-input input {
-    height: auto;
-    margin-right: 10px;
-    border: 8px solid black!important;
-}
+    .checkbox-input input {
+        height: auto;
+        margin-right: 10px;
+        border: 8px solid black !important;
+    }
 
-.checkbox-input{
-    display: flex;
-    flex-direction: row;
-}
+    .checkbox-input {
+        display: flex;
+        flex-direction: row;
+    }
 
-.checkbox-input p{
-    color: var(--ongoing-color);
-    text-decoration: underline;
-    cursor: pointer;
-}
+    .checkbox-input p {
+        color: var(--ongoing-color);
+        text-decoration: underline;
+        cursor: pointer;
+    }
 
-.register-field .error-text .errorfield,
-.register-field .checkbox-input .errorfield {
-    color: var(--error-color)!important;
-    border: 2px solid var(--error-color)!important;
-    font-weight: 600;
+    .error-text .errorfield,
+    .checkbox-input .errorfield {
+        color: var(--error-color) !important;
+        border: 2px solid var(--error-color) !important;
+        font-weight: 600;
+    }
 }
 
 @media (max-width: 810px) {
     .register-field {
-        padding: 20px;
+        padding: 20px 60px;
         margin-left: 2%;
         margin-right: 2%;
         width: 96%;
+
+        h1 {
+            margin-top: 20px;
+            font-size: 1.5em;
+        }
+
+        input {
+            padding: 5px 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+
+        .pwd-recommendations {
+            max-width: 50%;
+        }
+
+        .side-inputs {
+            width: 100%;
+        }
+
+        .side-inputs div,
+        div,
+        label {
+            width: 100%;
+        }
+
+        .error-text .errorfield,
+        .checkbox-input .errorfield {
+            font-size: 0.8em;
+        }
     }
 
-    .register-field h1 {
-        margin-top: 20px;
-        font-size: 1.5em;
-    }
+}
 
-    .register-field input {
-        padding: 5px 10px;
-    }
+@media (max-width: 500px) {
+    .register-field {
+        padding: 20px;
 
-    .register-field button {
-        padding: 5px 10px;
-    }
+        .pwd-recommendations{
+            max-width: 70%;
+        }
 
-    .register-field .pwd-recommendations{
-       max-width: 50%;
+        .checkbox-input p,
+        a{
+            font-size: 0.8em;
+        }
     }
-
-    .register-field .side-inputs {
-        width: 100%;
-    }
-
-    .register-field .side-inputs div,
-    .register-field div,
-    .register-field label {
-        width: 100%;
-    }
-
-    .register-field .error-text .errorfield,
-    .register-field .checkbox-input .errorfield {
-        font-size: 0.8em;
-    }
-    
 }

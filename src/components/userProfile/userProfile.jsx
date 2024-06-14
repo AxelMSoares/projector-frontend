@@ -232,7 +232,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
 
     return (
         <main className='profile'>
-            {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user.username}</h1>}
+            {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user && user.username}</h1>}
             {editing ?
                 <div className='editing-profile'>
                     < ProfileImageUpload jwt={jwt} user={user} onImageUpload={handleImageUpload} />
@@ -250,13 +250,13 @@ export default function UserProfile({ jwt, userData: userProp }) {
                 <>
                     {userProfile && <button className="edit-profile-btn" onClick={() => setEditing(true)}>Modifier mes informations</button>}
                     {message ? <p ref={messageRef} className={message.class}>{message.content}</p> : null}
-                    {user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="/images/avatar-neutre.png" alt="profile-pic" />}
-                    {user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
-                    <p>Pseudo: {user.username}</p>
+                    {user && user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="/images/avatar-neutre.png" alt="profile-pic" />}
+                    {user && user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
+                    <p>Pseudo: {user && user.username}</p>
                     {userProfile && <><p>Email: {user.email}</p><p className='error-text'>( L'adresse email n'est visible que par vous. Elle est utilisée pour la confirmation du compte, la récupération du mot de passe ou pour les notifications importantes. )</p></>}
                     <p>Membre depuis le : <span>{formatDate(user.CREATED)}</span></p>
                     <p>Dernière connexion : <span>{user.lastLogin ? formatDate(user.lastLogin) : "Jamais connecté."}</span></p>
-                    <p>Bio: <span>{user.bio ? user.bio : "Pas de bio pour l'instant."}</span></p>
+                    <p>Bio: <span>{user && user.bio ? user.bio : "Pas de bio pour l'instant."}</span></p>
                     {userProfile ? <>
                         {!passwordEditing ?
                             <>
