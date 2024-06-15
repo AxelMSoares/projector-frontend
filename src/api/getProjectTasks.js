@@ -1,4 +1,4 @@
-export async function getProjectTasks(jwt, projectUuid) {
+export async function getProjectTasks(jwt, csrfToken, projectUuid) {
 
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/${projectUuid}`, {
@@ -7,7 +7,8 @@ export async function getProjectTasks(jwt, projectUuid) {
                 'Content-Type': 'application/json',
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
-            }
+            },
+            credentials: 'include'
         });
         const data = response.json();
 

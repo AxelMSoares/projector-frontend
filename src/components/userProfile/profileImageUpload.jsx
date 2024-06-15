@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { uploadImage } from '../../api/uploadImage';
 import { deleteImage } from '../../api/deleteImage';
+import { useCSRFToken } from '../../context/CSRFTokenContext';
 
 export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
 
@@ -9,6 +10,7 @@ export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
   const [error, setError] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [userHasImage, setUserHasImage] = useState(false);
+  const csrfToken = useCSRFToken();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -48,7 +50,7 @@ export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
       // If the image is valid
       setError(null);
 
-      const response = await uploadImage(image, jwt);
+      const response = await uploadImage(image, jwt, csrfToken);
 
       if (response.message === 'Image uploaded successfully') {
         onImageUpload(response.imageUrl);
@@ -69,7 +71,7 @@ export default function ProfileImageUpload({ onImageUpload, user, jwt }) {
     const imageName = imageUrl.split('/').pop();
 
     // Delete the image
-    const response = await deleteImage(jwt, imageName);
+    const response = await deleteImage(jwt, csrfToken, imageName);
 
     if (response.message === 'Image deleted successfully') {
       onImageUpload(null);

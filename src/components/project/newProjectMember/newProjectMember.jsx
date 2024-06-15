@@ -1,13 +1,15 @@
-import { getAllUser } from "../../../api/getAllUsers";
 import { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import { getAllUser } from "../../../api/getAllUsers";
 import { createNewProjectMember } from "../../../api/createNewProjectMember";
 import { getMembersList } from "../../../api/getMembersList";
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
+import Cookies from "js-cookie";
 
 export default function NewProjectMember() {
 
     const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
     const [userData, setUserData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+    const csrfToken = useCSRFToken();
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [newMembers, setNewMembers] = useState([]);
@@ -50,7 +52,7 @@ export default function NewProjectMember() {
 
     // Get the users lists
     async function getUsers() {
-        const usersList = await getAllUser(jwt);
+        const usersList = await getAllUser(jwt, csrfToken);
 
         // Filter out the project author and existing project members
         const filteredUsers = usersList.filter(user => {
@@ -70,7 +72,7 @@ export default function NewProjectMember() {
     // Get the project members list
     async function getProjectMembers() {
         try {
-            const data = await getMembersList(projectUuid, jwt);
+            const data = await getMembersList(projectUuid, jwt, csrfToken);
             setMembersList(data);
         } catch (error) {
             console.log("Une erreur est survenue lors de la récupération des membres du projet", error);
@@ -124,7 +126,7 @@ export default function NewProjectMember() {
             }
 
             // Add the new member to the project
-            createNewProjectMember(data, jwt);
+            createNewProjectMember(data, jwt, csrfToken);
 
             // Stock the message in the cookies
             Cookies.set('message', JSON.stringify({ message: 'Les membres ont bien été ajoutés au projet', class: 'success' }));

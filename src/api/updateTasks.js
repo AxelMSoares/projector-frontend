@@ -1,4 +1,4 @@
-export async function updateTasks(jwt, id, data){
+export async function updateTasks(jwt, csrfToken, id, data){
 
     try{
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/update/${id}`, {
@@ -8,7 +8,8 @@ export async function updateTasks(jwt, id, data){
                 "Authorization": jwt,
                 "CSRF-Token": csrfToken
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
 
         const result = await response.json();

@@ -1,4 +1,4 @@
-export async function UpdateProjectMember(jwt, memberId, newRole) {
+export async function UpdateProjectMember(jwt, csrfToken, memberId, newRole) {
     try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/update/${memberId}`, {
                 method: 'PUT',
@@ -7,7 +7,8 @@ export async function UpdateProjectMember(jwt, memberId, newRole) {
                     "Authorization": jwt,
                     'CSRF-Token': csrfToken
                 },
-                body: JSON.stringify({ role: newRole })
+                body: JSON.stringify({ role: newRole }),
+                credentials: 'include'
             });
 
             const data = await response.json();

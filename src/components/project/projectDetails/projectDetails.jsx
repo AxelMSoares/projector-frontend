@@ -4,6 +4,7 @@ import { updateProjectDetails } from "../../../api/updateProject";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { formatDate, checkAdminStatus, checkProjectAuthor, checkProjectMember } from '../../../helpers/functions';
+import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import DeleteProjectBtn from "./deleteProjectBtn";
 import ProjectMembers from "./projectMembers";
 import Deadline from "./deadlineField";
@@ -24,6 +25,7 @@ export default function ProjectDetails({ jwt, userData }) {
     // Search in the url the project uuid
     const searchParams = new URLSearchParams(location.search);
     const projectUuid = searchParams.get('uuid');
+    const csrfToken = useCSRFToken();
 
     useEffect(() => {
 
@@ -58,7 +60,7 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function fetchProjectDetails() {
         try {
-            const data = await getProjectDetails(projectUuid, jwt);
+            const data = await getProjectDetails(projectUuid, jwt, csrfToken);
             setProject(data[0]);
             setProjectLoaded(true);
 
@@ -70,7 +72,7 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function fetchMembersList() {
         try {
-            const data = await getMembersList(projectUuid, jwt);
+            const data = await getMembersList(projectUuid, jwt, csrfToken);
             setMembersList(data);
             setMembersLoaded(true);
         } catch (error) {
@@ -80,7 +82,7 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function updateProject(dataToUpdate) {
         try {
-            await updateProjectDetails(projectUuid, jwt, dataToUpdate);
+            await updateProjectDetails(projectUuid, jwt, csrfToken, dataToUpdate);
         } catch (error) {
             console.log(
                 "Une erreur est survenue lors de la mise à jour du projet",
@@ -129,7 +131,7 @@ export default function ProjectDetails({ jwt, userData }) {
                             < StatusField project={project} userData={userData} onUpdate={updateProject} jwt={jwt} />
                             < ProjectMembers projectUuid={projectUuid} jwt={jwt} userData={userData} project={project} membersList={membersList} />
                             < TasksField project={project} userData={userData} jwt={jwt} />
-                            {/* <button className="tchat-access-btn" onClick={redirectToTchat}>Acceder au tchat du projet (Bêta)</button> */}
+                            <button className="tchat-access-btn" onClick={redirectToTchat}>Acceder au tchat du projet (Bêta)</button>
                         </div>
                     </>
                 )

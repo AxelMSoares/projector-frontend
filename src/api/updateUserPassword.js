@@ -1,4 +1,4 @@
-export async function updateUserPassword(uuid, jwt, pwd) {
+export async function updateUserPassword(uuid, jwt, csrfToken, pwd) {
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/update/pwd/${uuid}`, {
             method: 'PUT',
@@ -8,6 +8,7 @@ export async function updateUserPassword(uuid, jwt, pwd) {
                 'CSRF-Token': csrfToken
             },
             body: JSON.stringify({ pwd }),
+            credentials: 'include'
         });
         
         if (response.ok) {

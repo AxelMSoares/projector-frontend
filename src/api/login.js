@@ -1,8 +1,5 @@
 export async function login(loginData, csrfToken) {
 
-    console.log(loginData);
-    console.log("csrf:", csrfToken);
-
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
             method: 'POST',

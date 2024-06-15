@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { deleteProjectMember } from '../../../api/deleteProjectMember';
 import { UpdateProjectMember } from '../../../api/updateProjectMember';
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 import { cleanString } from '../../../helpers/functions';
 import Cookies from 'js-cookie';
 
@@ -15,6 +16,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
     const [filteredByUsername, setFilteredByUsername] = useState(false);
     const [filteredByRole, setFilteredByRole] = useState(false);
     const [ascending, setAscending] = useState(true);
+    const csrfToken = useCSRFToken();
 
     // If the user is not connected, prevent user to see project members
     if (!jwt && !userData) {
@@ -54,7 +56,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
 
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce membre ?");
         if (confirmation) {
-            await deleteProjectMember(id, jwt);
+            await deleteProjectMember(id, jwt, csrfToken);
             setMembers(members.filter(member => member.id !== id));
             setMessage({ message: 'Le membre a bien été supprimé', class: 'success' });
         }
@@ -76,7 +78,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             return null;
         }
 
-        await UpdateProjectMember(jwt, id, cleanString(newRole));
+        await UpdateProjectMember(jwt, csrfToken, id, cleanString(newRole));
         setEditingMemberId(false);
 
 
@@ -100,7 +102,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
         const confirmation = confirm("Êtes-vous sûr de vouloir quitter le projet ?");
 
         if (confirmation) {
-            await deleteProjectMember(id, jwt);
+            await deleteProjectMember(id, jwt, csrfToken);
             window.location.href = `/mes-projets/`;
         }
     }

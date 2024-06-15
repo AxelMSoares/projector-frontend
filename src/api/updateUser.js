@@ -1,4 +1,4 @@
-export async function updateUser(jwt, uuid, data) {
+export async function updateUser(jwt, csrfToken, uuid, data) {
 
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/update/${uuid}`, {
@@ -8,7 +8,8 @@ export async function updateUser(jwt, uuid, data) {
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
         return await response.json();
 

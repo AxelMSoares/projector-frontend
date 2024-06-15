@@ -9,6 +9,7 @@ import { checkPasswordFormat } from '../../helpers/functions';
 import { formatDate } from '../../helpers/functions';
 import { cleanString } from '../../helpers/functions';
 import { checkEmailFormat } from '../../helpers/functions';
+import { useCSRFToken } from '../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
 import ProfileImageUpload from './profileImageUpload';
 
@@ -30,6 +31,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
     const [passwordEditing, setPasswordEditing] = useState(false);
     const [userImage, setUserImage] = useState(null);
     const messageRef = useRef(null);
+    const csrfToken = useCSRFToken();
 
     useEffect(() => {
         fetchUserInfos();
@@ -67,7 +69,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
     // Get the user infos by his username
     async function fetchUserInfos() {
         if (pseudo) {
-            const result = await getUserByUsername(pseudo, jwt);
+            const result = await getUserByUsername(pseudo, jwt, csrfToken);
             setUser(result);
             setUserLoaded(true);
         }
@@ -114,7 +116,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
 
         // Call the update user function
-        const result = await updateUser(jwt, user.uuid, data);
+        const result = await updateUser(jwt, csrfToken, user.uuid, data);
 
         if (result.message === 'User updated') {
             updateCookiesWithNewData(data);
@@ -159,7 +161,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
 
         if (confirm) {
             // Call the delete account function
-            await deleteUser(jwt, user.uuid);
+            await deleteUser(jwt, csrfToken, user.uuid);
             // Remove the cookies
             Cookies.remove('jwt');
             Cookies.remove('userData');
@@ -198,7 +200,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
 
         // Check if the current password is correct
-        const auth = await login({ 'username': username, 'pwd': currentPwd });
+        const auth = await login({ 'username': username, 'pwd': currentPwd }, csrfToken);
 
         // If the token is not returned, the password is incorrect
         if (!auth.token) {
@@ -207,7 +209,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
 
         // Update the password
-        const result = await updateUserPassword(user.uuid, jwt, newPwd);
+        const result = await updateUserPassword(user.uuid, jwt, csrfToken, newPwd);
 
         if (result.message === 'User updated') {
             // Return a success message

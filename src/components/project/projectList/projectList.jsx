@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
 import { getUserProjects } from '../../../api/getUserProjects';
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 export default function ProjectList({ jwt }) {
     const navigate = useNavigate();
     const userData = Cookies.get('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
+    const csrfToken= useCSRFToken();
     const [projects, setProjects] = useState([]);
     const [asc, setAsc] = useState('');
     const [filterByName, setFilterByName] = useState(false);
@@ -29,7 +31,7 @@ export default function ProjectList({ jwt }) {
 
     async function fetchData() {
         try {
-            const response = await getUserProjects(userUUID, jwt);
+            const response = await getUserProjects(userUUID, jwt, csrfToken);
             setProjects(response); // Update the state with the projects
         } catch (error) {
             console.error('Erreur lors de la récupération des projets:', error.message);

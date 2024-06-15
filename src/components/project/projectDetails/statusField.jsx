@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { checkStatus } from "../../../helpers/functions";
 import { formatDateToYYYYMMDD } from "../../../helpers/functions";
 import { getProjectStatus } from "../../../api/getProjectStatus";
+import { useCSRFToken } from "../../../context/CSRFTokenContext";
 
 export default function StatusField({ project, userData, jwt, onUpdate }) {
     const [statusName, setStatusName] = useState('');
     const [editingStatus, setEditingStatus] = useState(false);
     const [newStatus, setNewStatus] = useState(1);
     const [statusList, setStatusList] = useState([]);
+    const csrfToken = useCSRFToken();
+
     const data = {
         project_description: project.project_description,
         project_status_id: newStatus,
@@ -28,7 +31,7 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     }, [project]);
 
     async function getStatus() {
-        const data = await getProjectStatus(jwt);
+        const data = await getProjectStatus(jwt, csrfToken);
         if (data) {
             setStatusList(data);
         }

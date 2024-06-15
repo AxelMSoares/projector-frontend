@@ -1,4 +1,4 @@
-export async function createNewProject(jwt, data) {
+export async function createNewProject(jwt, csrfToken, data) {
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/create`, {
             method: 'POST',
@@ -7,7 +7,8 @@ export async function createNewProject(jwt, data) {
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
+            credentials: 'include'
         });
 
         if (response.status === 201) {

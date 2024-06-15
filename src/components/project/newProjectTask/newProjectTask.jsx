@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { createNewProjectTask } from "../../../api/createNewProjectTask";
+import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { cleanString } from "../../../helpers/functions";
 import Cookies from 'js-cookie';
 
@@ -8,6 +9,7 @@ export default function NewProjectTask({ jwt, userData }) {
     const projectUUID = new URLSearchParams(window.location.search).get('uuid');
     const [projectAuthor, setProjectAuthor] = useState('');
     const [message, setMessage] = useState({content: '', class: ''});
+    const csrfToken = useCSRFToken();
 
     if (!jwt || !userData) {
         window.location.href = '/';
@@ -60,7 +62,7 @@ export default function NewProjectTask({ jwt, userData }) {
         Cookies.remove('project_author');
 
         // Create the new project task and redirect to the project detail page
-        await createNewProjectTask(jwt, data);
+        await createNewProjectTask(jwt, csrfToken, data);
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
         return null;
 

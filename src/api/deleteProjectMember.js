@@ -1,4 +1,4 @@
-export async function deleteProjectMember(id, jwt) {
+export async function deleteProjectMember(id, jwt, csrfToken) {
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/delete/${id}`, {
             method: 'DELETE',
@@ -6,7 +6,8 @@ export async function deleteProjectMember(id, jwt) {
                 "Content-Type": "application/json",
                 "Authorization": jwt,
                 "CSRF-Token": csrfToken
-            }
+            },
+            credentials: 'include'
         });
 
         const data = await response.json();

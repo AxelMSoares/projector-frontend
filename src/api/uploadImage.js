@@ -1,4 +1,4 @@
-export async function uploadImage(image, jwt) {
+export async function uploadImage(image, jwt, csrfToken) {
   const formData = new FormData();
   formData.append('image', image);
 
@@ -9,7 +9,8 @@ export async function uploadImage(image, jwt) {
         'Authorization': jwt,
         'CSRF-Token': csrfToken
       },
-      body: formData
+      body: formData,
+      credentials: 'include'
     });
 
     if (response.ok) {

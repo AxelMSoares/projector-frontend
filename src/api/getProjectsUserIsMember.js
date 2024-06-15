@@ -1,4 +1,4 @@
-export async function getProjectsUserIsMember(jwt, userUUID) {
+export async function getProjectsUserIsMember(jwt, csrfToken, userUUID) {
 
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_members/user/${userUUID}`, {
@@ -7,7 +7,8 @@ export async function getProjectsUserIsMember(jwt, userUUID) {
                 'Content-Type': 'application/json',
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
-            }
+            },
+            credentials: 'include'
         });
         const data = response.json();
 

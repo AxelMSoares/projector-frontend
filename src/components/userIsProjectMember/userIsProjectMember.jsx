@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getProjectsUserIsMember } from '../../api/getProjectsUserIsMember';
 import { formatDate } from '../../helpers/functions';
+import { useCSRFToken } from '../../context/CSRFTokenContext';
 
 export default function UserIsProjectMember({ jwt, userData }) {
     const [projects, setProjects] = useState([]);
@@ -12,6 +13,7 @@ export default function UserIsProjectMember({ jwt, userData }) {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const projectsPerPage = 4; // Number of projects per page
+    const csrfToken = useCSRFToken();
 
     useEffect(() => {
         fetchData();
@@ -23,7 +25,7 @@ export default function UserIsProjectMember({ jwt, userData }) {
     }
 
     async function fetchData() {
-        const projectList = await getProjectsUserIsMember(jwt, userData.uuid);
+        const projectList = await getProjectsUserIsMember(jwt, csrfToken, userData.uuid);
         setProjects(projectList);
     }
 

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { checkPasswordMatch, checkPasswordFormat, checkEmailFormat } from '../../../helpers/functions.js';
 import { cleanString } from '../../../helpers/functions.js';
 import { createNewUser } from '../../../api/createNewUser.js';
+import { useCSRFToken } from '../../../context/CSRFTokenContext.jsx';
 import Cookies from 'js-cookie';
 
 function RegisterForm() {
@@ -14,6 +15,7 @@ function RegisterForm() {
     const [pwdConfirm, setPwdConfirm] = useState('');
     const [cgu, setCgu] = useState(false);
     const [errorFields, setErrorFields] = useState({});
+    const csrfToken = useCSRFToken();
 
     // If the user is already connected, redirect to the home page
     if (Cookies.get('jwt') && Cookies.get('userData')) {
@@ -110,7 +112,7 @@ function RegisterForm() {
         }
 
         // Send the data to the backend
-        const response = await createNewUser(validatedForm);
+        const response = await createNewUser(validatedForm, csrfToken);
 
         // Get the response and if the user was created, redirect to the login page
         if (response && response.ok) {

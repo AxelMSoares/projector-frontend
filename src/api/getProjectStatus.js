@@ -1,4 +1,4 @@
-export async function getProjectStatus(jwt) {
+export async function getProjectStatus(jwt, csrfToken) {
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_status`, {
             method: 'GET',

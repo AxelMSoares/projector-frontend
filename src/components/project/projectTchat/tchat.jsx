@@ -1,5 +1,10 @@
 import { formatDate, checkDateIsPassed, checkStatus, checkMessageAuthor, displayHour, assignColorToUser } from '../../../helpers/functions';
 import { useState, useEffect, useRef } from "react";
+import { getProjectMessages } from '../../../api/getProjectMessages';
+import { createNewProjectMessage } from '../../../api/createNewProjectMessage';
+import { deleteProjectMessage } from '../../../api/deleteProjectMessage';
+import { updateProjectMessage } from '../../../api/updateProjectMessage';
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 
 
@@ -13,11 +18,12 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
     const [errorMessage, setErrorMessage] = useState('');
     const [editingMessage, setEditingMessage] = useState(null);
     const scrollRef = useRef(null); // Reference to the last message
+    const csrfToken = useCSRFToken();
 
     useEffect(() => {
         const invervalId = setInterval(() => {
             // Call the function to get the project messages
-            getProjectMessages();
+            getMessages();
         }, 1000); // Refresh the messages every 10 seconds
 
         return () => clearInterval(invervalId);
@@ -34,29 +40,10 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
     }
 
     // Function to get the project messages
-    async function getProjectMessages() {
-
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/${projectUUID}`, {
-                method: 'GET',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": jwt
-                }
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setErrorMsg("Une erreur est survenue lors de la récupération des messages");
-            } else {
-                setErrorMessage('');
-                setMessages(data);
-            }
-
-        } catch (error) {
-            setErrorMessage("Une erreur est survenue lors de la récupération des messages");
-            console.log("Une erreur est survenue lors de la récupération des messages", error);
+    async function getMessages() {
+        const data = await getProjectMessages(jwt, csrfToken, projectUUID);
+        if (data) {
+            setMessages(data);
         }
     }
 
@@ -94,29 +81,16 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         } else {
 
-            try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/create`, {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": jwt
-                    },
-                    body: JSON.stringify(data)
-                });
+            const response = await createNewProjectMessage(data, jwt, csrfToken);
 
-                if (!response.ok) {
-                    setErrorMessage("Une erreur est survenue lors de l'envoi du message");
-                } else {
-                    setErrorMessage('');
-                    getProjectMessages();
-                    console.log(data);
-                    document.getElementById("new_message").value = ""; // Clear the input
-                    // window.location.reload(); // Reload the page to display the new message
-                }
-
-            } catch (error) {
+            if (!response.ok) {
                 setErrorMessage("Une erreur est survenue lors de l'envoi du message");
-                console.log("Une erreur est survenue lors de l'envoi du message", error);
+            } else {
+                setErrorMessage('');
+                getMessages();
+                console.log(data);
+                document.getElementById("new_message").value = ""; // Clear the input
+                // window.location.reload(); // Reload the page to display the new message
             }
 
         }
@@ -133,53 +107,30 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         if (confirmation) {
 
-            try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/delete/${msgId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": jwt
-                    }
-                });
+            const response = await deleteProjectMessage(jwt, csrfToken, msgId);
 
-                if (!response.ok) {
-                    setErrorMessage("Une erreur est survenue lors de la suppression du message");
-                } else {
-                    error = '';
-                    getProjectMessages();
-                    window.location.reload(); // Reload the page to display the new message
-                }
-
-            } catch (error) {
+            if (!response.ok) {
                 setErrorMessage("Une erreur est survenue lors de la suppression du message");
-                console.log("Une erreur est survenue lors de la suppression du message", error);
+            } else {
+                error = '';
+                getProjectMessages();
+                window.location.reload(); // Reload the page to display the new message
             }
+
 
         }
     }
 
     const updateMessage = async (messageId, newContent) => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/project_messages/update/${messageId}`, {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": jwt
-                },
-                body: JSON.stringify({ message_content: newContent })
-            });
 
-            if (!response.ok) {
-                setErrorMessage("Une erreur est survenue lors de la mise à jour du message");
-            } else {
-                setErrorMessage('');
-                getProjectMessages();
-                setEditingMessage(null); // Reset the editing message
-            }
+        const response = await updateProjectMessage(jwt, csrfToken, messageId, newContent);
 
-        } catch (error) {
+        if (!response.ok) {
             setErrorMessage("Une erreur est survenue lors de la mise à jour du message");
-            console.log("Une erreur est survenue lors de la mise à jour du message", error);
+        } else {
+            setErrorMessage('');
+            getMessages();
+            setEditingMessage(null); // Reset the editing message
         }
     };
 
@@ -220,7 +171,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         <main className='tchat-background'>
             <p>Tchat:</p>
-            <button className="return-btn" onClick={(e)=>redirectToProject()}>Retourner au projet</button>
+            <button className="return-btn" onClick={(e) => redirectToProject()}>Retourner au projet</button>
             <div className="project-tchat">
                 {Object.keys(groupedMessages).map(date => (
                     <div key={date} className="message-group">

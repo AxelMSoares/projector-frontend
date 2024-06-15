@@ -1,4 +1,4 @@
-export async function deleteProjectTask(jwt, id){
+export async function deleteProjectTask(jwt, csrfToken, id){
 
     try{
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/tasks/delete/${id}`, {
@@ -7,7 +7,8 @@ export async function deleteProjectTask(jwt, id){
                 'Content-Type': 'application/json',
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
-            }
+            },
+            credentials: 'include'
         });
 
         if(response.status !== 200) {

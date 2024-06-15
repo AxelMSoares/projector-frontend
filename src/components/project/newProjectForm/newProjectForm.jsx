@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { getCategories } from "../../../api/getCategories";
 import { createNewProject } from "../../../api/createNewProject";
 import { cleanString } from "../../../helpers/functions";
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 function NewProjectForm({ jwt, userData }) {
     const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
     const [errorMsg, setErrorMsg] = useState('');
+    const csrfToken = useCSRFToken();
 
     useEffect(() => {
         if (!jwt) {
@@ -19,7 +21,7 @@ function NewProjectForm({ jwt, userData }) {
 
     async function fetchCategories() {
         try {
-            const data = await getCategories(jwt);
+            const data = await getCategories(jwt, csrfToken);
             setCategories(data);
         } catch (error) {
             console.error('Erreur lors du chargement des catégories :', error);
@@ -50,7 +52,7 @@ function NewProjectForm({ jwt, userData }) {
         }
 
         try {
-            const response = await createNewProject(jwt, data);
+            const response = await createNewProject(jwt, csrfToken, data);
         } catch (error) {
             console.error('Erreur lors de la création du projet', error);
             setErrorMsg('Erreur lors de la création du projet'); // Gestion de l'erreur par défaut

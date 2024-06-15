@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import { getProjectTasks } from "../../../api/getProjectTasks";
 import { getTaskStatus } from "../../../api/getTaskStatus";
 import { updateTasks } from "../../../api/updateTasks";
-import { checkStatus } from "../../../helpers/functions";
 import { deleteProjectTask } from "../../../api/deleteProjectTask";
+import { useCSRFToken } from "../../../context/CSRFTokenContext";
+import { checkStatus } from "../../../helpers/functions";
 import { cleanString } from "../../../helpers/functions";
 import Cookies from 'js-cookie';
 
@@ -22,6 +23,7 @@ export default function TasksField({ project, jwt, userData }) {
     const [editingTaskId, setEditingTaskId] = useState(null);
     const [filterByName, setFilterByName] = useState(false);
     const [filterByStatus, setFilterByStatus] = useState(false);
+    const csrfToken = useCSRFToken();
 
     // Fetch the tasks list and the task status when the project uuid is set
     useEffect(() => {
@@ -47,14 +49,14 @@ export default function TasksField({ project, jwt, userData }) {
 
     // Fetch the tasks list
     async function fetchTasksList() {
-        const data = await getProjectTasks(jwt, project.uuid);
+        const data = await getProjectTasks(jwt, csrfToken, project.uuid);
         setTasksList(data);
         setTasksLoaded(true);
     }
 
     // Fetch the task status
     async function fetchTaskStatus() {
-        const data = await getTaskStatus(jwt);
+        const data = await getTaskStatus(jwt, csrfToken);
         setTaskStatus(data);
     }
 
@@ -79,7 +81,7 @@ export default function TasksField({ project, jwt, userData }) {
 
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?");
         if (confirmation) {
-            await deleteProjectTask(jwt, taskId);
+            await deleteProjectTask(jwt, csrfToken, taskId);
             setMessage({ message: 'Tâche supprimée', className: 'success' });
             fetchTasksList();
         }
@@ -121,7 +123,7 @@ export default function TasksField({ project, jwt, userData }) {
         }
 
         // Update the task
-        await updateTasks(jwt, id, data);
+        await updateTasks(jwt, csrfToken, id, data);
         fetchTasksList();
         setEditingTaskId(null);
 

@@ -1,4 +1,4 @@
-export async function getTaskStatus(jwt) {
+export async function getTaskStatus(jwt, csrfToken) {
     try{
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/task_status`, {
             method: 'GET',
@@ -6,7 +6,8 @@ export async function getTaskStatus(jwt) {
                 'Content-Type': 'application/json',
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
-            }
+            },
+            credentials: 'include'
         });
         const data = await response.json();
         return data;

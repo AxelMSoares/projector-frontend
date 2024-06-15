@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { formatDateToYYYYMMDD } from '../../../helpers/functions';
 import { getCategories } from '../../../api/getCategories';
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 export default function CategoryField({ project, jwt, onUpdate, userData }) {
 
@@ -9,6 +10,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     const [categorieName, setCategorieName] = useState('');
     const [categorieId, setCategorieId] = useState('');
     const [newCategorie, setNewCategorie] = useState('');
+    const csrfToken = useCSRFToken();
 
     const data = {
         project_status_id: project.project_status_id,
@@ -30,7 +32,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     }, [project]);
 
     async function getCategoriesList() {
-        const response = await getCategories(jwt);
+        const response = await getCategories(jwt, csrfToken);
         if (response) {
             setCategoriesList(response);
         }

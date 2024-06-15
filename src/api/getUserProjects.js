@@ -1,4 +1,4 @@
-export async function getUserProjects(userUUID, jwt) {
+export async function getUserProjects(userUUID, jwt, csrfToken) {
 
     try {
         const response = await fetch(`http://localhost:3000/projects/${userUUID}`, {
@@ -7,7 +7,8 @@ export async function getUserProjects(userUUID, jwt) {
                 'Content-Type': 'application/json',
                 'Authorization': jwt,
                 'CSRF-Token': csrfToken
-            }
+            },
+            credentials: 'include'
         });
 
         if (response.ok) {
