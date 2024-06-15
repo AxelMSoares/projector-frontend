@@ -92,8 +92,12 @@ export default function NewProjectMember() {
         const isChecked = event.target.checked;
         if (isChecked) {
             setSelectedMembers(prevMembers => [...prevMembers, uuid]);
+            setNewMembers(prevMembers => [...prevMembers, uuid]);
+            setNewMembersUsernames(prevMembers => [...prevMembers, username]);
         } else {
             setSelectedMembers(prevMembers => prevMembers.filter(member => member !== uuid));
+            setNewMembers(prevMembers => prevMembers.filter(member => member !== uuid));
+            setNewMembersUsernames(prevMembers => prevMembers.filter(member => member !== username));
         }
     }
 
@@ -106,6 +110,7 @@ export default function NewProjectMember() {
         }
 
         if (newMembers.length === 0) {
+            console.log("Aucun membre n'a été sélectionné");
             return;
         }
 
