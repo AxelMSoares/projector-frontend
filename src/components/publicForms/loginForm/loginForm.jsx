@@ -45,6 +45,14 @@ function LoginForm({ onConnect }) {
   async function onLoginFormSubmitHandler(e) {
     e.preventDefault();
 
+    const honeyPot = document.getElementById('login-mail').value;
+
+    // If the honeyPot is filled, it means that the form has been filled by a bot
+    if (honeyPot.length > 0) {
+      setErrorMessage('Mot de passe ou nom d\'utilisateur incorrect.');
+      return;
+    }
+
     const loginData = {
       username: document.getElementById('username').value,
       pwd: document.getElementById('pwd').value,
@@ -89,12 +97,12 @@ function LoginForm({ onConnect }) {
       {newUserMsg ? <div className='success'>{newUserMsg}</div> : null}
       <form className="login-field" action="" method="post">
         <h1>Connexion</h1>
-        <label htmlFor="username">Utilisateur:</label>
+        <label htmlFor="username" className='username-label'>Utilisateur:</label>
         <input type="text" id="username" name="username" />
-        <label htmlFor="pwd">Mot de passe:</label>
+        <label htmlFor="pwd" className='pwd-label'>Mot de passe:</label>
         <input type="password" id="pwd" name="pwd" />
+        <label htmlFor="login-mail" className='email-label'>Adresse mail:</label>
         <input type="email" id="login-mail" />
-        <input type="hidden" id="csrfToken" defaultValue={csrfToken}/>
         <button type="submit" onClick={onLoginFormSubmitHandler}>Se Connecter</button>
         {errorMessage ? <div className='error'>{errorMessage}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>
