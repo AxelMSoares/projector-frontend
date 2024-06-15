@@ -3,7 +3,7 @@
     background: var(--secondary-background-color);
     border-radius: 5px;
     padding: 60px;
-    max-width: 1400px;
+    max-width: 1200px;
     width: 100%;
     margin-right: auto;
     margin-left: auto;
@@ -36,7 +36,7 @@
     margin-bottom: 2em;
     border-radius: 5px;
     border: 0;
-    height: 100px;
+    height: 200px;
     resize: none;
     padding: 10px;
 }
@@ -91,12 +91,17 @@
     box-shadow: 0 0 5px var(--light-color);
 }
 
-@media (max-width: 420px ){
+@media (max-width: 1200px ){
     .new-project-task-field{
         width: 96%;
+        margin-left: 2%;
+        margin-right: 2%;
         padding: 30px;
     }
+}
 
+@media (max-width: 420px ){
+    
     .new-project-task-field h2{
         font-size: 1.2em;
     }
