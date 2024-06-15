@@ -3,7 +3,8 @@ export async function createNewUser(user) {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/create`, {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "CSRF-Token": csrfToken
             },
             body: JSON.stringify(user)
         });

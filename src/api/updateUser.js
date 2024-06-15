@@ -5,7 +5,8 @@ export async function updateUser(jwt, uuid, data) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `${jwt}`
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             },
             body: JSON.stringify(data)
         });

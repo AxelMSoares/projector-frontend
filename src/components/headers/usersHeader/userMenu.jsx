@@ -25,7 +25,7 @@ function UserMenu({ userData, onDisconnect }) {
                     <img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} />
                     <Link to={data ? "/utilisateur/" + data['username'] : null} className="username-view">{data && data['username']}</Link>
                 </li>
-                <li class="logout-btn">
+                <li className="logout-btn">
                     <button onClick={onDisconnect}>Se Deconnecter</button>
                 </li>
             </ul>

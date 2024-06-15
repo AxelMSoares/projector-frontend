@@ -4,7 +4,8 @@ export async function getProjectDetails(projectUuid, jwt) {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": jwt
+                    "Authorization": jwt,
+                    "CSRF-Token": csrfToken
                 }
             });
 

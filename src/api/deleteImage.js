@@ -3,7 +3,8 @@ export async function deleteImage(jwt, imageName) {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload/${imageName}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': jwt
+        'Authorization': jwt,
+        'CSRF-Token': csrfToken
       }
     });
 

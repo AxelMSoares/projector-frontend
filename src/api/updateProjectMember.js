@@ -4,7 +4,8 @@ export async function UpdateProjectMember(jwt, memberId, newRole) {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": jwt
+                    "Authorization": jwt,
+                    'CSRF-Token': csrfToken
                 },
                 body: JSON.stringify({ role: newRole })
             });

@@ -4,7 +4,8 @@ export async function deleteUser(jwt, userUUID){
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": jwt
+                "Authorization": jwt,
+                'CSRF-Token': csrfToken
             }
         });
 

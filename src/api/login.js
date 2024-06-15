@@ -1,11 +1,17 @@
-export async function login(loginData) {
+export async function login(loginData, csrfToken) {
+
+    console.log(loginData);
+    console.log("csrf:", csrfToken);
+
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "CSRF-Token": csrfToken
             },
-            body: JSON.stringify(loginData)
+            body: JSON.stringify(loginData),
+            credentials: 'include'
         });
 
         if (response.status !== 200) {

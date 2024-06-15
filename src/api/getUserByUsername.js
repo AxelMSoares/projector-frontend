@@ -4,7 +4,8 @@ export async function getUserByUsername(username, jwt) {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": jwt
+                "Authorization": jwt,
+                "CSRF-Token": csrfToken
             }
         });
 

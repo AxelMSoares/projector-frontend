@@ -5,7 +5,8 @@ export async function createNewProjectTask(jwt, task) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jwt
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             },
             body: JSON.stringify(task)
         });

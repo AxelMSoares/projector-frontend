@@ -3,8 +3,9 @@ export async function updateProjectDetails(projectUuid, jwt, data) {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/update/${projectUuid}`, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: jwt,
+                    'Content-Type': "application/json",
+                    'Authorization': jwt,
+                    'CSRF-Token': csrfToken
                 },
                 body: JSON.stringify(data),
             });

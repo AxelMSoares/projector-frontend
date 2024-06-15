@@ -5,7 +5,8 @@ export async function updateTasks(jwt, id, data){
             method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": jwt
+                "Authorization": jwt,
+                "CSRF-Token": csrfToken
             },
             body: JSON.stringify(data)
         });

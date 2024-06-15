@@ -4,7 +4,8 @@ export async function getAllUser(jwt){
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jwt
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             }
         });
         const data = await response.json();

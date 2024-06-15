@@ -4,7 +4,8 @@ export async function createNewProject(jwt, data) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jwt
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             },
             body: JSON.stringify(data)
         });

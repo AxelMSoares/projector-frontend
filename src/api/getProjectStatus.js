@@ -4,8 +4,10 @@ export async function getProjectStatus(jwt) {
             method: 'GET',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": jwt
-            }
+                "Authorization": jwt,
+                "CSRF-Token": csrfToken
+            },
+            credentials: 'include'
         });
 
         const data = await response.json();

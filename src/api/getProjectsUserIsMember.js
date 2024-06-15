@@ -5,7 +5,8 @@ export async function getProjectsUserIsMember(jwt, userUUID) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jwt
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             }
         });
         const data = response.json();

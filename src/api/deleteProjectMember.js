@@ -4,7 +4,8 @@ export async function deleteProjectMember(id, jwt) {
             method: 'DELETE',
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": jwt
+                "Authorization": jwt,
+                "CSRF-Token": csrfToken
             }
         });
 

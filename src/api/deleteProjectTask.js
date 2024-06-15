@@ -5,7 +5,8 @@ export async function deleteProjectTask(jwt, id){
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': jwt
+                'Authorization': jwt,
+                'CSRF-Token': csrfToken
             }
         });
 

@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { login } from '../../../api/login';
+import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 function LoginForm({ onConnect }) {
 
@@ -9,6 +10,7 @@ function LoginForm({ onConnect }) {
   const [newUserMsg, setNewUserMsg] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
+  const csrfToken = useCSRFToken();
   
 
   if (Cookies.get('jwt') && Cookies.get('userData')) {
@@ -45,11 +47,11 @@ function LoginForm({ onConnect }) {
 
     const loginData = {
       username: document.getElementById('username').value,
-      pwd: document.getElementById('pwd').value
+      pwd: document.getElementById('pwd').value,
     };
 
     // Get the respose data and the token
-    const response = await login(loginData);
+    const response = await login(loginData, csrfToken);
 
     // If the user has tried to log in 4 times, block the login for 4 minutes
     if (loginAttempts >= 4) {
@@ -92,6 +94,7 @@ function LoginForm({ onConnect }) {
         <label htmlFor="pwd">Mot de passe:</label>
         <input type="password" id="pwd" name="pwd" />
         <input type="email" id="login-mail" />
+        <input type="hidden" id="csrfToken" defaultValue={csrfToken}/>
         <button type="submit" onClick={onLoginFormSubmitHandler}>Se Connecter</button>
         {errorMessage ? <div className='error'>{errorMessage}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>

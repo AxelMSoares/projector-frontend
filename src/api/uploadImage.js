@@ -6,7 +6,8 @@ export async function uploadImage(image, jwt) {
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload`, {
       method: 'POST',
       headers: {
-        'Authorization': jwt
+        'Authorization': jwt,
+        'CSRF-Token': csrfToken
       },
       body: formData
     });
