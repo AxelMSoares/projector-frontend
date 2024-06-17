@@ -6,6 +6,7 @@ import { deleteProjectTask } from "../../../api/deleteProjectTask";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { checkStatus } from "../../../helpers/functions";
 import { cleanString } from "../../../helpers/functions";
+import Cookies from "js-cookie";
 
 export default function TasksField({ project, jwt, userData }) {
 
@@ -26,6 +27,11 @@ export default function TasksField({ project, jwt, userData }) {
 
     // Fetch the tasks list and the task status when the project uuid is set
     useEffect(() => {
+        if(Cookies.get("task_message")) {
+            setMessage({ message: Cookies.get("task_message"), className: "success" });
+            console.log(message);
+        }
+
         if (project.uuid) {
             fetchTasksList();
             fetchTaskStatus();
@@ -82,7 +88,7 @@ export default function TasksField({ project, jwt, userData }) {
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer cette tache ?");
         if (confirmation) {
             await deleteProjectTask(jwt, csrfToken, taskId);
-            setMessage({ message: 'Tâche supprimée', className: 'success' });
+            setMessage({ message: 'La tâche a bien été supprimée.', className: 'success' });
             fetchTasksList();
         }
     }

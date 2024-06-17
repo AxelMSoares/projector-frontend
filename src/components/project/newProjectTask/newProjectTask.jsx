@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { createNewProjectTask } from "../../../api/createNewProjectTask";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { cleanString } from "../../../helpers/functions";
+import Cookies from "js-cookie";
 
 export default function NewProjectTask({ jwt, userData }) {
 
@@ -59,6 +60,9 @@ export default function NewProjectTask({ jwt, userData }) {
 
         // Remove the project author from the local storage
         localStorage.removeItem('project_author');
+
+        // Add a success message in the cookies
+        Cookies.set("task_message", "Tâche crée avec succèss.");
         
         // Create the new project task and redirect to the project detail page
         await createNewProjectTask(jwt, csrfToken, data);
