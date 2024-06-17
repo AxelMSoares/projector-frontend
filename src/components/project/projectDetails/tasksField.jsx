@@ -25,13 +25,17 @@ export default function TasksField({ project, jwt, userData }) {
     const [filterByStatus, setFilterByStatus] = useState(false);
     const csrfToken = useCSRFToken();
 
+    // If a cookie task message exist, set the message and delete the cookie
+    useEffect(() => {
+        const taskMessage = Cookies.get('task_message');
+        if (taskMessage) {
+            setMessage({ message: taskMessage, className: 'success' });
+            Cookies.remove('task_message');
+        }
+    }, []);
+
     // Fetch the tasks list and the task status when the project uuid is set
     useEffect(() => {
-        if(Cookies.get("task_message")) {
-            setMessage({ message: Cookies.get("task_message"), className: "success" });
-            console.log(message);
-        }
-
         if (project.uuid) {
             fetchTasksList();
             fetchTaskStatus();
@@ -46,6 +50,7 @@ export default function TasksField({ project, jwt, userData }) {
             return () => clearTimeout(timer);
         }
     }, [message]);
+
 
     // Check if the user is the author of the project
     function checkIfUserIsAuthor() {
