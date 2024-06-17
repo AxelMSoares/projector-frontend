@@ -12,7 +12,7 @@ function LoginForm({ onConnect }) {
   const [errorMessage, setErrorMessage] = useState('');
   const csrfToken = useCSRFToken();
   
-
+  // Id the user is already logged in, redirect to the homepage
   if (Cookies.get('jwt') && Cookies.get('userData')) {
     window.location.href = '/';
     return null;
@@ -58,6 +58,12 @@ function LoginForm({ onConnect }) {
       pwd: document.getElementById('pwd').value,
     };
 
+    // If the username or the password is empty, display an error message
+    if (!loginData.username || !loginData.pwd) {
+      setErrorMessage('Veuillez remplir tous les champs.');
+      return;
+    }
+
     // Get the respose data and the token
     const response = await login(loginData, csrfToken);
 
@@ -74,12 +80,13 @@ function LoginForm({ onConnect }) {
       return;
     }
 
+    // If the login is successful, get the token
     const responseJwt = response.token;
     
     // Reset the loginAttempts
     setLoginAttempts(0);
 
-    // Save the token in a cookie and the data in the client cookie
+    // Save the token and the user data in the client cookies
     Cookies.set('jwt', responseJwt);
     Cookies.set('userData', JSON.stringify(response));
 

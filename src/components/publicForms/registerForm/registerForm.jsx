@@ -70,6 +70,20 @@ function RegisterForm() {
             return;
         }
 
+        // If the username is less than 3 characters, return an error
+        if (formData.username.length < 3) {
+            setErrorMsg(prevErrors => [...prevErrors, 'Le nom d\'utilisateur doit contenir au moins 3 caractères.']);
+            setErrorFields(prevErrors => ({ ...prevErrors, username: true }));
+            return;
+        }
+
+        // If the username have special characters, return an error
+        if (!/^[a-zA-Z0-9_]*$/.test(formData.username)) {
+            setErrorMsg(prevErrors => [...prevErrors, 'Le nom d\'utilisateur ne doit pas contenir de caractères spéciaux.']);
+            setErrorFields(prevErrors => ({ ...prevErrors, username: true }));
+            return;
+        }
+
         // Check the email format
         if (!checkEmailFormat(formData.email)) {
             const errorEmailFormat = 'Le format de l\'adresse email est invalide.';
