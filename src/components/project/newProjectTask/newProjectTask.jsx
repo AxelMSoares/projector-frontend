@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { createNewProjectTask } from "../../../api/createNewProjectTask";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { cleanString } from "../../../helpers/functions";
-import Cookies from 'js-cookie';
 
 export default function NewProjectTask({ jwt, userData }) {
 
@@ -17,7 +16,7 @@ export default function NewProjectTask({ jwt, userData }) {
 
     useEffect(() => {
 
-        setProjectAuthor(Cookies.get('project_author') ? JSON.parse(Cookies.get('project_author')) : '');
+        setProjectAuthor(localStorage.getItem('project_author') ? JSON.parse(localStorage.getItem('project_author')) : '');
         checkIfUserIsAuthor();
     }, [projectUUID]);
 
@@ -58,9 +57,9 @@ export default function NewProjectTask({ jwt, userData }) {
             return;
         }
 
-        // Remove the cookies
-        Cookies.remove('project_author');
-
+        // Remove the project author from the local storage
+        localStorage.removeItem('project_author');
+        
         // Create the new project task and redirect to the project detail page
         await createNewProjectTask(jwt, csrfToken, data);
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
@@ -70,7 +69,7 @@ export default function NewProjectTask({ jwt, userData }) {
 
     // Cancel the creation of the new task and redirect to the project detail page
     function cancel() {
-        Cookies.remove('project_author');
+        localStorage.removeItem('project_author');
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
     }
 

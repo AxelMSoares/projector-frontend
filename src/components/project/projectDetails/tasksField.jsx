@@ -6,7 +6,6 @@ import { deleteProjectTask } from "../../../api/deleteProjectTask";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { checkStatus } from "../../../helpers/functions";
 import { cleanString } from "../../../helpers/functions";
-import Cookies from 'js-cookie';
 
 export default function TasksField({ project, jwt, userData }) {
 
@@ -66,8 +65,9 @@ export default function TasksField({ project, jwt, userData }) {
         if (!userIsAuthor) {
             return;
         }
+        // Set the project author in the local storage
+        localStorage.setItem('project_author', JSON.stringify({ author: project.username }));
 
-        Cookies.set('project_author', JSON.stringify({ author: project.username }));
         window.location.href = `/projet/nouvelle-tache/?uuid=${project.uuid}`;
         return null;
     }
@@ -133,7 +133,7 @@ export default function TasksField({ project, jwt, userData }) {
         setNewTaskStatus(null);
 
         // Display a success message
-        setMessage({ message: 'Tâche modifiée', className: 'success' });
+        setMessage({ message: 'La tache a bien été modifiée.', className: 'success' });
     }
 
     // Filter the tasks by name
@@ -172,6 +172,7 @@ export default function TasksField({ project, jwt, userData }) {
     return (
         <div className="tasks-field">
             <h3>Taches:</h3>
+                {message ? <div className={message.className}>{message.message}</div> : null}
             {tasksLoaded ?
                 <p className={tasksList.length - tasksList.filter((task) => task.task_status_id == 4).length == 0 ? "tasks-ratio success-text" : "tasks-ratio"}>Terminées: <span>{tasksList.filter((task) => task.task_status_id == 4).length} / {tasksList.length}</span></p>
                 : null}
@@ -235,7 +236,6 @@ export default function TasksField({ project, jwt, userData }) {
                         </li>
                         )
                     }) : <li> Pas de tâches pour le moment</li>}
-                {message ? <div className={message.className}>{message.message}</div> : null}
             </ul>
         </div>
     );

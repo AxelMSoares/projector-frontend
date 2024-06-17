@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
 import { getUserProjects } from '../../../api/getUserProjects';
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
 
 export default function ProjectList({ jwt }) {
     const navigate = useNavigate();
-    const userData = Cookies.get('userData');
+    const userData = localStorage.getItem('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const csrfToken= useCSRFToken();
     const [projects, setProjects] = useState([]);

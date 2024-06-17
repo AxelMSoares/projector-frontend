@@ -59,14 +59,14 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }, [message]);
 
-    // In image upload, set the user image and update the cookies
+    // In image upload, set the user image and update the localstorage
     function handleImageUpload(imageUrl) {
         setUserImage(imageUrl);
         setUserData({ ...userData, profilePicture: imageUrl });
-        updateCookiesWithNewImage(imageUrl);
+        updateLocalStorageWithNewImage(imageUrl);
     }
 
-    // Get the user infos by his username
+    // Get the user infos by his usernames
     async function fetchUserInfos() {
         if (pseudo) {
             const result = await getUserByUsername(pseudo, jwt, csrfToken);
@@ -119,7 +119,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         const result = await updateUser(jwt, csrfToken, user.uuid, data);
 
         if (result.message === 'User updated') {
-            updateCookiesWithNewData(data);
+            updateLocalStorageWithNewData(data);
 
             // If the user updated his username, redirect to the new profile page
             if (data.username !== user.username) {
@@ -134,17 +134,17 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }
 
-    // Update cookies with the new data
-    function updateCookiesWithNewData(data) {
+    // Update localstorage with the new data
+    function updateLocalStorageWithNewData(data) {
         const updatedUserData = { ...user, ...data };
-        Cookies.set('userData', JSON.stringify(updatedUserData));
+        localStorage.setItem('userData', updatedUserData);
         setUser(updatedUserData);
     }
 
-    // Update the cookies with the new image
-    function updateCookiesWithNewImage(imageUrl) {
+    // Update the localstorage with the new image
+    function updateLocalStorageWithNewImage(imageUrl) {
         const updatedUserData = { ...user, profilePicture: imageUrl };
-        Cookies.set('userData', JSON.stringify(updatedUserData));
+        localStorage.setItem('userData', updatedUserData);
         setUser(updatedUserData);
     }
 
@@ -162,9 +162,11 @@ export default function UserProfile({ jwt, userData: userProp }) {
         if (confirm) {
             // Call the delete account function
             await deleteUser(jwt, csrfToken, user.uuid);
-            // Remove the cookies
-            Cookies.remove('jwt');
-            Cookies.remove('userData');
+
+            // Remove the jwt and the user data from the localstorage
+            localStorage.removeItem('jwt');
+            localStorage.removeItem('userData');
+
             // Redirect to the home page
             window.location.href = '/';
         }
@@ -230,8 +232,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
     if (!userLoaded) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
     }
-
-
+    
     return (
         <main className='profile'>
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user && user.username}</h1>}

@@ -7,8 +7,8 @@ import Cookies from "js-cookie";
 
 export default function NewProjectMember() {
 
-    const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
-    const [userData, setUserData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+    const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
+    const [userData, setUserData] = useState(localStorage.getItem('userData') ? localStorage.getItem('userData') : null);
     const csrfToken = useCSRFToken();
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
@@ -28,7 +28,7 @@ export default function NewProjectMember() {
 
     // Get the users list and the project members list
     useEffect(() => {
-        Cookies.get('project_author') ? setProjectAuthor(JSON.parse(Cookies.get('project_author'))) : setProjectAuthor('');
+        localStorage.getItem('project_author') ? setProjectAuthor(localStorage.getItem('project_author')) : setProjectAuthor('');
         getUsers();
         getProjectMembers();
     }, []);
@@ -36,12 +36,20 @@ export default function NewProjectMember() {
     // Filter the users list based on the search input
     useEffect(() => {
         if (search) {
-            const filteredUsers = users.filter(user => user.username.toLowerCase().includes(search.toLowerCase()));
+            const filteredUsers = users.filter(user =>
+                user.username.toLowerCase().includes(search.toLowerCase()) &&
+                !checkIfMemberExists(user) &&
+                user.username !== projectAuthor
+            );
             setFilteredUsers(filteredUsers);
         } else {
-            setFilteredUsers(users); // Show all users if the search input is empty
+            const filteredUsers = users.filter(user =>
+                !checkIfMemberExists(user) &&
+                user.username !== projectAuthor
+            );
+            setFilteredUsers(filteredUsers);
         }
-    }, [search, users]);
+    }, [search, users, projectAuthor, membersList]);
 
     // Check if the user is the project author
     function checkIfUserIsAuthor(userData, projectAuthor) {
@@ -122,7 +130,7 @@ export default function NewProjectMember() {
             return;
         }
 
-        newMembers.map(member => {
+        newMembers.forEach(member => {
             // Set the new member data
             const data = {
                 project_uuid: projectUuid,
@@ -136,21 +144,21 @@ export default function NewProjectMember() {
             // Stock the message in the cookies
             Cookies.set('message', JSON.stringify({ message: 'Les membres ont bien été ajoutés au projet', class: 'success' }));
 
-            // Remove the project author from the cookies
-            Cookies.remove('project_author');
+            // Remove the project author from the localStorage
+            localStorage.removeItem('project_author');
+        });
 
-            // Redirect to the project details page
-            window.location.href = `/detail-projet/?uuid=${projectUuid}`;
-        })
+        // Redirect to the project details page
+        window.location.href = `/detail-projet/?uuid=${projectUuid}`;
     }
 
     // Redirect to the project details page
     function returnToProject() {
-        Cookies.remove('project_author');
+        localStorage.removeItem('project_author');
         window.location.href = `/detail-projet/?uuid=${projectUuid}`;
     }
 
-    const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || checkIfUserIsAuthor());
+    const allFilteredUsersAreMembers = filteredUsers.every(user => checkIfMemberExists(user) || checkIfUserIsAuthor(userData, projectAuthor));
 
     // Pagination Logic
     const indexOfLastUser = currentPage * usersPerPage;
@@ -191,10 +199,10 @@ export default function NewProjectMember() {
             <div className="pagination">
                 <p>Page:</p>
                 {Array.from({ length: Math.ceil(filteredUsers.length / usersPerPage) }).map((_, index) => (
-                    <button key={index} className={currentPage === index + 1 ? 'active' : null} onClick={() => paginate(index + 1)}>{index + 1}</button>
+                    <button key={index + 1} className={currentPage === index + 1 ? 'active' : null} onClick={() => paginate(index + 1)}>{index + 1}</button>
                 ))}
             </div>
-            <button className="return-project-btn" onClick={(e) => returnToProject()}>Annuler</button>
+            <button className="return-project-btn" onClick={returnToProject}>Annuler</button>
             <button className="add-member-btn" onClick={addNewMembers}>Ajouter</button>
         </main>
     );

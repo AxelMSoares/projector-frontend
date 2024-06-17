@@ -1,4 +1,4 @@
-.project-detail{
+.project-detail {
     background-color: var(--secondary-background-color);
     color: var(--light-color);
     max-width: 1400px;
@@ -9,422 +9,432 @@
     border-radius: 5px;
     margin-top: 40px;
     position: relative;
-}
-
-.project-detail span{
-    margin-left: 5px;
-}
-
-.project-detail h2 {
-    margin-bottom: 20px;
-    margin-left: 20px;
-}
-
-.project-detail .detail{
-    margin-left: 20px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-}
-
-.project-detail .detail .author-link{
-    color: var(--ongoing-color);
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.project-detail .members{
-     border: 2px solid var(--light-color);
-     border-radius: 5px;
-     padding: 40px 20px;
-     margin: 40px 0;
-     position: relative;
-}
-
-.project-detail .members .action-btns{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.project-detail .members li{
-    display: flex;
-    flex-wrap: wrap;
-    border: 1px solid var(--light-color);
-    padding: 10px;
-    justify-content: space-around;
-}
-
-.project-detail .members .success{
-    margin: 1px auto;
-}
-
-.project-detail .members li:first-child{
-    border-radius: 5px 5px 0 0;
-}
-
-.project-detail .members li:last-child{
-    border-radius: 0 0 5px 5px;
-}
-
-.project-detail .members li p,
-.project-detail .members li div{
-    width: 30%;
-    text-align: center;
-}
-
-.project-detail .members .members-confirm-btn,
-.project-detail .members .members-cancel-btn,
-.project-detail .members .members-delete-btn,
-.project-detail .members .members-edit-btn,
-.project-detail .members .members-add-btn,
-.project-detail .members .members-leave-btn{
-    background-color: var(--error-color);
-    padding: 5px 10px;
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    font-size: 0.6rem;
-    transition: all .3s ease;
-}
-
-.project-detail .members .members-leave-btn{
-    position: absolute;
-    top: 20px;
-    right: 20px;
-
-}
-
-.project-detail .members .members-confirm-btn{
-    background-color: var(--success-color);
-    margin-right: 10px;
-}
-
-.project-detail .members .members-cancel-btn{
-    background-color: var(--fourth-color);
-}
-
-.project-detail .members .member .user-link{
-    color: var(--ongoing-color);
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.project-detail .members .members-confirm-btn:hover,
-.project-detail .members .members-cancel-btn:hover,
-.project-detail .members .members-leave-btn:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .members .search-members-field{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-    margin-top: 20px;
-}
-
-.project-detail .members .search-members-field label{
-    margin-right: 20px;
-}
-
-.project-detail .members .search-members-field input {
-    max-width: 240px;
-    width: 100%;
-}
-
-.project-detail .members .members-add-btn{
-    position: absolute;
-    background-color: var(--ongoing-color);
-    font-size: 0.8rem;
-    top: 20px;
-    right: 20px;
-}
-
-.project-detail .members .members-edit-btn{
-    background-color: var(--ongoing-color);
-    margin-right: 10px;
-    transition: all .3s ease;
-}
-
-.project-detail .members .members-delete-btn{
-    background-color: var(--error-color);
-    transition: all .3s ease;
-}
-
-.project-detail .members .filter-field{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.project-detail .members .filter-field p{
-    margin-right: 20px;
-}
-
-.project-detail .members .filter-field button{
-    background-color: var(--fourth-color);
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    margin-right: 10px;
-    transition: all .3s ease;
-}
-
-.project-detail .members .members-add-btn:hover,
-.project-detail .members .members-edit-btn:hover,
-.project-detail .members .members-delete-btn:hover,
-.project-detail .members .filter-field button:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .members .message{
-    margin-bottom: 20px;
-}
-
-.project-detail .members .filters{
-    border-radius: 5px;
-    cursor:pointer;
-    transition: all .3s ease;
-}
-
-
-.project-detail .members .filters-clicked{
-    background-color: var(--secondary-color);
-    border-radius: 5px;
-}
-
-.project-detail .members .filters:hover,
-.project-detail .members .filters-clicked:hover{
-    box-shadow: 0 0 2px 2px var(--light-color);
-}
-
-.project-detail .project-date-field,
-.project-detail .project-status-field,
-.project-detail .project-categorie-field,
-.project-detail .project-description-field{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 5px;
-}
-
-.project-detail .project-description-field input{
-    width: 60%;
-    border-radius: 5px;
-}
-
-.project-detail .project-date-field button,
-.project-detail .project-status-field button,
-.project-detail .project-categorie-field button,
-.project-detail .project-description-field button{
-    background-color: var(--ongoing-color);
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    margin-left: 10px;
-    font-size: 0.8em;
-    padding: 2px 10px;
-    transition: all .3s ease;
-}
-
-.project-detail .project-date-field button:hover,
-.project-detail .project-status-field button:hover,
-.project-detail .project-categorie-field button:hover,
-.project-detail .project-description-field button:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .project-date-field .deadline-confirm-btn,
-.project-detail .project-status-field .status-confirm-btn,
-.project-detail .project-categorie-field .category-confirm-btn,
-.project-detail .project-description-field .desc-confirm-btn{
-    background-color: var(--success-color);
-    border: 1px solid var(--light-color);
-}
-
-.project-detail .project-date-field .deadline-cancel-btn,
-.project-detail .project-status-field .status-cancel-btn,
-.project-detail .project-categorie-field .category-cancel-btn,
-.project-detail .project-description-field .desc-cancel-btn{
-    background-color: var(--fourth-color);
-    border: 1px solid var(--light-color);
-}
-
-.project-detail .tasks-field{
-    border-radius: 5px;
-    border: 2px solid var(--light-color);
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.project-detail .tasks-field ul{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 100%;
-}
-
-.project-detail .tasks-field h3{
-    margin-bottom: 10px;
-}
-
-.project-detail .tasks-field .task-add-btn{
-    background-color: var(--ongoing-color);
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 0.8rem;
-    text-align: end;
-    margin-bottom: 10px;
-    transition: all .3s ease;
-}
-
-.project-detail .tasks-field .task-add-btn:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .tasks-field li{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    border: 1px solid var(--light-color);
-    border-collapse: collapse;
-    padding: 10px;
-}
-
-.project-detail .tasks-field input,
-.project-detail .tasks-field textarea{
-    width: 25%;
-    padding: 10px 5px;
-    height: 50px;
-}
-
-.project-detail .tasks-field textarea{
-    height: 80px;
-    resize: none;
-    border-radius: 5px;
-}
-
-.project-detail .tasks-field select{
-    width: 18%;
-    height: 30px;
-    border-radius: 5px;
-}
-
-.project-detail .tasks-field .author p{
-    width: 20%;
-    text-align: center;
-}
-
-.project-detail .tasks-field .author .action-buttons{
-    width: 20%;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-}
-
-.project-detail .tasks-field .author .action-buttons button{
-    color: var(--light-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin-bottom: 5px;
-    font-size: 0.6rem;
-    transition: all .3s ease;
-}
-
-.project-detail .tasks-field .author .action-buttons .edit{
-    background-color: var(--ongoing-color);
-}
-
-.project-detail .tasks-field .author .action-buttons .delete{
-    background-color: var(--error-color);
-}
-.project-detail .tasks-field .author .action-buttons .confirm{
-    background-color: var(--success-color);
-}
-
-.project-detail .tasks-field .author .action-buttons .cancel{
-    background-color: var(--fourth-color);
-}
-
-.project-detail .tasks-field .author .action-buttons .confirm:hover,
-.project-detail .tasks-field .author .action-buttons .cancel:hover,
-.project-detail .tasks-field .author .action-buttons .edit:hover,
-.project-detail .tasks-field .author .action-buttons .delete:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .tasks-field .user p{
-    width: 30%;
-    text-align: center;
-}
-
-.project-detail .tasks-field li:first-child{
-    border-radius: 5px 5px 0 0;
-}
-
-.project-detail .tasks-field li:first-child .filter{
-    cursor: pointer;
-    border-radius: 5px;
-    transition: all .3s ease;
-}
-
-.project-detail .tasks-field li:first-child .filter-clicked{
-    background-color: var(--secondary-color);
-    border-radius: 5px;
-    transition: all .3s ease;
-}
-
-.project-detail .tasks-field li:first-child .filter:hover,
-.project-detail .tasks-field li:first-child .filter-clicked:hover{
-    box-shadow: 0 0 2px 2px var(--light-color);
-}
-
-.project-detail .tasks-field li:last-child{
-    border-radius: 0 0 5px 5px;
-}
-
-.project-detail .tasks-field .filtered{
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    margin-top: 20px;
-    margin-left: 20px;
-}
-
-.project-detail .tasks-field .delete-filter{
-    cursor: pointer;
-    background-color: var(--fourth-color);
-    padding: 4px 8px;
-    border-radius: 5px;
-    text-align: center;
-    line-height: 20px;
-    margin-left: 20px;
-    font-size: 0.8rem;
-    transition: all .3s ease;
-}
-
-.project-detail .tasks-field .delete-filter:hover{
-    border: 2px solid var(--light-color);
-    box-shadow: 0 0 5px var(--light-color);
-}
-
-.project-detail .tasks-field .tasks-ratio{
-    text-align: end;
-}
-
 
 
-.tchat-access-btn{
+    span {
+        margin-left: 5px;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+        margin-left: 20px;
+    }
+
+    .detail {
+        margin-left: 20px;
+        margin-bottom: 5px;
+        margin-right: 5px;
+
+        .author-link {
+            color: var(--ongoing-color);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    .members {
+        border: 2px solid var(--light-color);
+        border-radius: 5px;
+        padding: 40px 20px;
+        margin: 40px 0;
+        position: relative;
+
+
+        .action-btns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid var(--light-color);
+            padding: 10px;
+            justify-content: space-around;
+        }
+
+        .success {
+            margin: 1px auto;
+        }
+
+        li:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+
+        li:last-child {
+            border-radius: 0 0 5px 5px;
+        }
+
+        li p,
+        li div {
+            width: 30%;
+            text-align: center;
+        }
+
+        .members-confirm-btn,
+        .members-cancel-btn,
+        .members-delete-btn,
+        .members-edit-btn,
+        .members-add-btn,
+        .members-leave-btn {
+            background-color: var(--error-color);
+            padding: 5px 10px;
+            color: var(--light-color);
+            border: 0;
+            border-radius: 5px;
+            font-size: 0.6rem;
+            transition: all .3s ease;
+        }
+
+        .members-leave-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+
+        }
+
+        .members-confirm-btn {
+            background-color: var(--success-color);
+            margin-right: 10px;
+        }
+
+        .members-cancel-btn {
+            background-color: var(--fourth-color);
+        }
+
+        .member .user-link {
+            color: var(--ongoing-color);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .members-confirm-btn:hover,
+        .members-cancel-btn:hover,
+        .members-leave-btn:hover {
+            border: 2px solid var(--light-color);
+            box-shadow: 0 0 5px var(--light-color);
+        }
+
+        .search-members-field {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            margin-top: 20px;
+        }
+
+        .search-members-field label {
+            margin-right: 20px;
+        }
+
+        .search-members-field input {
+            max-width: 240px;
+            width: 100%;
+        }
+
+        .members-add-btn {
+            position: absolute;
+            background-color: var(--ongoing-color);
+            font-size: 0.8rem;
+            top: 20px;
+            right: 20px;
+        }
+
+        .members-edit-btn {
+            background-color: var(--ongoing-color);
+            margin-right: 10px;
+            transition: all .3s ease;
+        }
+
+        .members-delete-btn {
+            background-color: var(--error-color);
+            transition: all .3s ease;
+        }
+
+        .filter-field {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-field p {
+            margin-right: 20px;
+        }
+
+        .filter-field button {
+            background-color: var(--fourth-color);
+            color: var(--light-color);
+            border: 0;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            margin-right: 10px;
+            transition: all .3s ease;
+        }
+
+        .members-add-btn:hover,
+        .members-edit-btn:hover,
+        .members-delete-btn:hover,
+        .filter-field button:hover {
+            border: 2px solid var(--light-color);
+            box-shadow: 0 0 5px var(--light-color);
+        }
+
+        .message {
+            margin-bottom: 20px;
+        }
+
+        .filters {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all .3s ease;
+        }
+
+
+        .filters-clicked {
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+        }
+
+        .filters:hover,
+        .filters-clicked:hover {
+            box-shadow: 0 0 2px 2px var(--light-color);
+        }
+    }
+
+    .project-date-field,
+    .project-status-field,
+    .project-categorie-field,
+    .project-description-field {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 5px;
+    }
+
+    .project-description-field input {
+        width: 60%;
+        border-radius: 5px;
+    }
+
+    .project-date-field button,
+    .project-status-field button,
+    .project-categorie-field button,
+    .project-description-field button {
+        background-color: var(--ongoing-color);
+        color: var(--light-color);
+        border: 0;
+        border-radius: 5px;
+        margin-left: 10px;
+        font-size: 0.8em;
+        padding: 2px 10px;
+        transition: all .3s ease;
+    }
+
+    .project-date-field button:hover,
+    .project-status-field button:hover,
+    .project-categorie-field button:hover,
+    .project-description-field button:hover {
+        border: 2px solid var(--light-color);
+        box-shadow: 0 0 5px var(--light-color);
+    }
+
+    .project-date-field .deadline-confirm-btn,
+    .project-status-field .status-confirm-btn,
+    .project-categorie-field .category-confirm-btn,
+    .project-description-field .desc-confirm-btn {
+        background-color: var(--success-color);
+        border: 1px solid var(--light-color);
+    }
+
+    .project-date-field .deadline-cancel-btn,
+    .project-status-field .status-cancel-btn,
+    .project-categorie-field .category-cancel-btn,
+    .project-description-field .desc-cancel-btn {
+        background-color: var(--fourth-color);
+        border: 1px solid var(--light-color);
+    }
+
+    .tasks-field {
+        border-radius: 5px;
+        border: 2px solid var(--light-color);
+        padding: 20px;
+        margin-bottom: 20px;
+
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        h3 {
+            margin-bottom: 10px;
+        }
+
+        .task-add-btn {
+            background-color: var(--ongoing-color);
+            color: var(--light-color);
+            border: 0;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            text-align: end;
+            margin-bottom: 10px;
+            transition: all .3s ease;
+        }
+
+        .task-add-btn:hover {
+            border: 2px solid var(--light-color);
+            box-shadow: 0 0 5px var(--light-color);
+        }
+
+        li {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            border: 1px solid var(--light-color);
+            border-collapse: collapse;
+            padding: 10px;
+        }
+
+        input,
+        textarea {
+            width: 25%;
+            padding: 10px 5px;
+            height: 50px;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+            border-radius: 5px;
+        }
+
+        select {
+            width: 18%;
+            height: 30px;
+            border-radius: 5px;
+        }
+
+        .author p {
+            width: 20%;
+            text-align: center;
+        }
+
+        .author .action-buttons {
+            width: 20%;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .author .action-buttons button {
+            color: var(--light-color);
+            border: 0;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            font-size: 0.6rem;
+            transition: all .3s ease;
+        }
+
+        .author .action-buttons .edit {
+            background-color: var(--ongoing-color);
+        }
+
+        .author .action-buttons .delete {
+            background-color: var(--error-color);
+        }
+
+        .author .action-buttons .confirm {
+            background-color: var(--success-color);
+        }
+
+        .author .action-buttons .cancel {
+            background-color: var(--fourth-color);
+        }
+
+        .author .action-buttons .confirm:hover,
+        .author .action-buttons .cancel:hover,
+        .author .action-buttons .edit:hover,
+        .author .action-buttons .delete:hover {
+            border: 2px solid var(--light-color);
+            box-shadow: 0 0 5px var(--light-color);
+        }
+
+        .user p {
+            width: 30%;
+            text-align: center;
+        }
+
+        li:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+
+        li:first-child .filter {
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all .3s ease;
+        }
+
+        li:first-child .filter-clicked {
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            transition: all .3s ease;
+        }
+
+        li:first-child .filter:hover,
+        li:first-child .filter-clicked:hover {
+            box-shadow: 0 0 2px 2px var(--light-color);
+        }
+
+        li:last-child {
+            border-radius: 0 0 5px 5px;
+        }
+
+        .filtered {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .delete-filter {
+            cursor: pointer;
+            background-color: var(--fourth-color);
+            padding: 4px 8px;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 20px;
+            margin-left: 20px;
+            font-size: 0.8rem;
+            transition: all .3s ease;
+        }
+
+        .delete-filter:hover {
+            border: 2px solid var(--light-color);
+            box-shadow: 0 0 5px var(--light-color);
+        }
+
+        .tasks-ratio {
+            text-align: end;
+        }
+
+        .success{
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+    }
+}
+
+
+
+.tchat-access-btn {
     color: var(--light-color);
     text-decoration: none;
     background-color: var(--ongoing-color);
@@ -436,7 +446,7 @@
     transition: all .3s ease;
 }
 
-.delete-project-btn{
+.delete-project-btn {
     display: inline;
     color: var(--light-color);
     background-color: var(--error-color);
@@ -450,33 +460,33 @@
 }
 
 .tchat-access-btn:hover,
-.delete-project-btn:hover{
+.delete-project-btn:hover {
     box-shadow: 0 0 5px var(--light-color);
     border: 2px solid var(--light-color);
 }
 
 @media (max-width: 1400px) {
-    .project-detail{
+    .project-detail {
         width: 96%;
     }
 }
 
 @media (max-width: 560px) {
-    .project-detail{
+    .project-detail {
         padding: 10px;
         font-size: 0.9em;
     }
 
-    .project-detail .detail{
+    .project-detail .detail {
         margin-left: 5px;
     }
 
-    .project-detail button{
+    .project-detail button {
         font-size: 0.9em;
         padding: 2px 5px;
     }
 
-    .project-detail .delete-project-btn{
+    .project-detail .delete-project-btn {
         font-size: 0.8em;
         top: 20px;
         right: 20px;
@@ -485,71 +495,71 @@
     .project-detail .project-description-field div button,
     .project-detail .project-categorie-field div button,
     .project-detail .project-status-field div button,
-    .project-detail .project-date-field div button{
+    .project-detail .project-date-field div button {
         margin-left: 5px;
     }
 
-    .project-detail .members{
+    .project-detail .members {
         padding: 10px;
         font-size: 0.9em;
     }
 
-    .project-detail .members .members-add-btn{
+    .project-detail .members .members-add-btn {
         font-size: 1em;
         padding: 2px 5px;
     }
 
-    .project-detail .members .member input{
+    .project-detail .members .member input {
         width: 40%;
         margin-right: auto;
         margin-left: auto;
         font-size: 1em;
     }
 
-    .project-detail .members .search-members-field input{
+    .project-detail .members .search-members-field input {
         width: 100%;
         margin-right: auto;
         margin-left: auto;
     }
 
-    .project-detail .members li{
+    .project-detail .members li {
         padding: 40px 0;
     }
 
-    .project-detail .members .members-leave-btn{
+    .project-detail .members .members-leave-btn {
         right: 10px;
         top: 10px;
     }
 
-    .project-detail .members .action-btns{
+    .project-detail .members .action-btns {
         flex-direction: column;
         align-items: center;
     }
 
-    .project-detail .members .action-btns button{
+    .project-detail .members .action-btns button {
         font-size: 1em;
         padding: 2px 5px;
         margin: 0 0 5px 0;
     }
 
-    .project-detail .tasks-field{
+    .project-detail .tasks-field {
         padding: 10px;
         font-size: 0.9em;
         line-height: 1.4em;
     }
 
-    .project-detail .tasks-field .task-add-btn{
+    .project-detail .tasks-field .task-add-btn {
         font-size: 1em;
         padding: 2px 5px;
     }
 
-    .project-detail .tasks-field .author .action-buttons{
+    .project-detail .tasks-field .author .action-buttons {
         width: 100%;
         flex-direction: row;
         justify-content: center;
     }
 
-    .project-detail .tasks-field .author .action-buttons button{
+    .project-detail .tasks-field .author .action-buttons button {
         font-size: 1em;
         padding: 2px 5px;
         margin-right: 10px;
@@ -557,10 +567,9 @@
 
     .project-detail .tasks-field .author select,
     .project-detail .tasks-field .author input,
-    .project-detail .tasks-field .author textarea{
+    .project-detail .tasks-field .author textarea {
         font-size: 1em;
         width: 100%;
         margin-bottom: 10px;
     }
 }
-

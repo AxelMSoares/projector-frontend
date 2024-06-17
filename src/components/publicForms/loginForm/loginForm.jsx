@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie';
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { login } from '../../../api/login';
@@ -13,7 +12,7 @@ function LoginForm({ onConnect }) {
   const csrfToken = useCSRFToken();
   
   // Id the user is already logged in, redirect to the homepage
-  if (Cookies.get('jwt') && Cookies.get('userData')) {
+  if (localStorage.getItem('jwt') && localStorage.getItem('userData')) {
     window.location.href = '/';
     return null;
   }
@@ -86,9 +85,9 @@ function LoginForm({ onConnect }) {
     // Reset the loginAttempts
     setLoginAttempts(0);
 
-    // Save the token and the user data in the client cookies
-    Cookies.set('jwt', responseJwt);
-    Cookies.set('userData', JSON.stringify(response));
+    // Save the token and the user data in the the localstorage
+    localStorage.setItem('jwt', responseJwt);
+    localStorage.setItem('userData', JSON.stringify(response));
 
     // Update the state of the parent component
     onConnect(true);
@@ -98,6 +97,7 @@ function LoginForm({ onConnect }) {
       window.location.href = '/';
     }
   }
+
 
   return (
     <main>
