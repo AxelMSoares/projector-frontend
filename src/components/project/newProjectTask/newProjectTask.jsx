@@ -74,6 +74,7 @@ export default function NewProjectTask({ jwt, userData }) {
     // Cancel the creation of the new task and redirect to the project detail page
     function cancel() {
         localStorage.removeItem('project_author');
+        Cookies.remove('task_message');
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
     }
 

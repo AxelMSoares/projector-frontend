@@ -30,7 +30,6 @@ export default function TasksField({ project, jwt, userData }) {
         const taskMessage = Cookies.get('task_message');
         if (taskMessage) {
             setMessage({ message: taskMessage, className: 'success' });
-            Cookies.remove('task_message');
         }
     }, []);
 
