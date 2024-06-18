@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
-import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link } from 'react-router-dom';
 import PublicHeader from '../src/components/headers/publicHeader/publicHeader.jsx';
 import UsersHeader from '../src/components/headers/usersHeader/usersHeader.jsx';
 import Footer from '../src/components/footer/footer.jsx';
-import Home from '../src/components/homePage/home.jsx'
-import LoginForm from '../src/components/publicForms/loginForm/loginForm.jsx'
-import RegisterForm from '../src/components/publicForms/registerForm/registerForm.jsx'
-import NewProjectForm from '../src/components/project/newProjectForm/newProjectForm.jsx'
+import Home from '../src/components/homePage/home.jsx';
+import LoginForm from '../src/components/publicForms/loginForm/loginForm.jsx';
+import RegisterForm from '../src/components/publicForms/registerForm/registerForm.jsx';
+import NewProjectForm from '../src/components/project/newProjectForm/newProjectForm.jsx';
 import ProjectList from './components/project/projectList/projectList.jsx';
 import PrivacyPolicy from '../src//components/privacyPolicy/privacyPolicy.jsx'
 import ProjectDetails from './components/project/projectDetails/projectDetails.jsx';
@@ -15,7 +15,8 @@ import NewProjectMember from './components/project/newProjectMember/newProjectMe
 import UserIsProjectMember from './components/userIsProjectMember/userIsProjectMember.jsx';
 import NewProjectTask from './components/project/newProjectTask/newProjectTask.jsx';
 import UserProfile from './components/userProfile/userProfile.jsx';
-import './assets/css/main.css'
+import './assets/css/main.css';
+import jwt from 'jsonwebtoken';
 
 function App() {
   const [connected, setConnected] = useState(false); // State hook
@@ -24,8 +25,15 @@ function App() {
   const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
 
   useEffect(() => {
-    setConnected(localStorage.getItem('jwt') && localStorage.getItem('userData') ? true : false);
-  }, [jwt]);
+    const jwtoken = localStorage.getItem('jwt');
+    try {
+      const decoded = jwt.verify(jwtoken, 'secretKey');
+      setConnected(true);
+    } catch (err) {
+      localStorage.removeItem('jwt');
+      setConnected(false);
+    }
+  }, []);
 
   const router = createBrowserRouter([
     {
