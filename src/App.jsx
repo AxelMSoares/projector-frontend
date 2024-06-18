@@ -16,7 +16,7 @@ import UserIsProjectMember from './components/userIsProjectMember/userIsProjectM
 import NewProjectTask from './components/project/newProjectTask/newProjectTask.jsx';
 import UserProfile from './components/userProfile/userProfile.jsx';
 import './assets/css/main.css';
-import jwt from 'jsonwebtoken';
+import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [connected, setConnected] = useState(false); // State hook
@@ -25,10 +25,15 @@ function App() {
   const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
 
   useEffect(() => {
-    const jwtoken = localStorage.getItem('jwt');
+    const token = localStorage.getItem('jwt');
     try {
-      const decoded = jwt.verify(jwtoken, 'secretKey');
-      setConnected(true);
+      const decoded = jwtDecode(token);
+      if (decoded.exp < Date.now() / 1000) {
+        localStorage.removeItem('jwt');
+        setConnected(false);
+      } else {
+        setConnected(true);
+      }
     } catch (err) {
       localStorage.removeItem('jwt');
       setConnected(false);
@@ -87,7 +92,7 @@ function App() {
         },
         {
           path: '/utilisateur/:pseudo',
-          element: <UserProfile jwt={jwt} userData={userData} setUserData={setUserData}/>
+          element: <UserProfile jwt={jwt} userData={userData} setUserData={setUserData} />
         }
       ]
     }

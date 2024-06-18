@@ -220,6 +220,11 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }
 
+    // Refresh the page
+    function refreshPage() {
+        window.location.reload();
+    }
+
     // Reset the new data
     function resetNewData() {
         setNewUsername('');
