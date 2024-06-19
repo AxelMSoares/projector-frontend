@@ -9,7 +9,6 @@ export default function NewProjectMember() {
 
     const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
     const [userData, setUserData] = useState(localStorage.getItem('userData') ? localStorage.getItem('userData') : null);
-    const csrfToken = useCSRFToken();
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [newMembers, setNewMembers] = useState([]);
@@ -21,6 +20,7 @@ export default function NewProjectMember() {
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 5; // Number of users per page
     const [selectedMembers, setSelectedMembers] = useState([]);
+    const csrfToken = useCSRFToken();
 
     // Get the project uuid in the url
     const urlParams = new URLSearchParams(location.search);
@@ -29,9 +29,14 @@ export default function NewProjectMember() {
     // Get the users list and the project members list
     useEffect(() => {
         localStorage.getItem('project_author') ? setProjectAuthor(localStorage.getItem('project_author')) : setProjectAuthor('');
-        getUsers();
-        getProjectMembers();
     }, []);
+
+    useEffect(() => {
+        if(csrfToken && jwt) {
+            getUsers();
+            getProjectMembers();
+        }
+    }, [csrfToken, jwt]);
 
     // Filter the users list based on the search input
     useEffect(() => {
