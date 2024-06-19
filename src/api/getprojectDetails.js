@@ -1,4 +1,5 @@
 export async function getProjectDetails(projectUuid, jwt, csrfToken) {
+
         try {
             const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/projects/details/${projectUuid}`, {
                 method: 'GET',

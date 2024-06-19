@@ -34,8 +34,10 @@ export default function UserProfile({ jwt, userData: userProp }) {
     const csrfToken = useCSRFToken();
 
     useEffect(() => {
-        fetchUserInfos();
-    }, [pseudo]);
+        if (csrfToken) {
+            fetchUserInfos();
+        }
+    }, [pseudo, csrfToken]);
 
     // If the user is loaded, check if it's the user profile and set the state
     useEffect(() => {
@@ -237,7 +239,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
     if (!userLoaded) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
     }
-    
+
     return (
         <main className='profile'>
             {userProfile ? <h1>Mon profil</h1> : <h1>Profil de {user && user.username}</h1>}
@@ -251,7 +253,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
                     {errorMsg ? <p className="error">{errorMsg}</p> : null}
                     <div className='buttons-box'>
                         <button className='validate-profile-edit-btn' onClick={(e) => handleUpdateUser()}>Enregistrer</button>
-                        <button className='cancel-edit-btn' max-length="255" onClick={() =>setEditing(false)}>Annuler</button>
+                        <button className='cancel-edit-btn' max-length="255" onClick={() => setEditing(false)}>Annuler</button>
                     </div>
 
                 </div> :
@@ -280,10 +282,10 @@ export default function UserProfile({ jwt, userData: userProp }) {
                                 <input type="password" className='new-pwd-confirm' id="new-pwd-confirm" />
                                 {errorMsg ? <p className="error">{errorMsg}</p> : null}
                                 <div className='buttons-field'>
-                                    <button className='pwd-cancel-btn' onClick={(e) =>{ 
+                                    <button className='pwd-cancel-btn' onClick={(e) => {
                                         setPasswordEditing(false);
                                         setErrorMsg('');
-                                        }}>Annuler</button>
+                                    }}>Annuler</button>
                                     <button className='pwd-validate-btn' onClick={(e) => handleUpdatePassword(user.username)}>Valider</button>
                                 </div>
                             </div>}

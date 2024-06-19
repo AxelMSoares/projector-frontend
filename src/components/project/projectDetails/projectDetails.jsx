@@ -16,6 +16,7 @@ import TasksField from "./tasksField";
 
 export default function ProjectDetails({ jwt, userData }) {
 
+    const csrfToken = useCSRFToken();
     const location = useLocation();
     const [project, setProject] = useState({});
     const [errorMsg, setErrorMsg] = useState('');
@@ -25,18 +26,14 @@ export default function ProjectDetails({ jwt, userData }) {
     // Search in the url the project uuid
     const searchParams = new URLSearchParams(location.search);
     const projectUuid = searchParams.get('uuid');
-    const csrfToken = useCSRFToken();
+
 
     useEffect(() => {
-
-        if (jwt && projectUuid) {
-            const fetchData = async () => {
-                await fetchProjectDetails(jwt, projectUuid);
-                await fetchMembersList(jwt, projectUuid);
-            }
-            fetchData();
+        if (jwt && csrfToken) {
+            fetchProjectDetails();
+            fetchMembersList();
         }
-    }, [jwt, projectUuid]);
+    }, [jwt, csrfToken]);
 
     useEffect(() => {
         if (projectLoaded && membersLoaded) {
@@ -60,6 +57,9 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function fetchProjectDetails() {
         try {
+            console.log("projectUuid", projectUuid);
+            console.log("jwt", jwt);
+            console.log("csrfToken", csrfToken);
             const data = await getProjectDetails(projectUuid, jwt, csrfToken);
             setProject(data[0]);
             setProjectLoaded(true);
