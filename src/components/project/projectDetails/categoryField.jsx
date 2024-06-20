@@ -28,7 +28,9 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
         setCategorieId(project.project_category_id
         );
         setCategorieName(project.category_name);
-        getCategoriesList();
+        if (csrfToken && jwt) {
+            getCategoriesList();
+        }
     }, [project]);
 
     async function getCategoriesList() {

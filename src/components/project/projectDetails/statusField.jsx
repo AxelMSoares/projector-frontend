@@ -27,7 +27,9 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
     useEffect(() => {
         setStatusName(project.status_name);
         setNewStatus(1);
-        getStatus();
+        if (jwt && csrfToken) {
+            getStatus();
+        }
     }, [project]);
 
     async function getStatus() {
