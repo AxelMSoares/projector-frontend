@@ -8,6 +8,7 @@ import { updateUserPassword } from '../../api/updateUserPassword';
 import { checkPasswordFormat } from '../../helpers/functions';
 import { formatDate } from '../../helpers/functions';
 import { cleanString } from '../../helpers/functions';
+import { checkUsernameFormat } from '../../helpers/functions';
 import { checkEmailFormat } from '../../helpers/functions';
 import { useCSRFToken } from '../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
@@ -41,7 +42,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
 
     // If the user is loaded, check if it's the user profile and set the state
     useEffect(() => {
-        if (userLoaded) {
+        if (user && userLoaded) {
             checkIfItsUserProfile(userData, user);
             setNewUsername(user.username || '');
             setNewEmail(user.email || '');
@@ -88,6 +89,12 @@ export default function UserProfile({ jwt, userData: userProp }) {
 
         // Check if the user is the owner of the profile before editing
         if (!userProfile) {
+            return;
+        }
+
+        // Check if the new username format is correct
+        if (!checkUsernameFormat(newUsername)) {
+            setErrorMsg('Le pseudo doit contenir entre 3 et 20 caractères, sans caractères spéciaux.');
             return;
         }
 
@@ -238,6 +245,10 @@ export default function UserProfile({ jwt, userData: userProp }) {
     // If the user profile is not loaded, display a loading message
     if (!userLoaded) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
+    }
+
+    if(!user){
+        return <div className='profile'><div className='loading-profile'>Utilisateur introuvable</div></div>
     }
 
     return (

@@ -31,6 +31,7 @@ export default function TasksField({ project, jwt, userData }) {
         if (taskMessage) {
             setMessage({ message: taskMessage, className: 'success' });
         }
+        Cookies.remove('task_message');
     }, []);
 
     // Fetch the tasks list and the task status when the project uuid is set
