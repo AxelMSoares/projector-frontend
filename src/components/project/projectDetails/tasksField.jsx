@@ -75,8 +75,8 @@ export default function TasksField({ project, jwt, userData }) {
         if (!userIsAuthor) {
             return;
         }
-        // Set the project author in the local storage
-        localStorage.setItem('project_author', JSON.stringify({ author: project.username }));
+        // Set the project author in the cookies
+        Cookies.set('project_author', JSON.stringify({ author: project.username }));
 
         window.location.href = `/projet/nouvelle-tache/?uuid=${project.uuid}`;
         return null;

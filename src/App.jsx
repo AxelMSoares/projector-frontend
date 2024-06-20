@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createBrowserRouter, RouterProvider, NavLink, Outlet, useRouteError, defer, Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import PublicHeader from '../src/components/headers/publicHeader/publicHeader.jsx';
 import UsersHeader from '../src/components/headers/usersHeader/usersHeader.jsx';
 import Footer from '../src/components/footer/footer.jsx';
@@ -21,21 +22,21 @@ import { jwtDecode } from 'jwt-decode';
 function App() {
   const [connected, setConnected] = useState(false); // State hook
   const onConnectChangeHandler = (value) => setConnected(value); // Update the state hook
-  const [userData, setUserData] = useState(localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : null);
-  const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
+  const [userData, setUserData] = useState(Cookies.get('userData') ? JSON.parse(Cookies.get('userData')) : null);
+  const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt');
+    const token = Cookies.get('jwt');
     try {
       const decoded = jwtDecode(token);
       if (decoded.exp < Date.now() / 1000) {
-        localStorage.removeItem('jwt');
+        Cookies.remove('jwt');
         setConnected(false);
       } else {
         setConnected(true);
       }
     } catch (err) {
-      localStorage.removeItem('jwt');
+      Cookies.remove('jwt');
       setConnected(false);
     }
   }, []);

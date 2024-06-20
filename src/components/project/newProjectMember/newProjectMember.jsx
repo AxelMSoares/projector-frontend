@@ -7,8 +7,8 @@ import Cookies from "js-cookie";
 
 export default function NewProjectMember() {
 
-    const [jwt, setJwt] = useState(localStorage.getItem('jwt') ? localStorage.getItem('jwt') : null);
-    const [userData, setUserData] = useState(localStorage.getItem('userData') ? localStorage.getItem('userData') : null);
+    const [jwt, setJwt] = useState(Cookies.get('jwt') ? Cookies.get('jwt') : null);
+    const [userData, setUserData] = useState(Cookies.get('userData') ? Cookies.get('userData') : null);
     const [users, setUsers] = useState([]);
     const [filteredUsers, setFilteredUsers] = useState([]);
     const [newMembers, setNewMembers] = useState([]);
@@ -28,7 +28,7 @@ export default function NewProjectMember() {
 
     // Get the users list and the project members list
     useEffect(() => {
-        localStorage.getItem('project_author') ? setProjectAuthor(localStorage.getItem('project_author')) : setProjectAuthor('');
+        Cookies.get('project_author') ? setProjectAuthor(Cookies.get('project_author')) : setProjectAuthor('');
     }, []);
 
     useEffect(() => {
@@ -149,8 +149,8 @@ export default function NewProjectMember() {
             // Stock the message in the cookies
             Cookies.set('message', JSON.stringify({ message: 'Les membres ont bien été ajoutés au projet', class: 'success' }));
 
-            // Remove the project author from the localStorage
-            localStorage.removeItem('project_author');
+            // Remove the project author from the Cookies
+            Cookies.remove('project_author');
         });
 
         // Redirect to the project details page
@@ -159,7 +159,7 @@ export default function NewProjectMember() {
 
     // Redirect to the project details page
     function returnToProject() {
-        localStorage.removeItem('project_author');
+        Cookies.remove('project_author');
         window.location.href = `/detail-projet/?uuid=${projectUuid}`;
     }
 

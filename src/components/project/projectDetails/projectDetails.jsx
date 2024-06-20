@@ -57,9 +57,6 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function fetchProjectDetails() {
         try {
-            console.log("projectUuid", projectUuid);
-            console.log("jwt", jwt);
-            console.log("csrfToken", csrfToken);
             const data = await getProjectDetails(projectUuid, jwt, csrfToken);
             setProject(data[0]);
             setProjectLoaded(true);

@@ -18,7 +18,7 @@ function RegisterForm() {
     const csrfToken = useCSRFToken();
 
     // If the user is already connected, redirect to the home page
-    if (localStorage.getItem('jwt') && localStorage.getItem('userData')) {
+    if (Cookies.get('jwt') && Cookies.get('userData')) {
         window.location.href = '/';
         return null;
     }

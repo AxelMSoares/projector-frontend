@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import UserMenu from './userMenu';
 import NavMenu from './navMenu';
+import Cookies from 'js-cookie';
 
 function UsersHeader({ onConnect, userData }) {
 
@@ -14,18 +15,18 @@ function UsersHeader({ onConnect, userData }) {
 	const onLogoutHandler = (e) => {
 		e.preventDefault();
 		onConnect(false);
-		// Destroy the jwt and userData in the localStorage
-		localStorage.removeItem('jwt');
-		localStorage.removeItem('userData');
+		// Destroy the jwt and userData in the Cookies
+		Cookies.remove('jwt');
+		Cookies.remove('userData');
 		// Redirect to the home page
 		window.location.href = '/';
 	}
 
 	const onDisconnect = () => {
 		onConnect(false);
-		// Destroy the jwt and userData in the localStorage
-		localStorage.removeItem('jwt');
-		localStorage.removeItem('userData');
+		// Destroy the jwt and userData in the Cookies
+		Cookies.remove('jwt');
+		Cookies.remove('userData');
 		// Redirect to the home page
 		window.location.href = '/';
 	}

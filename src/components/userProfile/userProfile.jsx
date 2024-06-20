@@ -61,11 +61,11 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }, [message]);
 
-    // In image upload, set the user image and update the localstorage
+    // In image upload, set the user image and update the Cookies
     function handleImageUpload(imageUrl) {
         setUserImage(imageUrl);
         setUserData({ ...userData, profilePicture: imageUrl });
-        updateLocalStorageWithNewImage(imageUrl);
+        updateCookiesWithNewImage(imageUrl);
     }
 
     // Get the user infos by his usernames
@@ -121,7 +121,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         const result = await updateUser(jwt, csrfToken, user.uuid, data);
 
         if (result.message === 'User updated') {
-            updateLocalStorageWithNewData(data);
+            updateCookiesWithNewData(data);
 
             // If the user updated his username, redirect to the new profile page
             if (data.username !== user.username) {
@@ -136,17 +136,17 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }
 
-    // Update localstorage with the new data
-    function updateLocalStorageWithNewData(data) {
+    // Update Cookies with the new data
+    function updateCookiesWithNewData(data) {
         const updatedUserData = { ...user, ...data };
-        localStorage.setItem('userData', JSON.stringify(updatedUserData));
+        Cookies.set('userData', JSON.stringify(updatedUserData));
         setUser(updatedUserData);
     }
 
-    // Update the localstorage with the new image
-    function updateLocalStorageWithNewImage(imageUrl) {
+    // Update the Cookies with the new image
+    function updateCookiesWithNewImage(imageUrl) {
         const updatedUserData = { ...user, profilePicture: imageUrl };
-        localStorage.setItem('userData', JSON.stringify(updatedUserData));
+        Cookies.set('userData', JSON.stringify(updatedUserData));
         setUser(updatedUserData);
     }
 
@@ -165,9 +165,9 @@ export default function UserProfile({ jwt, userData: userProp }) {
             // Call the delete account function
             await deleteUser(jwt, csrfToken, user.uuid);
 
-            // Remove the jwt and the user data from the localstorage
-            localStorage.removeItem('jwt');
-            localStorage.removeItem('userData');
+            // Remove the jwt and the user data from the Cookies
+            Cookies.remove('jwt');
+            Cookies.remove('userData');
 
             // Redirect to the home page
             window.location.href = '/';

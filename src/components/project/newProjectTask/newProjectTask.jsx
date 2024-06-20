@@ -17,7 +17,7 @@ export default function NewProjectTask({ jwt, userData }) {
 
     useEffect(() => {
 
-        setProjectAuthor(localStorage.getItem('project_author') ? JSON.parse(localStorage.getItem('project_author')) : '');
+        setProjectAuthor(Cookies.get('project_author') ? JSON.parse(Cookies.get('project_author')) : '');
         checkIfUserIsAuthor();
     }, [projectUUID]);
 
@@ -58,8 +58,8 @@ export default function NewProjectTask({ jwt, userData }) {
             return;
         }
 
-        // Remove the project author from the local storage
-        localStorage.removeItem('project_author');
+        // Remove the project author from the cookies
+        Cookies.remove('project_author');
 
         // Add a success message in the cookies
         Cookies.set("task_message", "Tâche crée avec succèss.");
@@ -73,7 +73,7 @@ export default function NewProjectTask({ jwt, userData }) {
 
     // Cancel the creation of the new task and redirect to the project detail page
     function cancel() {
-        localStorage.removeItem('project_author');
+        Cookies.remove('project_author');
         Cookies.remove('task_message');
         window.location.href = `/detail-projet/?uuid=${projectUUID}`;
     }

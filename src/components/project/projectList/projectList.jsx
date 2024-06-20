@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/functions';
 import { getUserProjects } from '../../../api/getUserProjects';
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
+import Cookies from 'js-cookie';
 
 export default function ProjectList({ jwt }) {
     const navigate = useNavigate();
-    const userData = localStorage.getItem('userData');
+    const userData = Cookies.get('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
     const csrfToken= useCSRFToken();
     const [projects, setProjects] = useState([]);

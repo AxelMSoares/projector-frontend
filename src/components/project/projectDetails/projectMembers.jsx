@@ -114,7 +114,7 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
             return null;
         }
 
-        localStorage.setItem('project_author', JSON.stringify({ author: project.username }));
+        Cookies.set('project_author', JSON.stringify({ author: project.username }));
         window.location.href = `/projet/nouveau-membre/?uuid=${projectUuid}`;
         return;
     }
