@@ -120,9 +120,17 @@ export default function UserProfile({ jwt, userData: userProp }) {
         // Get the data to update, if not modification in a field, keep the old data value
         const data = {
             username: newUsername ? newUsername : user.username,
-            email: newEmail ? newEmail : user.email,
-            bio: newBio ? cleanString(newBio) : user.bio,
-            profilePicture: userImage ? userImage : user.profilePicture
+            email: newEmail ? newEmail : user.email
+        }
+
+        // If the user updated his profile picture, add it to the data
+        if (userImage) {
+            data.profilePicture = userImage;
+        }
+
+        // If the user updated his bio, add it to the data
+        if (newBio) {
+            data.bio = newBio;
         }
 
         // Call the update user function
@@ -133,8 +141,12 @@ export default function UserProfile({ jwt, userData: userProp }) {
 
             // If the user updated his username, redirect to the new profile page
             if (data.username !== user.username) {
+                resetNewData();
+                setErrorMsg('');
                 window.location.href = `/utilisateur/${data.username}`;
+                return;
             }
+
             resetNewData();
             setErrorMsg('');
             setMessage({ content: 'Profil mis à jour avec succès.', class: 'success' });
@@ -248,7 +260,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         return <div className='profile'><div className='loading-profile'>Chargement...</div></div>
     }
 
-    if(!user){
+    if (!user) {
         return <div className='profile'><div className='loading-profile'>Utilisateur introuvable</div></div>
     }
 
@@ -261,7 +273,8 @@ export default function UserProfile({ jwt, userData: userProp }) {
                     <label htmlFor={"username"}>Pseudo:</label><input type="text" id="username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
                     <label htmlFor={"email"}>Email:</label><input type="email" id="email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
                     <label htmlFor={"conf-email"}>Confirmation email:</label><input type="email" id="conf-email" value={ConfNewEmail} onChange={(e) => setConfNewEmail(e.target.value)} />
-                    <label htmlFor={"bio"}>Bio:</label><textarea id="bio" onChange={(e) => setNewBio(e.target.value)} placeholder='Ecrivez ici une bio...' defaultValue={user.bio ? user.bio : ""}></textarea>
+                    <label htmlFor={"bio"}>Bio:</label>
+                    <textarea id="bio" onChange={(e) => setNewBio(e.target.value)} placeholder='Vous pouvez écrire vos pensées, vos compétences...' defaultValue={user.bio ? user.bio : ""}></textarea>
                     {errorMsg ? <p className="error">{errorMsg}</p> : null}
                     <div className='buttons-box'>
                         <button className='validate-profile-edit-btn' onClick={(e) => handleUpdateUser()}>Enregistrer</button>
