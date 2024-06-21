@@ -45,21 +45,21 @@ function LoginForm({ onConnect }) {
   async function onLoginFormSubmitHandler(e) {
     e.preventDefault();
 
-    const honeyPot = document.getElementById('login-mail').value;
+    const honeyPot = document.getElementById('username').value;
 
     // If the honeyPot is filled, it means that the form has been filled by a bot
     if (honeyPot.length > 0) {
-      setErrorMessage('Mot de passe ou nom d\'utilisateur incorrect.');
+      setErrorMessage('Adresse email et/ou mot de passe incorrects.');
       return;
     }
 
     const loginData = {
-      username: document.getElementById('username').value,
+      email: document.getElementById('email').value,
       pwd: document.getElementById('pwd').value,
     };
 
-    // If the username or the password is empty, display an error message
-    if (!loginData.username || !loginData.pwd) {
+    // If the email or the password is empty, display an error message
+    if (!loginData.email || !loginData.pwd) {
       setErrorMessage('Veuillez remplir tous les champs.');
       return;
     }
@@ -76,7 +76,7 @@ function LoginForm({ onConnect }) {
     // If the login failed, increment the loginAttempts and display an error message
     if (response.message == 'Login failed') {
       setLoginAttempts(loginAttempts + 1);
-      setErrorMessage('Nom d\'utilisateur ou mot de passe incorrect.');
+      setErrorMessage('Adresse email et/ou mot de passe incorrects.');
       return;
     }
 
@@ -107,10 +107,10 @@ function LoginForm({ onConnect }) {
         <h1>Connexion</h1>
         <label htmlFor="username" className='username-label'>Utilisateur:</label>
         <input type="text" id="username" name="username" />
+        <label htmlFor="email" className='email-label'>Adresse email:</label>
+        <input type="email" id="email" />
         <label htmlFor="pwd" className='pwd-label'>Mot de passe:</label>
         <input type="password" id="pwd" name="pwd" />
-        <label htmlFor="login-mail" className='email-label'>Adresse mail:</label>
-        <input type="email" id="login-mail" />
         <button type="submit" onClick={onLoginFormSubmitHandler}>Se Connecter</button>
         {errorMessage ? <div className='error'>{errorMessage}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>
