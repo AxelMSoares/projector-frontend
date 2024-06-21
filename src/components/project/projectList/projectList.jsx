@@ -10,7 +10,7 @@ export default function ProjectList({ jwt }) {
     const navigate = useNavigate();
     const userData = Cookies.get('userData');
     const userUUID = userData ? JSON.parse(userData).uuid : null;
-    const csrfToken= useCSRFToken();
+    const csrfToken = useCSRFToken();
     const [projects, setProjects] = useState([]);
     const [asc, setAsc] = useState('');
     const [filterByName, setFilterByName] = useState(false);
@@ -26,9 +26,14 @@ export default function ProjectList({ jwt }) {
             window.location.href = '/connexion'; // If the user is not connected, redirect him to the login page
             return; // Return to prevent the rest of the function from executing
         }
+    }, [jwt]); // Dependency array
 
-        fetchData(); // Call the function to get the projects
-    }, [jwt, navigate, userUUID]); // Dependency array
+    useEffect(() => {
+        if(jwt && userUUID && csrfToken) {
+            fetchData(); // Fetch the projects
+        }
+    }, [jwt, userUUID, csrfToken]); // Dependency array
+
 
     async function fetchData() {
         try {

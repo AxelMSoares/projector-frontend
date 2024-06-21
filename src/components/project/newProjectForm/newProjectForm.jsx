@@ -4,6 +4,7 @@ import { getCategories } from "../../../api/getCategories";
 import { createNewProject } from "../../../api/createNewProject";
 import { cleanString } from "../../../helpers/functions";
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
+import DOMPurify from "dompurify";
 
 function NewProjectForm({ jwt, userData }) {
     const navigate = useNavigate();
@@ -16,7 +17,9 @@ function NewProjectForm({ jwt, userData }) {
             navigate('/connexion'); // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
         }
 
-        fetchCategories();
+        if (jwt && csrfToken) {
+            fetchCategories();
+        }
     }, [jwt, navigate]);
 
     async function fetchCategories() {
@@ -79,7 +82,7 @@ function NewProjectForm({ jwt, userData }) {
                     <label htmlFor="category">Choisir une categorie:<span className="required-field">*</span></label>
                     <select name="category" id="category">
                         {categories.map(category => (
-                            <option key={category.id} value={category.id}>{category.category_name}</option>
+                            <option key={category.id} value={category.id}>{DOMPurify.sanitize(category.category_name)}</option>
                         ))}
                     </select>
 
