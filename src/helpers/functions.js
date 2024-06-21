@@ -52,6 +52,12 @@ export function formatDate(date) {
     return new Date(date).toLocaleDateString('fr-FR', options);
 }
 
+// Transform a date format to DD/MM/YYYY HH:MM
+export function formatDateTime(date) {
+    const options = { weekday:'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+    return new Date(date).toLocaleDateString('fr-FR', options);
+}
+
 // Transform a date to format YYYY/MM/DD
 export function formatDateToYYYYMMDD(date) {
     const parsedDate = new Date(date);

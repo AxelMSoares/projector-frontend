@@ -10,6 +10,7 @@ import { formatDate } from '../../helpers/functions';
 import { cleanString } from '../../helpers/functions';
 import { checkUsernameFormat } from '../../helpers/functions';
 import { checkEmailFormat } from '../../helpers/functions';
+import { formatDateTime } from '../../helpers/functions';
 import { useCSRFToken } from '../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
 import ProfileImageUpload from './profileImageUpload';
@@ -290,7 +291,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
                     <p>Pseudo: {user && DOMPurify.sanitize(user.username)}</p>
                     {userProfile && <><p>Email: {user.email}</p><p className='error-text'>( L'adresse email n'est visible que par vous. Elle est utilisée pour la confirmation du compte, la récupération du mot de passe ou pour les notifications importantes. )</p></>}
                     <p>Membre depuis le : <span>{formatDate(user.CREATED)}</span></p>
-                    <p>Dernière connexion : <span>{user.lastLogin ? formatDate(user.lastLogin) : "Jamais connecté."}</span></p>
+                    <p>Dernière connexion : <span>{user.lastLogin ? formatDateTime(user.lastLogin) : "Jamais connecté."}</span></p>
                     <p>Bio: <span>{user && user.bio ? DOMPurify.sanitize(user.bio) : "Pas de bio pour l'instant."}</span></p>
                     {userProfile ? <>
                         {!passwordEditing ?
