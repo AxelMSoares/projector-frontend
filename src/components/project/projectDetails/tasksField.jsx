@@ -7,6 +7,7 @@ import { useCSRFToken } from "../../../context/CSRFTokenContext";
 import { checkStatus } from "../../../helpers/functions";
 import { cleanString } from "../../../helpers/functions";
 import Cookies from "js-cookie";
+import DOMPurify from "dompurify";
 
 export default function TasksField({ project, jwt, userData }) {
 
@@ -219,7 +220,7 @@ export default function TasksField({ project, jwt, userData }) {
                                             </option>
                                         })}
                                     </select>
-                                    <textarea defaultValue={currentTask.task_description} onChange={(e) => setNewTaskDescription(e.target.value)}></textarea>
+                                    <textarea defaultValue={currentTask.task_description} onChange={(e) => setNewTaskDescription(DOMPurify.sanitize(e.target.value))}></textarea>
                                     <div className="action-buttons">
                                         <button className="confirm" onClick={(e) => updateTask(task.task_id)}>Valider</button>
                                         <button className="cancel" onClick={(e) => setEditingTaskId(null)}>Annuler</button>
@@ -227,9 +228,9 @@ export default function TasksField({ project, jwt, userData }) {
                                 </>
                                 :
                                 <>
-                                    <p>{task.task_name}</p>
-                                    <p className={checkStatus(task.status_name)}>{task.status_name}</p>
-                                    <p>{task.task_description}</p>
+                                    <p>{DOMPurify.sanitize(task.task_name)}</p>
+                                    <p className={checkStatus(task.status_name)}>{DOMPurify.sanitize(task.status_name)}</p>
+                                    <p>{DOMPurify.sanitize(task.task_description)}</p>
                                     {userIsAuthor ?
                                         <div className="action-buttons">
                                             <button className="edit" onClick={(e) => {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { formatDateToYYYYMMDD } from '../../../helpers/functions';
 import { getCategories } from '../../../api/getCategories';
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
+import DOMPurify from 'dompurify';
 
 export default function CategoryField({ project, jwt, onUpdate, userData }) {
 
@@ -57,7 +58,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
                 <p className="detail">Categorie:</p>
                 <select onChange={(e) => setNewCategorie(e.target.value)}>
                     {categoriesList.length > 0 && categoriesList.map((category => (
-                        <option key={category.id} value={category.id}>{category.category_name}</option>
+                        <option key={category.id} value={category.id}>{DOMPurify.sanitize(category.category_name)}</option>
                     )))}
                 </select>
                 <button className='category-confirm-btn' onClick={() => updateProjectCategorie(data)} >Valider</button>
@@ -68,7 +69,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
             </div >
         ) : (
             <div className='project-categorie-field'>
-                <p className="detail">Categorie: <span>{categorieName}</span></p>
+                <p className="detail">Categorie: <span>{DOMPurify.sanitize(categorieName)}</span></p>
                 {(userData.username === project.username) ? <div><button className='cat-edit-btn' onClick={() => setEditingCategorie(true)} >Éditer</button></div> : null}
             </div>
         )

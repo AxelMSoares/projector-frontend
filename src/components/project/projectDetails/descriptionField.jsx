@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { formatDateToYYYYMMDD, cleanString } from '../../../helpers/functions.js';
+import DOMPurify from 'dompurify';
 
 export default function DescriptionField({ project, userData, onUpdate }) {
     const [description, setDescription] = useState(project.project_description || '');
@@ -39,10 +40,10 @@ export default function DescriptionField({ project, userData, onUpdate }) {
             {editingDescription ? (
                 <>
                     <p className='detail'>Description: </p>
-                    <input type="text" value={newDescription} onChange={(e) => setNewDescription(e.target.value)} />
+                    <input type="text" value={newDescription} onChange={(e) => setNewDescription(DOMPurify.sanitize(e.target.value))} />
                 </>
             ) : (
-                <p className="detail">Description: <span>{description}</span></p>
+                <p className="detail">Description: <span>{DOMPurify.sanitize(description)}</span></p>
             )
             }
             {(userData.username === project.username) ? (

@@ -13,6 +13,7 @@ import { checkEmailFormat } from '../../helpers/functions';
 import { useCSRFToken } from '../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
 import ProfileImageUpload from './profileImageUpload';
+import DOMPurify from 'dompurify';
 
 export default function UserProfile({ jwt, userData: userProp }) {
 
@@ -273,11 +274,11 @@ export default function UserProfile({ jwt, userData: userProp }) {
                     {message ? <p ref={messageRef} className={message.class}>{message.content}</p> : null}
                     {user && user.profilePicture ? <img className="profile-pic" src={user.profilePicture} alt="profile-pic" /> : <img className="profile-pic" src="/images/avatar-neutre.png" alt="user avatar" />}
                     {user && user.statut === 'administrateur' ? <p className="success-text">Admin</p> : null}
-                    <p>Pseudo: {user && user.username}</p>
+                    <p>Pseudo: {user && DOMPurify.sanitize(user.username)}</p>
                     {userProfile && <><p>Email: {user.email}</p><p className='error-text'>( L'adresse email n'est visible que par vous. Elle est utilisée pour la confirmation du compte, la récupération du mot de passe ou pour les notifications importantes. )</p></>}
                     <p>Membre depuis le : <span>{formatDate(user.CREATED)}</span></p>
                     <p>Dernière connexion : <span>{user.lastLogin ? formatDate(user.lastLogin) : "Jamais connecté."}</span></p>
-                    <p>Bio: <span>{user && user.bio ? user.bio : "Pas de bio pour l'instant."}</span></p>
+                    <p>Bio: <span>{user && user.bio ? DOMPurify.sanitize(user.bio) : "Pas de bio pour l'instant."}</span></p>
                     {userProfile ? <>
                         {!passwordEditing ?
                             <>

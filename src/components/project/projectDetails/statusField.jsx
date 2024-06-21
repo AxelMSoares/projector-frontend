@@ -3,6 +3,7 @@ import { checkStatus } from "../../../helpers/functions";
 import { formatDateToYYYYMMDD } from "../../../helpers/functions";
 import { getProjectStatus } from "../../../api/getProjectStatus";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
+import DOMPurify from "dompurify";
 
 export default function StatusField({ project, userData, jwt, onUpdate }) {
     const [statusName, setStatusName] = useState('');
@@ -51,7 +52,7 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
                 <p className="detail">Statut:</p>
                 <select onChange={(e) => setNewStatus(e.target.value)}>
                     {statusList.map((status) => (
-                        <option key={status.id} value={status.id}>{status.status_name}</option>
+                        <option key={status.id} value={status.id}>{DOMPurify.sanitize(status.status_name)}</option>
                     ))}
                 </select>
                 <div>
@@ -65,7 +66,7 @@ export default function StatusField({ project, userData, jwt, onUpdate }) {
 
         ) : (
             <div className="project-status-field">
-                <p className="detail">Statut: <span className={checkStatus(statusName)}>{statusName}</span></p>
+                <p className="detail">Statut: <span className={checkStatus(statusName)}>{DOMPurify.sanitize(statusName)}</span></p>
                 {(userData.username === project.username) ? <div><button onClick={() => setEditingStatus(true)}>Éditer</button></div> : null}
             </div>
         )

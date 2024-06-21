@@ -5,6 +5,7 @@ import { cleanString } from '../../../helpers/functions.js';
 import { createNewUser } from '../../../api/createNewUser.js';
 import { useCSRFToken } from '../../../context/CSRFTokenContext.jsx';
 import Cookies from 'js-cookie';
+import DOMPurify from 'dompurify';
 
 function RegisterForm() {
 
@@ -119,7 +120,7 @@ function RegisterForm() {
 
         // Create the user object
         const validatedForm = {
-            username: formData.username,
+            username: DOMPurify.sanitize(formData.username),
             email: formData.email.toLowerCase(),
             pwd: formData.pwd,
             cgu: 1

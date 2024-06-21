@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import UserMenu from './userMenu';
 import NavMenu from './navMenu';
 import Cookies from 'js-cookie';
+import DOMPurify from 'dompurify';
 
 function UsersHeader({ onConnect, userData }) {
 
@@ -53,7 +54,7 @@ function UsersHeader({ onConnect, userData }) {
 					</div>
 					<div className="nav-bar-right">
 						<ul className="desktop-user-menu">
-							<li><Link className="username-view" to={data ? "/utilisateur/" + data['username'] : null}><img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} /> <span>{data && data['username']}</span> </Link></li>
+							<li><Link className="username-view" to={data ? "/utilisateur/" + DOMPurify.sanitize(data['username']) : null}><img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} /> <span>{data && DOMPurify.sanitize(data['username'])}</span> </Link></li>
 							<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
 						</ul>
 						<UserMenu userData={data} onDisconnect={onDisconnect} />

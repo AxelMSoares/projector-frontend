@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { getProjectsUserIsMember } from '../../api/getProjectsUserIsMember';
 import { formatDate } from '../../helpers/functions';
 import { useCSRFToken } from '../../context/CSRFTokenContext';
+import DOMPurify from 'dompurify';
 
 export default function UserIsProjectMember({ jwt, userData }) {
     const [projects, setProjects] = useState([]);
@@ -16,7 +17,9 @@ export default function UserIsProjectMember({ jwt, userData }) {
     const csrfToken = useCSRFToken();
 
     useEffect(() => {
-        fetchData();
+        if (jwt && csrfToken) {
+            fetchData();
+        }
     }, []);
 
     if (!jwt) {
@@ -129,11 +132,11 @@ export default function UserIsProjectMember({ jwt, userData }) {
                 <ul>
                     {currentProjects.map((project) => (
                         <li key={project.uuid} onClick={(e) => redirectToProjectDetails(project.uuid)}>
-                            <p>Nom: <span>{project.project_name}</span></p>
-                            <p>Description: <span>{project.project_description}</span></p>
+                            <p>Nom: <span>{DOMPurify.sanitize(project.project_name)}</span></p>
+                            <p>Description: <span>{DOMPurify.sanitize(project.project_description)}</span></p>
                             <p>Date de création: <span>{formatDate(project.project_created)}</span></p>
-                            <p>Catégorie: <span>{project.category_name}</span></p>
-                            <p>Mon rôle: <span>{project.role}</span></p>
+                            <p>Catégorie: <span>{DOMPurify.sanitize(project.category_name)}</span></p>
+                            <p>Mon rôle: <span>{DOMPurify.sanitize(project.role)}</span></p>
                         </li>
                     ))}
                 </ul> :

@@ -4,6 +4,7 @@ import { UpdateProjectMember } from '../../../api/updateProjectMember';
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
 import { cleanString } from '../../../helpers/functions';
 import Cookies from 'js-cookie';
+import DOMPurify from 'dompurify';
 
 export default function ProjectMembers({ projectUuid, jwt, userData, project, membersList }) {
 
@@ -215,12 +216,12 @@ export default function ProjectMembers({ projectUuid, jwt, userData, project, me
                 }
                 {members && members.length > 0 ? members.map((member) => (
                     <li key={member.id} className="member">
-                        <p onClick={(e) => redirectToUserProfile(member.username)}><a className='user-link'>{member.username}</a></p>
+                        <p onClick={(e) => redirectToUserProfile(member.username)}><a className='user-link'>{DOMPurify.sanitize(member.username)}</a></p>
                         {editingMemberId === member.id ? (
                             <input
                                 type="text"
                                 value={newRole}
-                                onChange={(e) => setNewRole(e.target.value)}
+                                onChange={(e) => setNewRole(DOMPurify.sanitize(e.target.value))}
                             />
                         ) : (
                             <>

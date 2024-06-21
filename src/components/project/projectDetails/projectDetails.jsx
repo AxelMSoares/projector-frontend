@@ -12,6 +12,7 @@ import CategoryField from "./categoryField";
 import StatusField from "./statusField";
 import DescriptionField from "./descriptionField";
 import TasksField from "./tasksField";
+import DOMPurify from "dompurify";
 
 
 export default function ProjectDetails({ jwt, userData }) {
@@ -119,8 +120,8 @@ export default function ProjectDetails({ jwt, userData }) {
                     <>
                         <div className="project-detail">
                             < DeleteProjectBtn jwt={jwt} projectUuid={projectUuid} project={project} userData={userData} />
-                            <h2 className="capitalize-first-letter">{project.project_name}</h2>
-                            <p className="detail">Auteur: <span className="capitalize-first-letter author-link" onClick={(e) => redirectToUserProfil()}>{project.username}</span></p>
+                            <h2 className="capitalize-first-letter">{DOMPurify.sanitize(project.project_name)}</h2>
+                            <p className="detail">Auteur: <span className="capitalize-first-letter author-link" onClick={(e) => redirectToUserProfil()}>{DOMPurify.sanitize(project.username)}</span></p>
                             <p className="detail">Crée le: <span>{formatDate(project.project_created)}</span></p>
                             < DescriptionField project={project} userData={userData} onUpdate={updateProject} />
                             < CategoryField project={project} jwt={jwt} userData={userData} onUpdate={updateProject} />

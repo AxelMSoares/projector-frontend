@@ -4,6 +4,7 @@ import { formatDate, checkDateIsPassed, checkStatus } from '../../../helpers/fun
 import { getUserProjects } from '../../../api/getUserProjects';
 import { useCSRFToken } from '../../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
+import DOMPurify from 'dompurify';
 
 export default function ProjectList({ jwt }) {
     const navigate = useNavigate();
@@ -131,7 +132,7 @@ export default function ProjectList({ jwt }) {
                                 placeholder="Rechercher un projet par nom..."
                                 value={search}
                                 onChange={(e) => {
-                                    setSearch(e.target.value);
+                                    setSearch(DOMPurify.sanitize(e.target.value));
                                     setCurrentPage(1); // Reset to first page on search
                                 }}
                             />
@@ -158,16 +159,16 @@ export default function ProjectList({ jwt }) {
                         currentProjects.map(project => (
                             <div key={project.uuid} className="project">
                                 <div className="project-content" onClick={() => handleProjectClick(project.uuid)}>
-                                    <p className='project-title'>{project.project_name}</p>
-                                    <p>{project.project_description}</p>
+                                    <p className='project-title'>{DOMPurify.sanitize(project.project_name)}</p>
+                                    <p>{DOMPurify.sanitize(project.project_description)}</p>
                                     <p>Créé le: <span>{formatDate(project.project_created)}</span></p>
-                                    <p>Catégorie: <span>{project.category_name}</span></p>
+                                    <p>Catégorie: <span>{DOMPurify.sanitize(project.category_name)}</span></p>
                                     {project.project_deadline ? (
                                         <p>Deadline: <span className={checkDateIsPassed(project.project_deadline)}>{formatDate(project.project_deadline)}</span></p>
                                     ) : (
                                         <p>Deadline: <span className="success-text">Pas de date limite</span></p>
                                     )}
-                                    <p>Statut: <span className={checkStatus(project.status_name)}>{project.status_name}</span></p>
+                                    <p>Statut: <span className={checkStatus(project.status_name)}>{DOMPurify.sanitize(project.status_name)}</span></p>
                                 </div>
                             </div>
                         ))
