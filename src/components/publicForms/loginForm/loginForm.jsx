@@ -64,14 +64,15 @@ function LoginForm({ onConnect }) {
       return;
     }
 
-    // Get the respose data and the token
-    const response = await login(loginData, csrfToken);
-
     // If the user has tried to log in 4 times, block the login for 4 minutes
     if (loginAttempts >= 4) {
       setErrorMessage('Vous avez dépassé le nombre de tentatives de connexion autorisées, réessayez dans 5 minutes.');
       return;
     }
+    
+    // Get the respose data and the token
+    const response = await login(loginData, csrfToken);
+
 
     // If the login failed, increment the loginAttempts and display an error message
     if (response.message == 'Login failed') {
