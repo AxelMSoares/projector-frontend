@@ -1,11 +1,10 @@
-export async function login(loginData, csrfToken) {
+export async function login(loginData) {
 
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/users/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
-                "CSRF-Token": csrfToken
             },
             body: JSON.stringify(loginData),
             credentials: 'include'

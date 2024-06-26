@@ -1,6 +1,6 @@
 // src/context/CSRFTokenContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { getCSRFToken } from '../api/getCSRFToken';
+import Cookies from 'js-cookie';
 
 const CSRFTokenContext = createContext();
 
@@ -9,8 +9,10 @@ export const CSRFTokenProvider = ({ children }) => {
 
     useEffect(() => {
         const fetchToken = async () => {
-            const token = await getCSRFToken();
-            setCsrfToken(token);
+            const token = Cookies.get('csrfToken');
+            if(token){
+                setCsrfToken(token);
+            }
         };
         fetchToken();
     }, []);

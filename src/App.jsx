@@ -32,6 +32,7 @@ function App() {
       if (decoded.exp < Date.now() / 1000) {
         Cookies.remove('jwt');
         setConnected(false);
+        window.location.href = '/connexion';
       } else {
         setConnected(true);
       }

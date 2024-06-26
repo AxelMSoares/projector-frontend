@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { login } from '../../../api/login';
-import { useCSRFToken } from '../../../context/CSRFTokenContext';
 import Cookies from 'js-cookie';
 
 function LoginForm({ onConnect }) {
@@ -10,7 +9,7 @@ function LoginForm({ onConnect }) {
   const [newUserMsg, setNewUserMsg] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [errorMessage, setErrorMessage] = useState('');
-  const csrfToken = useCSRFToken();
+  
   
   // Id the user is already logged in, redirect to the homepage
   if (Cookies.get('jwt') && Cookies.get('userData')) {
@@ -71,7 +70,7 @@ function LoginForm({ onConnect }) {
     }
     
     // Get the respose data and the token
-    const response = await login(loginData, csrfToken);
+    const response = await login(loginData);
 
 
     // If the login failed, increment the loginAttempts and display an error message
@@ -81,15 +80,19 @@ function LoginForm({ onConnect }) {
       return;
     }
 
-    // If the login is successful, get the token
-    const responseJwt = response.token;
-    
+    // If the login is successful, get the jwt token
+    const responseJwt = response.jwtoken;
+
+    // Get the csrfToken
+    const csrfToken = response.csrfToken;
+
     // Reset the loginAttempts
     setLoginAttempts(0);
 
     // Save the token and the user data in the the cookies
     Cookies.set('jwt', responseJwt);
     Cookies.set('userData', JSON.stringify(response));
+    Cookies.set('csrfToken', csrfToken);
 
     // Update the state of the parent component
     onConnect(true);
