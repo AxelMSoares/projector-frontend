@@ -16,18 +16,20 @@ function UsersHeader({ onConnect, userData }) {
 	const onLogoutHandler = (e) => {
 		e.preventDefault();
 		onConnect(false);
-		// Destroy the jwt and userData in the Cookies
+		// Destroy the csrf token, the jwt and userData in the Cookies
 		Cookies.remove('jwt');
 		Cookies.remove('userData');
+		Cookies.remove('csrfToken');
 		// Redirect to the home page
 		window.location.href = '/';
 	}
 
 	const onDisconnect = () => {
 		onConnect(false);
-		// Destroy the jwt and userData in the Cookies
+		// Destroy the csrf token, the jwt and userData in the Cookies
 		Cookies.remove('jwt');
 		Cookies.remove('userData');
+		Cookies.remove('csrfToken');
 		// Redirect to the home page
 		window.location.href = '/';
 	}
