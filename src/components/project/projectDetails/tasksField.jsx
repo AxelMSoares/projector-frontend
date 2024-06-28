@@ -193,14 +193,14 @@ export default function TasksField({ project, jwt, userData }) {
                 : null}
             {filterByName || filterByStatus ?
                 <div className="filtered">
-                    <p>Tâches triées par: <span>{filterByName ? "Nom" : "Status"}</span></p>
+                    <p>Tâches triées par: <span>{filterByName ? "Nom" : "Statuts"}</span></p>
                     <p className="delete-filter" onClick={(e) => resetFilter()}>Retirer les filtres</p>
                 </div>
                 : null}
             <ul>
                 <li className={userIsAuthor ? "author" : "user"}>
                     <p className={filterByName ? "filter filter-clicked" : "filter"} onClick={(e) => filterTasksByName()}>Nom: {filterByName ? (asc ? '▲' : '▼') : null} </p>
-                    <p className={filterByStatus ? "filter filter-clicked" : "filter"} onClick={(e) => filterTasksByStatus()}>Status: {filterByStatus ? (asc ? '▲' : '▼') : null}</p>
+                    <p className={filterByStatus ? "filter filter-clicked" : "filter"} onClick={(e) => filterTasksByStatus()}>Statuts: {filterByStatus ? (asc ? '▲' : '▼') : null}</p>
                     <p>Description:</p>
                     {userIsAuthor ? <p id='action-title'>Actions:</p> : null}
                 </li>

@@ -50,14 +50,16 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
     // Regroup messages by date
     function groupMessagesByDate(messages) {
         const groupedMessages = {};
-        messages.forEach(message => {
-            const date = formatDate(message.message_created); // Format the date
-            if (!groupedMessages[date]) {
-                groupedMessages[date] = [message];
-            } else {
-                groupedMessages[date].push(message);
-            }
-        });
+        if (messages) {
+            messages.forEach(message => {
+                const date = formatDate(message.message_created); // Format the date
+                if (!groupedMessages[date]) {
+                    groupedMessages[date] = [message];
+                } else {
+                    groupedMessages[date].push(message);
+                }
+            });
+        }
         return groupedMessages;
     }
 
@@ -83,12 +85,11 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
             const response = await createNewProjectMessage(data, jwt, csrfToken);
 
-            if (!response.ok) {
+            if (response.message !== 'Message créé') {
                 setErrorMessage("Une erreur est survenue lors de l'envoi du message");
             } else {
                 setErrorMessage('');
                 getMessages();
-                console.log(data);
                 document.getElementById("new_message").value = ""; // Clear the input
                 // window.location.reload(); // Reload the page to display the new message
             }
@@ -109,7 +110,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
             const response = await deleteProjectMessage(jwt, csrfToken, msgId);
 
-            if (!response.ok) {
+            if (!response.message !== 'Message supprimé') {
                 setErrorMessage("Une erreur est survenue lors de la suppression du message");
             } else {
                 error = '';
@@ -125,7 +126,7 @@ export default function Tchat({ projectUuid, error, jwt, userData }) {
 
         const response = await updateProjectMessage(jwt, csrfToken, messageId, newContent);
 
-        if (!response.ok) {
+        if (response.message !== 'Message mis à jour') {
             setErrorMessage("Une erreur est survenue lors de la mise à jour du message");
         } else {
             setErrorMessage('');
