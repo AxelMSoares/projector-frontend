@@ -227,8 +227,6 @@ export default function UserProfile({ jwt, userData: userProp }) {
         // Check if the current password is correct
         const auth = await login({ 'email': email, 'pwd': currentPwd });
 
-        console.log('auth', auth);
-
         // If the token is not returned, the password is incorrect
         if (!auth.jwtoken) {
             setErrorMsg('Mot de passe actuel incorrect.');
