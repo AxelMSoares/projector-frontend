@@ -195,7 +195,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
     }
 
-    async function handleUpdatePassword(username) {
+    async function handleUpdatePassword(email) {
         // Check if the user is the owner of the profile before editing
         if (!userProfile || !jwt) {
             return;
@@ -225,10 +225,12 @@ export default function UserProfile({ jwt, userData: userProp }) {
         }
 
         // Check if the current password is correct
-        const auth = await login({ 'username': username, 'pwd': currentPwd }, csrfToken);
+        const auth = await login({ 'email': email, 'pwd': currentPwd });
+
+        console.log('auth', auth);
 
         // If the token is not returned, the password is incorrect
-        if (!auth.token) {
+        if (!auth.jwtoken) {
             setErrorMsg('Mot de passe actuel incorrect.');
             return;
         }
@@ -312,7 +314,7 @@ export default function UserProfile({ jwt, userData: userProp }) {
                                         setPasswordEditing(false);
                                         setErrorMsg('');
                                     }}>Annuler</button>
-                                    <button className='pwd-validate-btn' onClick={(e) => handleUpdatePassword(user.username)}>Valider</button>
+                                    <button className='pwd-validate-btn' onClick={(e) => handleUpdatePassword(user.email)}>Valider</button>
                                 </div>
                             </div>}
                     </> : null}
