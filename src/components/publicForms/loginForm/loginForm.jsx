@@ -80,7 +80,7 @@ function LoginForm({ onConnect }) {
       return;
     }
 
-    // If the login is successful, get the jwt token
+    // Get the jwt token
     const responseJwt = response.jwtoken;
 
     // Get the csrfToken

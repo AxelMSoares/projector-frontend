@@ -90,6 +90,7 @@ function RegisterForm() {
             const errorEmailFormat = 'Le format de l\'adresse email est invalide.';
             setErrorMsg(prevErrors => [...prevErrors, errorEmailFormat]);
             setErrorFields(prevErrors => ({ ...prevErrors, email: true }));
+            return;
         }
 
         // Check if the password format is correct
@@ -97,6 +98,7 @@ function RegisterForm() {
             const errorPwdFormat = 'Le format du mot de passe est invalide.';
             setErrorMsg(prevErrors => [...prevErrors, errorPwdFormat]);
             setErrorFields(prevErrors => ({ ...prevErrors, pwd: true }));
+            return;
         }
 
         // Check if the password and the confirmation password match
@@ -104,6 +106,7 @@ function RegisterForm() {
             const errorPwd = 'Les mots de passe ne correspondent pas';
             setErrorMsg(prevErrors => [...prevErrors, errorPwd]);
             setErrorFields(prevErrors => ({ ...prevErrors, pwdConfirm: true }));
+            return;
         }
 
         // Check if the user accepted the terms of use
@@ -111,6 +114,7 @@ function RegisterForm() {
             const errorCgu = 'Vous devez accepter les conditions d\'utilisation pour pouvoir utiliser nos services.';
             setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
             setErrorFields(prevErrors => ({ ...prevErrors, cgu: true }));
+            return;
         }
 
         // If there are errors, return
@@ -137,11 +141,11 @@ function RegisterForm() {
             const errorCreatingUser = 'Erreur lors de la création de l\'utilisateur';
             setErrorMsg(prevErrors => [...prevErrors, response.error || errorCreatingUser]);
 
-            if(response.error === 'Ce pseudo est déjà utilisé. Merci de choisir un autre.'){
+            if (response.error === 'Ce pseudo est déjà utilisé. Merci de choisir un autre.') {
                 setErrorFields(prevErrors => ({ ...prevErrors, username: true }));
             }
 
-            if(response.error === 'Cette adresse email est déjà utilisée.') {
+            if (response.error === 'Cette adresse email est déjà utilisée.') {
                 setErrorFields(prevErrors => ({ ...prevErrors, email: true }));
             }
 
@@ -159,24 +163,48 @@ function RegisterForm() {
                 <form className="register-field" action="" method="post" onSubmit={handleSubmit}>
                     <h1>Inscription</h1>
                     <label className={errorFields && errorFields.username ? "error-text" : null}>Utilisateur:
-                        <input type="text" id="username" name="username" onChange={(e) => setUsername(e.target.value)} className={errorFields && errorFields.username ? "errorfield" : null}/>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            onChange={(e) => setUsername(e.target.value)}
+                            className={errorFields && errorFields.username ? "errorfield" : null}
+                        />
                     </label>
                     <div className="side-inputs">
                         <div>
                             <label className={errorFields && errorFields.email ? "error-text" : null}>Email:
-                                <input type="text" name="email" id="email" onChange={(e) => setEmail(e.target.value)} className={errorFields && errorFields.email ? "errorfield" : null} />
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email" 
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className={errorFields && errorFields.email ? "errorfield" : null}
+                                />
                             </label>
                         </div>
                     </div>
                     <div className="side-inputs">
                         <div>
                             <label className={errorFields && errorFields.pwd ? "error-text" : null} >Mot de passe:
-                                <input type="password" id="pwd" name="pwd" onChange={(e) => setPwd(e.target.value)}  className={errorFields && errorFields.pwd ? "errorfield" : null}/>
+                                <input
+                                    type="password"
+                                    id="pwd"
+                                    name="pwd"
+                                    onChange={(e) => setPwd(e.target.value)}
+                                    className={errorFields && errorFields.pwd ? "errorfield" : null}
+                                />
                             </label>
                         </div>
                         <div>
                             <label className={errorFields && errorFields.pwdConfirm ? "error-text" : null} >Confirmation mot de passe:
-                                <input type="password" id="pwd-confirm" name="pwd-confirm" onChange={(e) => setPwdConfirm(e.target.value)}  className={errorFields && errorFields.pwdConfirm ? "errorfield" : null}/>
+                                <input
+                                    type="password"
+                                    id="pwd-confirm"
+                                    name="pwd-confirm"
+                                    onChange={(e) => setPwdConfirm(e.target.value)}
+                                    className={errorFields && errorFields.pwdConfirm ? "errorfield" : null}
+                                />
                             </label>
                         </div>
                         <div className="pwd-recommendations">
@@ -191,7 +219,7 @@ function RegisterForm() {
                         </div>
                     </div>
                     <div className="checkbox-input">
-                        <input type="checkbox" id="cgu" name="cgu" onChange={(e) => setCgu(!cgu)}  className={errorFields && errorFields.cgu ? "errorfield" : null}/>
+                        <input type="checkbox" id="cgu" name="cgu" onChange={(e) => setCgu(!cgu)} className={errorFields && errorFields.cgu ? "errorfield" : null} />
                         <p onClick={(e) => redirectToPrivacyPolicy()}>
                             J'accepte la politique de confidentialité et les conditions d'utilisation
                         </p>
