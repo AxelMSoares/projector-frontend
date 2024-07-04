@@ -17,7 +17,6 @@ import UserIsProjectMember from './components/userIsProjectMember/userIsProjectM
 import NewProjectTask from './components/project/newProjectTask/newProjectTask.jsx';
 import UserProfile from './components/userProfile/userProfile.jsx';
 import './assets/css/main.css';
-import { jwtDecode } from 'jwt-decode';
 
 function App() {
   const [connected, setConnected] = useState(false); // State hook
@@ -27,17 +26,9 @@ function App() {
 
   useEffect(() => {
     const token = Cookies.get('jwt');
-    try {
-      const decoded = jwtDecode(token);
-      if (decoded.exp < Date.now() / 1000) {
-        Cookies.remove('jwt');
-        setConnected(false);
-        window.location.href = '/connexion';
-      } else {
-        setConnected(true);
-      }
-    } catch (err) {
-      Cookies.remove('jwt');
+    if(token){
+      setConnected(true);
+    } else {
       setConnected(false);
     }
   }, []);
