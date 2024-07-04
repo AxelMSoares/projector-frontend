@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { deleteProject } from "../../../api/deleteProject";
 import { useCSRFToken } from "../../../context/CSRFTokenContext";
 
-export default function ({ jwt, projectUuid, project, userData }) {
+export default function ({ jwt, projectUuid, project, userData, setErrorMsg }) {
 
     const csrfToken = useCSRFToken();
 
@@ -30,12 +30,13 @@ export default function ({ jwt, projectUuid, project, userData }) {
 
         const confirmation = window.confirm("Êtes-vous sûr de vouloir supprimer ce projet?");
         if (confirmation) {
-            try {
-                await deleteProject(jwt, csrfToken, projectUuid);
+                const result = await deleteProject(jwt, csrfToken, projectUuid);
+                if (result && result.error) {
+                    setErrorMsg(result.error);
+                    return;
+                }
+
                 window.location.href = '/mes-projets';
-            } catch (error) {
-                setErrorMsg('Erreur lors de la suppression du projet');
-            }
         }
     }
 

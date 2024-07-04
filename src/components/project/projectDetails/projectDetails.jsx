@@ -80,12 +80,14 @@ export default function ProjectDetails({ jwt, userData }) {
 
     async function updateProject(dataToUpdate) {
         try {
-            await updateProjectDetails(projectUuid, jwt, csrfToken, dataToUpdate);
+            const response = await updateProjectDetails(projectUuid, jwt, csrfToken, dataToUpdate);
+
+            if (!response.ok) {
+                setErrorMsg(response.error);
+                return;
+            }
         } catch (error) {
-            console.log(
-                "Une erreur est survenue lors de la mise à jour du projet",
-                error
-            );
+            setErrorMsg('Erreur lors de la mise à jour du projet');
         }
         await fetchProjectDetails(jwt, projectUuid);
     }
@@ -119,7 +121,7 @@ export default function ProjectDetails({ jwt, userData }) {
                 (
                     <>
                         <div className="project-detail">
-                            < DeleteProjectBtn jwt={jwt} projectUuid={projectUuid} project={project} userData={userData} />
+                            < DeleteProjectBtn jwt={jwt} projectUuid={projectUuid} project={project} userData={userData} setErrorMsg={setErrorMsg}/>
                             <h2 className="capitalize-first-letter">{DOMPurify.sanitize(project.project_name)}</h2>
                             <p className="detail">Auteur: <span className="capitalize-first-letter author-link" onClick={(e) => redirectToUserProfil()}>{DOMPurify.sanitize(project.username)}</span></p>
                             <p className="detail">Crée le: <span>{formatDate(project.project_created)}</span></p>

@@ -13,7 +13,7 @@ export async function getMembersList(projectUuid, jwt, csrfToken) {
             const data = await response.json();
 
             if (!response.ok) {
-                console.log("Une erreur est survenue lors de la récupération des membres du projet", data.error);
+                return await response.json();
             } else {
                 return data;
             }

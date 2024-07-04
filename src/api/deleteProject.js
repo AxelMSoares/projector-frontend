@@ -9,7 +9,11 @@ export async function deleteProject(jwt, csrfToken, projectUuid) {
             },
             credentials: 'include'
         });
-        const data = await response.json();
+        
+        if (!response.ok) {
+            return await response.json();
+        }
+        
     } catch (error) {
         console.error('Erreur lors de la suppression du projet', error);
     }
