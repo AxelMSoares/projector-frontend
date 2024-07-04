@@ -3,7 +3,7 @@
     color: var(--light-color);
     max-width: 1400px;
     width: 100%;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-right: auto;
     margin-left: auto;
     padding: 20px;
@@ -16,11 +16,11 @@
     flex-wrap: wrap;
 }
 
-.project-list .filters p{
+.project-list .filters p {
     margin-right: 20px;
 }
 
-.project-list .filters button{
+.project-list .filters button {
     margin-right: 10px;
     background-color: var(--fourth-color);
     color: var(--light-color);
@@ -30,7 +30,7 @@
     transition: all .3s ease;
 }
 
-.project-list .filters .filter-name{
+.project-list .filters .filter-name {
     display: flex;
     flex-wrap: wrap;
     width: 90%;
@@ -39,11 +39,11 @@
     margin-right: auto;
 }
 
-.project-list .filters .filter-name span{
+.project-list .filters .filter-name span {
     margin-left: 5px;
 }
 
-.project-list .filters .filter-name #delete-filters{
+.project-list .filters .filter-name #delete-filters {
     border: 1px solid var(--light-color);
     padding: 6px;
 }
@@ -65,33 +65,33 @@
     transition: all .3s linear;
 }
 
-.project-list .project:hover{
+.project-list .project:hover {
     border: 2px solid var(--light-color);
     box-shadow: 0 0 5px var(--light-color);
-    
+
 }
 
-.project-list .project .project-content{
+.project-list .project .project-content {
     padding: 20px 80px;
 }
 
 .project-list .project a {
-    color:var(--light-color);
+    color: var(--light-color);
     text-decoration: none;
 }
 
-.project-list .project p span{
+.project-list .project p span {
     margin-left: 5px;
 }
 
-.project-list .same-line{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:space-between;
+.project-list .same-line {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.project-list .search-box{
+.project-list .search-box {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -100,25 +100,25 @@
     margin-bottom: 20px;
 }
 
-.project-list .search-box input{
+.project-list .search-box input {
     width: 50%;
     margin-bottom: 20px;
 }
 
-.project-list .results-text{
+.project-list .results-text {
     margin-bottom: 20px;
     margin-left: 20px;
     text-decoration: underline;
     font-size: 1em;
 }
 
-.project-list .pagination{
+.project-list .pagination {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
 }
 
-.project-list .pagination .pages-btn{
+.project-list .pagination .pages-btn {
     background-color: var(--fourth-color);
     color: var(--light-color);
     border: 0;
@@ -128,21 +128,21 @@
     margin-left: 10px;
 }
 
-.project-list .pagination .pages-btn:hover{
+.project-list .pagination .pages-btn:hover {
     box-shadow: 0 0 2px 2px var(--light-color);
 }
 
-.project-list .pagination .active{
+.project-list .pagination .active {
     background-color: var(--ongoing-color);
 }
 
-.clicked{
-    background-color: var(--fourth-color)!important;
-    border: 1px solid var(--light-color)!important;
+.clicked {
+    background-color: var(--fourth-color) !important;
+    border: 1px solid var(--light-color) !important;
     transition: all .3s ease;
 }
 
-#delete-filters{
+#delete-filters {
     background: transparent;
     color: var(--light-color);
     font-size: 0.6rem;
@@ -152,56 +152,63 @@
 }
 
 .project-list .filters button:hover,
-.clicked:hover{
+.clicked:hover {
     box-shadow: 0 0 2px 2px var(--light-color);
 }
 
 
-#delete-filters:hover{
+#delete-filters:hover {
     border: 2px solid var(--light-color);
     box-shadow: 0 0 5px var(--light-color);
 }
 
 @media (max-width: 1400px) {
 
-    .project-list{
+    .project-list {
         width: 96%;
         padding: 14px;
     }
 
-    .project-list .project .project-content{
-        padding: 20px;
-    }
-
-    .project-list .project-content{
+    .project-list .project .project-content {
         padding: 20px 40px;
     }
 
-    .project-list .search-box input{
+
+    .project-list .search-box input {
         width: 90%;
     }
 }
 
 @media (max-width: 460px) {
-    .project-list{
+    .project-list {
         font-size: 1em;
         line-height: 1.6em;
+
+        .project{
+            width: 100%;
+
+            .project-content {
+                padding: 10px;
+                font-size: 0.8em;
+            }
+        }
+
+        .filters {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+
+            p {
+                margin-bottom: 10px;
+            }
+
+            button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+
     }
 
-    .project-list .filters p{
-        margin-bottom: 10px;
-    }
 
-    .project-list .filters{
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
-
-    .project-list .filters button{
-        margin-bottom: 10px;
-        width: 100%;
-    }
-
-    
 }

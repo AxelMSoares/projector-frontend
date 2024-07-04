@@ -3,7 +3,7 @@
     color: var(--light-color);
     max-width: 1000px;
     width: 100%;
-    padding: 80px;
+    padding: 60px;
     margin: 0 auto;
     border-radius: 5px;
     position: relative;
@@ -14,7 +14,7 @@
 
     h1 {
         font-size: 2rem;
-        margin-bottom: 60px;
+        margin-bottom: 30px;
     }
 
     .success {
@@ -129,6 +129,8 @@
         color: var(--light-color);
         margin-top: 20px;
         margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .buttons-field {
@@ -230,16 +232,23 @@
 @media (max-width: 420px) {
 
     .profile {
-        padding: 30px;
+        padding: 20px;
+        align-items: flex-start;
 
         h1 {
             font-size: 1.4em;
         }
 
         .edit-profile-btn {
-            top: 80px;
+            top: 50px;
             right: 50%;
             transform: translateX(50%);
+            font-size: 0.7em;
+            padding: 5px 20px;
+        }
+
+        .profile-pic{
+            width: 80%;
         }
 
         label,
