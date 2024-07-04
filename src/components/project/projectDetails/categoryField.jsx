@@ -22,7 +22,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     if (newCategorie) {
         data.project_category_id = newCategorie;
     } else {
-        data.project_category_id = 1;
+        data.project_category_id = project.project_category_id;
     }
 
     useEffect(() => {
@@ -45,10 +45,10 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     async function updateProjectCategorie(data) {
         // Send the updated data to the server
         onUpdate(data);
-        // Close the editing field
-        setEditingCategorie(false);
         // Reinit the newCategorie state after the update
         setNewCategorie('');
+        // Close the editing field
+        setEditingCategorie(false);
     }
 
 
@@ -57,6 +57,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
             <div className='project-categorie-field'>
                 <p className="detail">Categorie:</p>
                 <select onChange={(e) => setNewCategorie(e.target.value)}>
+                        <option value="" disabled selected>Choisir une Catégorie</option>
                     {categoriesList.length > 0 && categoriesList.map((category => (
                         <option key={category.id} value={category.id}>{DOMPurify.sanitize(category.category_name)}</option>
                     )))}

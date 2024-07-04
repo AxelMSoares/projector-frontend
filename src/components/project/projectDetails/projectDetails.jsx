@@ -81,8 +81,8 @@ export default function ProjectDetails({ jwt, userData }) {
     async function updateProject(dataToUpdate) {
         try {
             const response = await updateProjectDetails(projectUuid, jwt, csrfToken, dataToUpdate);
-
-            if (!response.ok) {
+            
+            if (response) {
                 setErrorMsg(response.error);
                 return;
             }
@@ -90,10 +90,6 @@ export default function ProjectDetails({ jwt, userData }) {
             setErrorMsg('Erreur lors de la mise à jour du projet');
         }
         await fetchProjectDetails(jwt, projectUuid);
-    }
-
-    function redirectToTchat() {
-        window.location.href = `/projet/tchat/?uuid=${projectUuid}`;
     }
 
     async function checkIfUserIsAuthorised(userData, project, membersList) {
