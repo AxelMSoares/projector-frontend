@@ -12,7 +12,7 @@ function PublicHeader() {
                         <ul>
                             <li>
                                 <Link to="/">
-                                    <img src="/images/projector_logo.png" id="logo-link" />
+                                    <img src="/images/projector_logo.png" id="logo-link" alt="logo Projector"/>
                                 </Link>
                             </li>
                         </ul>

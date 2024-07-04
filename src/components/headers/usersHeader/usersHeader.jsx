@@ -40,7 +40,7 @@ function UsersHeader({ onConnect, userData }) {
 				<div className="header-container">
 					<div className="nav-bar-left">
 						<Link id="projector-logo" to="/">
-							<img src="/images/projector_logo.png" id="logo-link" />
+							<img src="/images/projector_logo.png" id="logo-link" alt="logo Projector"/>
 						</Link>
 						<ul className='nav-bar'>
 							<li><Link className="page-link" to="/nouveau-projet">Nouveau Projet</Link></li>
@@ -51,12 +51,12 @@ function UsersHeader({ onConnect, userData }) {
 					</div>
 					<div id="middle-logo">
 						<Link to="/">
-							<img src="/images/projector_logo.png" id="logo-link" />
+							<img src="/images/projector_logo.png" id="logo-link" alt="logo Projector"/>
 						</Link>
 					</div>
 					<div className="nav-bar-right">
 						<ul className="desktop-user-menu">
-							<li><Link className="username-view" to={data ? "/utilisateur/" + DOMPurify.sanitize(data['username']) : null}><img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} /> <span>{data && DOMPurify.sanitize(data['username'])}</span> </Link></li>
+							<li><Link className="username-view" to={data ? "/utilisateur/" + DOMPurify.sanitize(data['username']) : null}><img className="profile-picture" src={data && data['profilePicture'] ? data['profilePicture'] : "/images/avatar-neutre.png"} alt="photo de profil de l'utilisateur"/> <span>{data && DOMPurify.sanitize(data['username'])}</span> </Link></li>
 							<li id="logout-btn"><button onClick={onLogoutHandler}>Se Deconnecter</button></li>
 						</ul>
 						<UserMenu userData={data} onDisconnect={onDisconnect} />
