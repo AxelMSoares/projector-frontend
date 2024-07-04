@@ -8,7 +8,7 @@ function LoginForm({ onConnect }) {
   const location = useLocation();
   const [newUserMsg, setNewUserMsg] = useState('');
   const [loginAttempts, setLoginAttempts] = useState(0);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [message, setMessage] = useState({class: '', content: ''});
   
   
   // Id the user is already logged in, redirect to the homepage
@@ -36,7 +36,7 @@ function LoginForm({ onConnect }) {
       // After 5 minutes, reset the loginAttempts and the timeToWait
       setTimeout(() => {
         setLoginAttempts(0);
-        setErrorMessage('');
+        setMessage('');
       }, 300000);
     }
   }, [loginAttempts]);
@@ -44,11 +44,11 @@ function LoginForm({ onConnect }) {
   async function onLoginFormSubmitHandler(e) {
     e.preventDefault();
 
-    const honeyPot = document.getElementById('username').value;
+    const honeyBot = document.getElementById('username').value;
 
-    // If the honeyPot is filled, it means that the form has been filled by a bot
-    if (honeyPot.length > 0) {
-      setErrorMessage('Adresse email et/ou mot de passe incorrects.');
+    // If the honeyBot is filled, it means that the form has been filled by a bot
+    if (honeyBot.length > 0) {
+      setMessage({class:'success', content:'Bienvenue! Vous êtes maintenant connecté.'});
       return;
     }
 
@@ -59,13 +59,13 @@ function LoginForm({ onConnect }) {
 
     // If the email or the password is empty, display an error message
     if (!loginData.email || !loginData.pwd) {
-      setErrorMessage('Veuillez remplir tous les champs.');
+      setMessage({class:'error', content:'Veuillez remplir tous les champs.'});
       return;
     }
 
     // If the user has tried to log in 4 times, block the login for 4 minutes
     if (loginAttempts >= 4) {
-      setErrorMessage('Vous avez dépassé le nombre de tentatives de connexion autorisées, réessayez dans 5 minutes.');
+      setMessage({class:'error', content:'Vous avez dépassé le nombre de tentatives de connexion autorisées, réessayez dans 5 minutes.'});
       return;
     }
     
@@ -76,7 +76,7 @@ function LoginForm({ onConnect }) {
     // If the login failed, increment the loginAttempts and display an error message
     if (response.message == 'Login failed') {
       setLoginAttempts(loginAttempts + 1);
-      setErrorMessage('Adresse email et/ou mot de passe incorrects.');
+      setMessage({class: 'error', content:'Adresse email et/ou mot de passe incorrects.'});
       return;
     }
 
@@ -116,7 +116,7 @@ function LoginForm({ onConnect }) {
         <label htmlFor="pwd" className='pwd-label'>Mot de passe:</label>
         <input type="password" id="pwd" name="pwd" />
         <button type="submit" onClick={onLoginFormSubmitHandler}>Se Connecter</button>
-        {errorMessage ? <div className='error'>{errorMessage}</div> : null}
+        {message && message.content.length > 0 ? <div className={message.class}>{message.content}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>
       </form>
     </main>
