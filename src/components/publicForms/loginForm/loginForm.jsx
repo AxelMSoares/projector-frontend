@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { login } from '../../../api/login';
 import Cookies from 'js-cookie';
+import { checkEmailFormat, checkPasswordFormat } from '../../../helpers/functions';
 
 function LoginForm({ onConnect }) {
 
@@ -62,6 +63,13 @@ function LoginForm({ onConnect }) {
       setMessage({class:'error', content:'Veuillez remplir tous les champs.'});
       return;
     }
+
+    // If the email is not valid, display an error message
+    if (!checkEmailFormat(loginData.email)) {
+      setMessage({class:'error', content:'Adresse email invalide.'});
+      return;
+    }
+
 
     // If the user has tried to log in 4 times, block the login for 4 minutes
     if (loginAttempts >= 4) {

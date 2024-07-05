@@ -209,7 +209,7 @@ export default function TasksField({ project, jwt, userData }) {
                         return (<li key={task.task_id} className={userIsAuthor ? "author" : "user"}>
                             {editingTaskId === task.task_id ?
                                 <>
-                                    <input type="text" defaultValue={currentTask.task_name} onChange={(e) => setNewTaskName(e.target.value)} />
+                                    <input type="text" defaultValue={currentTask.task_name} onChange={(e) => setNewTaskName(DOMPurify.sanitize(e.target.value))} />
                                     <select defaultValue={currentTask.task_status_id} onChange={(e) => setNewTaskStatus(e.target.value)}>
                                         {taskStatus.map((status) => {
                                             return <option
