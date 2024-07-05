@@ -14,16 +14,16 @@
     align-items: center;
 
     h1 {
-        margin-top: 20px;
+        margin-top: 10px;
         font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
     }
 
     input {
         margin-top: 5px;
-        margin-bottom: 40px;
-        margin-left: 10px;
+        margin-bottom: 20px;
+        margin-right: 40px;
         border-radius: 5px;
         border: 0;
         padding: 5px 20px;
@@ -32,6 +32,7 @@
     label {
         display: flex;
         flex-direction: column;
+        font-size: 0.9em;
     }
 
     .side-inputs {
@@ -64,7 +65,9 @@
     }
 
     .pwd-recommendations {
-        width: 50%;
+        display: flex;
+        align-items: center;
+        width: 80%;
         font-size: 0.8em;
         margin-bottom: 20px;
         margin-right: auto;
@@ -75,6 +78,7 @@
     .pwd-recommendations li {
         list-style-type: disc;
         margin-left: 40px;
+        margin-bottom: -5px;
     }
 
     a {
@@ -88,8 +92,8 @@
 
     button:hover,
     button:focus {
-        background-color: var(--fourth-color);
-        box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+        background-color: var(--primary-color);
+        box-shadow: 0px 0px 4px 2px rgba(255, 255, 255, 0.8);
     }
 
     .checkbox-input input {
@@ -131,6 +135,7 @@
 
         input {
             padding: 5px 10px;
+            margin-right: 0px;
         }
 
         button {
@@ -162,13 +167,20 @@
 @media (max-width: 500px) {
     .register-field {
         padding: 20px;
+        margin-top: -20px;
 
-        .pwd-recommendations{
-            max-width: 70%;
+        input {
+            margin-bottom: 10px;
+            padding: 5px;
+            height: 25px;
+        }
+
+        .pwd-recommendations {
+            max-width: 90%;
         }
 
         .checkbox-input p,
-        a{
+        a {
             font-size: 0.8em;
         }
     }

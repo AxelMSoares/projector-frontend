@@ -162,22 +162,24 @@ function RegisterForm() {
             <div>
                 <form className="register-field" action="" method="post" onSubmit={handleSubmit}>
                     <h1>Inscription</h1>
-                    <label className={errorFields && errorFields.username ? "error-text" : null}>Utilisateur:
-                        <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            onChange={(e) => setUsername(e.target.value)}
-                            className={errorFields && errorFields.username ? "errorfield" : null}
-                        />
-                    </label>
                     <div className="side-inputs">
+                        <div>
+                            <label className={errorFields && errorFields.username ? "error-text" : null}>Pseudo:
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    className={errorFields && errorFields.username ? "errorfield" : null}
+                                />
+                            </label>
+                        </div>
                         <div>
                             <label className={errorFields && errorFields.email ? "error-text" : null}>Email:
                                 <input
                                     type="text"
                                     name="email"
-                                    id="email" 
+                                    id="email"
                                     onChange={(e) => setEmail(e.target.value)}
                                     className={errorFields && errorFields.email ? "errorfield" : null}
                                 />
@@ -208,14 +210,16 @@ function RegisterForm() {
                             </label>
                         </div>
                         <div className="pwd-recommendations">
-                            <p>Le mot de passe doit avoir:</p>
-                            <ul>
-                                <li className={pwd.length > 0 ? (hasLowerCase(pwd) ? "success-text" : 'error-text') : null}>Au moins une lettre minuscule</li>
-                                <li className={pwd.length > 0 ? (hasUpperCase(pwd) ? "success-text" : 'error-text') : null}>Au moins une lettre majuscule</li>
-                                <li className={pwd.length > 0 ? (hasNumber(pwd) ? "success-text" : 'error-text') : null}>Au moins un chiffre</li>
-                                <li className={pwd.length > 0 ? (hasSpecialCharacter(pwd) ? "success-text" : 'error-text') : null}>Au moins un caractère spécial</li>
-                                <li className={pwd.length > 0 ? (hasEightCharacters(pwd) ? "success-text" : 'error-text') : null}>Au moins 8 caractères</li>
-                            </ul>
+                            <p>Le mot de passe doit être composé de:</p>
+                            <div>
+                                <ul>
+                                    <li className={pwd.length > 0 ? (hasLowerCase(pwd) ? "success-text" : 'error-text') : null}>Au moins une lettre minuscule</li>
+                                    <li className={pwd.length > 0 ? (hasUpperCase(pwd) ? "success-text" : 'error-text') : null}>Au moins une lettre majuscule</li>
+                                    <li className={pwd.length > 0 ? (hasNumber(pwd) ? "success-text" : 'error-text') : null}>Au moins un chiffre</li>
+                                    <li className={pwd.length > 0 ? (hasSpecialCharacter(pwd) ? "success-text" : 'error-text') : null}>Au moins un caractère spécial</li>
+                                    <li className={pwd.length > 0 ? (hasEightCharacters(pwd) ? "success-text" : 'error-text') : null}>Au moins 8 caractères</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div className="checkbox-input">

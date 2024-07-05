@@ -10,14 +10,14 @@
     text-align: justify;
 }
 
-.privacy-policy h2 {
+.privacy-policy h1 {
     margin-bottom: 60px;
     text-align: center;
     font-size: 2em;
     line-height: 1.45em;
 }
 
-.privacy-policy h3 {
+.privacy-policy h2 {
     margin-bottom: 20px;
     text-align: center;
     font-size: 1.4em;
@@ -41,6 +41,7 @@
 
 .privacy-policy span {
     color: var(--ongoing-color);
+    text-decoration: underline;
     font-weight: 600;
 }
 

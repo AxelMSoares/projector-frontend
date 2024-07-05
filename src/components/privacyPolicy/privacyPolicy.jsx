@@ -28,7 +28,7 @@ function PrivacyPolicy() {
                 <li>- Retirer votre consentement au traitement de vos données.</li>
                 <li>- Déposer une plainte auprès d'une autorité de protection des données.</li>
             </ul>
-            <p>Pour exercer ces droits, veuillez nous contacter à l'adresse suivante : <span>drackaxel@gmail.com.</span></p>
+            <p>Pour exercer ces droits, veuillez nous contacter à l'adresse suivante : <span><a href="mailto:drackaxel@gmail.com">drackaxel@gmail.com.</a></span></p>
             <h2>Durée de conservation des Données Personnelles</h2>
             <p>Nous conservons vos adresses e-mails aussi longtemps que nécessaire pour valider les inscriptions et envoyer des notifications, ou conformément aux exigences légales.</p>
             <h2>Modifications de la Politique de Confidentialité</h2>
