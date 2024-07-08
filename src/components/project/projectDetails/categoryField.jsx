@@ -26,8 +26,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
     }
 
     useEffect(() => {
-        setCategorieId(project.project_category_id
-        );
+        setCategorieId(project.project_category_id);
         setCategorieName(project.category_name);
         if (csrfToken && jwt) {
             getCategoriesList();
@@ -57,7 +56,7 @@ export default function CategoryField({ project, jwt, onUpdate, userData }) {
             <div className='project-categorie-field'>
                 <p className="detail">Categorie:</p>
                 <select onChange={(e) => setNewCategorie(e.target.value)}>
-                        <option value="" disabled selected>Choisir une Catégorie</option>
+                    <option value="" disabled selected>Choisir une Catégorie</option>
                     {categoriesList.length > 0 && categoriesList.map((category => (
                         <option key={category.id} value={category.id}>{DOMPurify.sanitize(category.category_name)}</option>
                     )))}

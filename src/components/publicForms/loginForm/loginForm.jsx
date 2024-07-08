@@ -66,7 +66,7 @@ function LoginForm({ onConnect }) {
 
     // If the email is not valid, display an error message
     if (!checkEmailFormat(loginData.email)) {
-      setMessage({class:'error', content:'Adresse email invalide.'});
+      setMessage({class:'error', content:'Format d\'adresse email invalide.'});
       return;
     }
 
