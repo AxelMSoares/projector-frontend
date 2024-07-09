@@ -123,6 +123,7 @@ function LoginForm({ onConnect }) {
         <input type="email" id="email" />
         <label htmlFor="pwd" className='pwd-label'>Mot de passe:</label>
         <input type="password" id="pwd" name="pwd" />
+        <Link className="pwd-forgetted"><p>Mot de passe oublié?</p></Link>
         <button type="submit" onClick={onLoginFormSubmitHandler}>Se Connecter</button>
         {message && message.content.length > 0 ? <div className={message.class}>{message.content}</div> : null}
         <Link className="sign-up-link" to="/inscription"><p>S'inscrire</p></Link>
