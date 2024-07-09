@@ -232,15 +232,15 @@ function RegisterForm() {
                         </div>
                     </div>
                     <div className="checkbox-input">
-                        <input type="checkbox" id="cgu" name="cgu" onChange={(e) => setCgu(!cgu)} className={errorFields && errorFields.cgu ? "errorfield" : null} />
-                        <p onClick={(e) => redirectToPrivacyPolicy()}>
-                            J'accepte la politique de confidentialité et les conditions d'utilisation
+                        <input type="checkbox" id="rgpd" name="rgpd" onChange={(e) => setRgpd(!rgpd)} className={errorFields && errorFields.cgu ? "errorfield" : null}/>
+                        <p>
+                            J'accepte la RGPD (Règlementation Générale sur la Protection des Données)
                         </p>
                     </div>
                     <div className="checkbox-input">
-                        <input type="checkbox" id="rgpd" name="rgpd" onChange={(e) => setRgpd(!rgpd)} className={errorFields && errorFields.cgu ? "errorfield" : null}/>
-                        <p>
-                            J'accepte la RGPD
+                        <input type="checkbox" id="cgu" name="cgu" onChange={(e) => setCgu(!cgu)} className={errorFields && errorFields.cgu ? "errorfield" : null} />
+                        <p onClick={(e) => redirectToPrivacyPolicy()}>
+                            J'accepte la politique de confidentialité et les conditions d'utilisation
                         </p>
                     </div>
                     {errorMsg.length > 0 &&
