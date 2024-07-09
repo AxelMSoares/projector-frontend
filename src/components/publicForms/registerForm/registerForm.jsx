@@ -15,6 +15,7 @@ function RegisterForm() {
     const [pwd, setPwd] = useState('');
     const [pwdConfirm, setPwdConfirm] = useState('');
     const [cgu, setCgu] = useState(false);
+    const [rgpd, setRgpd] = useState(false);
     const [errorFields, setErrorFields] = useState({});
     const csrfToken = useCSRFToken();
 
@@ -61,7 +62,8 @@ function RegisterForm() {
             email: email,
             pwd: pwd,
             pwdConfirm: pwdConfirm,
-            cgu: cgu
+            cgu: cgu,
+            rgpd: rgpd
         }
 
         // If one of the fields is empty, return an error
@@ -112,6 +114,13 @@ function RegisterForm() {
         // Check if the user accepted the terms of use
         if (!formData.cgu) {
             const errorCgu = 'Vous devez accepter les conditions d\'utilisation pour pouvoir utiliser nos services.';
+            setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
+            setErrorFields(prevErrors => ({ ...prevErrors, cgu: true }));
+            return;
+        }
+
+        if(!formData.rgpd){
+            const errorCgu = 'Vous devez accepter la RGPD pour pouvoir utiliser nos services.';
             setErrorMsg(prevErrors => [...prevErrors, errorCgu]);
             setErrorFields(prevErrors => ({ ...prevErrors, cgu: true }));
             return;
@@ -226,6 +235,12 @@ function RegisterForm() {
                         <input type="checkbox" id="cgu" name="cgu" onChange={(e) => setCgu(!cgu)} className={errorFields && errorFields.cgu ? "errorfield" : null} />
                         <p onClick={(e) => redirectToPrivacyPolicy()}>
                             J'accepte la politique de confidentialité et les conditions d'utilisation
+                        </p>
+                    </div>
+                    <div className="checkbox-input">
+                        <input type="checkbox" id="rgpd" name="rgpd" onChange={(e) => setRgpd(!rgpd)} className={errorFields && errorFields.cgu ? "errorfield" : null}/>
+                        <p>
+                            J'accepte la RGPD
                         </p>
                     </div>
                     {errorMsg.length > 0 &&
